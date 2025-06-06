@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free online video speed changer tool. Upload your video and instantly redirect to change its speed. Fully responsive, stylish design with AdSense integration.">
+  <meta name="keywords" content="video speed changer, video editor, online video tool, video speed tool">
+  <meta name="author" content="YourBrand">
+  <title>Video Speed Changer Tool</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --text-color: #111;
+      --primary-color: #007BFF;
+      --card-bg: #fff;
+    }
+    [data-theme="dark"] {
+      --bg-color: #1e1e1e;
+      --text-color: #eee;
+      --primary-color: #0d6efd;
+      --card-bg: #2e2e2e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    header {
+      padding: 1rem;
+      background: var(--card-bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: var(--text-color);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .upload-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .upload-card input {
+      margin-top: 1rem;
+    }
+
+    button {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.875rem;
+      color: #777;
+    }
+
+    .adsense-slot {
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .dark-mode-toggle {
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav a {
+        margin: 5px;
+      }
+    }
+  </style>
+  <!-- Google AdSense Sample Integration -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</head>
+<body>
+  <header>
+    <div><strong>Video Speed Changer</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about-us.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="contact-us.html">Contact</a>
+      <a href="faq.html">FAQ</a>
+      <span class="dark-mode-toggle" onclick="toggleTheme()">🌓</span>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="upload-card">
+      <h1>Change Video Speed Instantly</h1>
+      <p>Upload your video and we’ll redirect you to our speed adjustment tool.</p>
+      <input type="file" id="videoInput" accept="video/*">
+      <br>
+      <button id="continueBtn" style="display:none">Continue</button>
+    </section>
+
+    <div class="adsense-slot">
+      <!-- AdSense Ad Unit 1 -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+        data-ad-slot="1111111111"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <section id="about">
+      <h2>About Us</h2>
+      <p>This tool is developed to make video editing easier and accessible for everyone. We offer quick redirection to EZGIF for fast video speed changes.</p>
+    </section>
+
+    <section id="blog">
+      <h2>Blog</h2>
+      <p>Coming soon! Tips on video editing, tools, and productivity.</p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy Policy</h2>
+      <p>We do not store your uploaded videos. All processing happens externally via EZGIF.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: support@yourdomain.com</p>
+    </section>
+
+    <section id="faq">
+      <h2>FAQ</h2>
+      <p><strong>Q:</strong> Is my video safe?<br><strong>A:</strong> Yes! Your video never leaves your device until you upload it to EZGIF.</p>
+    </section>
+
+    <div class="adsense-slot">
+      <!-- AdSense Ad Unit 2 -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+        data-ad-slot="2222222222"
+        data-ad-format="rectangle"
+        data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Video Speed Changer. All rights reserved.
+  </footer>
+
+<script>
+    const videoInput = document.getElementById('videoInput');
+    const continueBtn = document.getElementById('continueBtn');
+
+    videoInput.addEventListener('change', function() {
+      if (videoInput.files.length > 0) {
+        continueBtn.style.display = 'inline-block';
+      }
+    });
+
+    continueBtn.addEventListener('click', function() {
+      window.location.href = 'https://ezgif.com/video-speed/ezgif-65bb8da192a9e.webm';
+    });
+  </script>
+</body>
+</html>

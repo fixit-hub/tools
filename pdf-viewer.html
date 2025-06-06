@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDF Reader Tool</title>
+  <meta name="description" content="Read and navigate your PDF files online with our easy and responsive PDF Reader Tool." />
+  <meta name="keywords" content="PDF Reader, PDF Viewer, PDF Navigation, Online PDF Tool" />
+  <meta name="author" content="PDF Reader Tool" />
+  <style>
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #1a202c;
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      flex: 1 1 auto;
+      min-width: 180px;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      flex: 2 1 auto;
+      justify-content: flex-end;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover, nav a:focus {
+      background-color: #2d3748;
+      outline: none;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .toolbar button, .toolbar input {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    #pdf-render {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+      flex-grow: 1;
+      padding: 0 1rem 2rem;
+      overflow: auto;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin-bottom: 2rem;
+      max-width: 100%;
+      height: auto !important;
+      /* To make canvas responsive */
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #2d3748;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    /* Dark mode */
+    body.dark-mode {
+      background-color: #111;
+      color: #eee;
+    }
+    body.dark-mode header {
+      background: #2d3748;
+      color: #eee;
+    }
+    body.dark-mode nav a {
+      color: #eee;
+    }
+    body.dark-mode nav a:hover, body.dark-mode nav a:focus {
+      background-color: #1a202c;
+    }
+    body.dark-mode .toolbar {
+      background: #1a202c;
+      box-shadow: 0 1px 5px rgba(255, 255, 255, 0.1);
+    }
+    body.dark-mode .toolbar button, body.dark-mode .toolbar input {
+      background: #2d3748;
+      color: #eee;
+      border: none;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 768px) {
+      header {
+        justify-content: center;
+      }
+      nav {
+        justify-content: center;
+      }
+      .toolbar {
+        justify-content: center;
+      }
+    }
+
+    /* Ad containers style */
+    .ad-container {
+      margin: 1rem auto;
+      max-width: 728px;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+  <!-- Google AdSense Async Script (you will add your publisher ID here) -->
+  <script data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>PDF Reader</h1>
+  <nav aria-label="Primary navigation">
+    <a href="#upload">Upload PDF</a>
+    <a href="#pdf-render">View PDF</a>
+    <a href="contact-us.html">Contact</a>
+  </nav>
+  <input type="file" id="upload" accept="application/pdf" aria-label="Upload PDF file" />
+</header>
+
+<!-- Ad unit - Top banner -->
+<div class="ad-container" aria-label="Advertisement - Top banner">
+  <!-- Replace ca-pub-xxxxxxxx and data-ad-slot with your AdSense ad unit ID -->
+  <ins class="adsbygoogle"
+    style="display:inline-block;width:728px;height:90px"
+    data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+    data-ad-slot="1111111111"></ins>
+</div>
+
+<div class="toolbar" role="toolbar" aria-label="PDF navigation controls">
+  <button onclick="prevPage()" aria-label="Previous Page">Prev</button>
+  <button onclick="nextPage()" aria-label="Next Page">Next</button>
+  <span>Page: <span id="page-num" aria-live="polite"></span> / <span id="page-count"></span></span>
+  <input type="number" id="go-to-page" placeholder="Go to page" min="1" aria-label="Go to page number" />
+  <button onclick="goToPage()" aria-label="Go to specified page">Go</button>
+  <button onclick="zoomIn()" aria-label="Zoom In">Zoom In</button>
+  <button onclick="zoomOut()" aria-label="Zoom Out">Zoom Out</button>
+  <button onclick="fitToScreen()" aria-label="Fit PDF to screen">Fit</button>
+  <button onclick="originalSize()" aria-label="Original PDF size">Original</button>
+  <button onclick="toggleDarkMode()" aria-pressed="false" id="dark-mode-toggle">Dark/Light</button>
+  <button onclick="printPDF()" aria-label="Print PDF page">Print</button>
+</div>
+
+<!-- Ad unit - Inline responsive -->
+<div class="ad-container" aria-label="Advertisement - Inline responsive">
+  <ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+    data-ad-slot="2222222222"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+</div>
+
+<div id="pdf-render"><canvas id="pdf-canvas" role="img" aria-label="PDF page display"></canvas></div>
+
+<!-- Ad unit - Bottom banner -->
+<div class="ad-container" aria-label="Advertisement - Bottom banner">
+  <ins class="adsbygoogle"
+    style="display:inline-block;width:468px;height:60px"
+    data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+    data-ad-slot="3333333333"></ins>
+</div>
+
+<footer id="footer">
+  &copy; 2025 PDF Reader Tool. All rights reserved.
+</footer>
+
+<!-- PDF.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  let pdfDoc = null,
+      pageNum = 1,
+      pageRendering = false,
+      pageNumPending = null,
+      scale = 1.5,
+      canvas = document.getElementById('pdf-canvas'),
+      ctx = canvas.getContext('2d');
+
+  document.getElementById('upload').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.type !== 'application/pdf') {
+      alert('Please upload a valid PDF file.');
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = function() {
+      const typedarray = new Uint8Array(this.result);
+      pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+        pdfDoc = pdf;
+        document.getElementById('page-count').textContent = pdfDoc.numPages;
+        pageNum = 1;
+        renderPage(pageNum);
+      });
+    };
+    fileReader.readAsArrayBuffer(file);
+  });
+
+  function renderPage(num) {
+    pageRendering = true;
+    pdfDoc.getPage(num).then(function(page) {
+      const viewport = page.getViewport({ scale: scale });
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      const renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+      };
+      const renderTask = page.render(renderContext);
+
+      renderTask.promise.then(function() {
+        pageRendering = false;
+        document.getElementById('page-num').textContent = pageNum;
+        if (pageNumPending !== null) {
+          renderPage(pageNumPending);
+          pageNumPending = null;
+        }
+      });
+    });
+  }
+
+  function queueRenderPage(num) {
+    if (pageRendering) {
+      pageNumPending = num;
+    } else {
+      renderPage(num);
+    }
+  }
+
+  function prevPage() {
+    if (!pdfDoc) return;
+    if (pageNum <= 1) return;
+    pageNum--;
+    queueRenderPage(pageNum);
+  }
+
+  function nextPage() {
+    if (!pdfDoc) return;
+    if (pageNum >= pdfDoc.numPages) return;
+    pageNum++;
+    queueRenderPage(pageNum);
+  }
+
+  function goToPage() {
+    if (!pdfDoc) return;
+    const pageInput = document.getElementById('go-to-page').value;
+    const pageNumber = parseInt(pageInput);
+    if (pageNumber >= 1 && pageNumber <= pdfDoc.numPages) {
+      pageNum = pageNumber;
+      queueRenderPage(pageNum);
+    }
+  }
+
+  function zoomIn() {
+    if (!pdfDoc) return;
+    scale += 0.2;
+    queueRenderPage(pageNum);
+  }
+
+  function zoomOut() {
+    if (!pdfDoc) return;
+    scale = Math.max(0.5, scale - 0.2);
+    queueRenderPage(pageNum);
+  }
+
+  function fitToScreen() {
+    if (!pdfDoc) return;
+    scale = 1.2;
+    queueRenderPage(pageNum);
+  }
+
+  function originalSize() {
+    if (!pdfDoc) return;
+    scale = 1.5;
+    queueRenderPage(pageNum);
+  }
+
+  function toggleDarkMode() {
+    const body = document.body;
+    const btn = document.getElementById('dark-mode-toggle');
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    btn.setAttribute('aria-pressed', isDark);
+  }
+
+  function printPDF() {
+    if (!pdfDoc) return;
+    pdfDoc.getPage(pageNum).then(function(page) {
+      const viewport = page.getViewport({ scale: 2 });
+      const printCanvas = document.createElement('canvas');
+      const printCtx = printCanvas.getContext('2d');
+      printCanvas.width = viewport.width;
+      printCanvas.height = viewport.height;
+
+      page.render({
+        canvasContext: printCtx,
+        viewport: viewport
+      }).promise.then(function() {
+        const dataUrl = printCanvas.toDataURL();
+        const win = window.open('', '_blank');
+        win.document.write('<img src="' + dataUrl + '"/>');
+        win.document.close();
+        win.focus();
+        win.print();
+      });
+    });
+  }
+
+  // Initialize ads
+  (adsbygoogle = window.adsbygoogle || []).push();
+</script>
+
+</body>
+</html>

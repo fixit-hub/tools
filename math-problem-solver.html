@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Advanced Math Solver Tool using Newton API - Simplify, Derive, Integrate, Factor, Solve Equations and more." />
+  <meta name="keywords" content="math solver, equation solver, simplify expressions, calculus tool, online math tool" />
+  <meta name="author" content="Fixit Hub" />
+  <title>Math Problem Solver - Fixit Hub</title>
+  <style>
+    :root {
+      --bg-light: #ffffff;
+      --bg-dark: #121212;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+      --primary: #4CAF50;
+      --accent: #00bcd4;
+      --font: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light-mode {
+      background: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.7rem 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hamburger {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background: var(--primary);
+    }
+
+    nav.active {
+      display: flex;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.7rem;
+      display: block;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 0.9rem;
+      margin: 0.4rem 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+    }
+
+    #result {
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    .ad-space, .ad-top, .ad-bottom {
+      margin: 1rem auto;
+      text-align: center;
+    }
+
+    .toggle-mode {
+      cursor: pointer;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body class="light-mode">
+  <div class="ad-top">
+    <!-- AdSense Top Small Ad -->
+    <ins class="adsbygoogle"
+      style="display:inline-block;width:320px;height:50px"
+      data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+      data-ad-slot="3333333333"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <header>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <h1>Math Solver</h1>
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="contact-us.html">Contact Us</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <button class="toggle-mode" onclick="toggleMode()">Dark/Light</button>
+  </header>
+
+  <main class="container">
+    <h2>Solve Math Problems Instantly</h2>
+    <select id="operation">
+      <option value="simplify">Simplify</option>
+      <option value="factor">Factor</option>
+      <option value="derive">Derive</option>
+      <option value="integrate">Integrate</option>
+      <option value="log">Log</option>
+      <option value="solve">Solve Equation</option>
+      <option value="tangent">Tangent</option>
+      <option value="area">Area Under Curve</option>
+    </select>
+
+    <input type="text" id="expression" placeholder="e.g. 2x + 3x or x^2 + 2x = 0" />
+    <input type="text" id="extra" placeholder="Optional: Extra Param (e.g. 0 2 for area)" />
+    <button onclick="solve()">Solve Now</button>
+
+    <div id="result">Your result will appear here.</div>
+
+    <div class="ad-space">
+      <!-- AdSense Ad 1 -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+        data-ad-slot="1111111111"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+
+    <div class="ad-space">
+      <!-- AdSense Ad 2 -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+        data-ad-slot="2222222222"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+  </main>
+
+  <div class="ad-bottom">
+    <!-- AdSense Bottom Ad -->
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+      data-ad-slot="4444444444"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Tools Hub. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function solve() {
+      const op = document.getElementById("operation").value;
+      const exp = document.getElementById("expression").value.trim();
+      const extra = document.getElementById("extra").value.trim();
+      const fullExp = encodeURIComponent(exp + (extra ? " " + extra : ""));
+      const resultBox = document.getElementById("result");
+      resultBox.textContent = "⏳ Solving...";
+
+      fetch(`https://newton.vercel.app/api/v2/${op}/${fullExp}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.result) {
+            resultBox.innerHTML = `<strong>Result:</strong> ${data.result}`;
+          } else {
+            resultBox.textContent = "❌ Unable to solve this expression.";
+          }
+        })
+        .catch(err => {
+          resultBox.textContent = "⚠️ Error connecting to the API.";
+          console.error(err);
+        });
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("dark-mode");
+      document.body.classList.toggle("light-mode");
+    }
+
+    function toggleMenu() {
+      const nav = document.getElementById("navMenu");
+      nav.classList.toggle("active");
+    }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</body>
+</html>

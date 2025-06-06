@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Powerful and modern all-in-one percentage calculator tool with multiple features, dark/light mode, responsive layout, blog, and AdSense integration.">
+  <meta name="keywords" content="percentage calculator, tip calculator, responsive, dark mode, SEO, blog, AdSense">
+  <meta name="author" content="Fixit Hub">
+  <title>Percentage Calculator - Fixit Hub</title>
+  <style>
+    :root {
+      --primary: #0077ff;
+      --background: #f9f9f9;
+      --text: #333;
+      --card: #fff;
+    }
+    [data-theme="dark"] {
+      --background: #121212;
+      --text: #f1f1f1;
+      --card: #1e1e1e;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+    }
+    header, footer {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: white;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 12px rgba(0,0,0,0.05);
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: green;
+      margin-top: 1rem;
+    }
+    .adsense-placeholder {
+      background: #efefef;
+      padding: 1rem;
+      text-align: center;
+      margin: 2rem 0;
+      border-radius: 10px;
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+    }
+    @media (max-width: 768px) {
+      nav a {
+        display: block;
+        margin: 0.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Percentage Calculator</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about-us.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="contact-us.html">Contact</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+
+  <button class="dark-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+
+  <div class="container">
+    <div class="adsense-placeholder">
+<!-- Header Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <div class="card">
+      <h2>What is X% of Y?</h2>
+      <input type="number" id="x" placeholder="Enter X (percent)">
+      <input type="number" id="y" placeholder="Enter Y (number)">
+      <button onclick="calcPercentageOf()">Calculate</button>
+      <div class="result" id="result1"></div>
+    </div>
+
+    <div class="card">
+      <h2>Increase A by B%</h2>
+      <input type="number" id="a" placeholder="Enter A">
+      <input type="number" id="b" placeholder="Enter B (percent)">
+      <button onclick="calcIncrease()">Calculate</button>
+      <div class="result" id="result2"></div>
+    </div>
+
+    <div class="adsense-placeholder">
+
+
+    <div class="card">
+      <h2>Decrease C by D%</h2>
+      <input type="number" id="c" placeholder="Enter C">
+      <input type="number" id="d" placeholder="Enter D (percent)">
+      <button onclick="calcDecrease()">Calculate</button>
+      <div class="result" id="result3"></div>
+    </div>
+
+    <div class="card">
+      <h2>E is what percent of F?</h2>
+      <input type="number" id="e" placeholder="Enter E">
+      <input type="number" id="f" placeholder="Enter F">
+      <button onclick="calcWhatPercent()">Calculate</button>
+      <div class="result" id="result4"></div>
+    </div>
+
+    <div class="card">
+      <h2>Tip Calculator</h2>
+      <input type="number" id="bill" placehold<!-- Header Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+      er="Bill Amount">
+      <input type="number" id="tipPercent" placeholder="Tip %">
+      <button onclick="calcTip()">Calculate Tip</button>
+      <div class="result" id="result5"></div>
+    </div>
+
+    <div class="adsense-placeholder">
+<!-- Header Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <div id="about" class="card">
+      <h2>About Us</h2>
+      <p>We are dedicated to building high-quality, responsive web tools for everyone, including this comprehensive percentage calculator.</p>
+    </div>
+
+    <div id="blog" class="card">
+      <h2>Blog & Articles</h2>
+      <div>
+        <h3>Mastering Percentage Calculations</h3>
+        <img src="https://via.placeholder.com/800x400" alt="Blog cover">
+        <p>Percentage calculations are used everywhere, from shopping to business. In this guide, you'll learn how to quickly master percentage increase, decrease, tips, and more.</p>
+      </div>
+      <div>
+        <h3>Why Responsive Tools Matter in 2025</h3>
+        <img src="https://via.placeholder.com/800x400" alt="Responsive design">
+        <p>With mobile usage surpassing desktop, having tools that adapt across all screens is essential. Discover how responsive design boosts engagement and performance.</p>
+      </div>
+    </div>
+
+    <div id="privacy" class="card">
+      <h2>Privacy Policy</h2>
+      <p>We respect your privacy. No user data is collected or stored. Any ads shown are managed by Google AdSense under its policy.</p>
+    </div>
+
+    <div id="contact" class="card">
+      <h2>Contact Us</h2>
+      <p>Have feedback or need help? Email us at support@toolshub.com or use our contact form.</p>
+    </div>
+
+    <div id="faq" class="card">
+      <h2>FAQ</h2>
+      <p><strong>Q:</strong> Is this tool free to use?<br><strong>A:</strong> Yes, it's completely free and accessible on any device.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Tools Hub. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function calcPercentageOf() {
+      const x = parseFloat(document.getElementById('x').value);
+      const y = parseFloat(document.getElementById('y').value);
+      if (!isNaN(x) && !isNaN(y)) {
+        const result = (x / 100) * y;
+        document.getElementById('result1').textContent = `${x}% of ${y} is ${result}`;
+      }
+    }
+    function calcIncrease() {
+      const a = parseFloat(document.getElementById('a').value);
+      const b = parseFloat(document.getElementById('b').value);
+      if (!isNaN(a) && !isNaN(b)) {
+        const result = a + (a * (b / 100));
+        document.getElementById('result2').textContent = `${a} increased by ${b}% is ${result}`;
+      }
+    }
+    function calcDecrease() {
+      const c = parseFloat(document.getElementById('c').value);
+      const d = parseFloat(document.getElementById('d').value);
+      if (!isNaN(c) && !isNaN(d)) {
+        const result = c - (c * (d / 100));
+        document.getElementById('result3').textContent = `${c} decreased by ${d}% is ${result}`;
+      }
+    }
+    function calcWhatPercent() {
+      const e = parseFloat(document.getElementById('e').value);
+      const f = parseFloat(document.getElementById('f').value);
+      if (!isNaN(e) && !isNaN(f) && f !== 0) {
+        const result = (e / f) * 100;
+        document.getElementById('result4').textContent = `${e} is ${result.toFixed(2)}% of ${f}`;
+      }
+    }
+    function calcTip() {
+      const bill = parseFloat(document.getElementById('bill').value);
+      const tipPercent = parseFloat(document.getElementById('tipPercent').value);
+      if (!isNaN(bill) && !isNaN(tipPercent)) {
+        const tip = bill * (tipPercent / 100);
+        const total = bill + tip;
+        document.getElementById('result5').textContent = `Tip: $${tip.toFixed(2)}, Total: $${total.toFixed(2)}`;
+      }
+    }
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+    }
+  </script>
+</body>
+</html>

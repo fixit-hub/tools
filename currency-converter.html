@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Currency Converter | Live Rates & Calculator</title>
+  <meta name="description" content="Live Currency Converter with auto-updating exchange rates, persistent storage, responsive design, and AdSense monetization." />
+  <meta name="keywords" content="Currency Converter, Live Rates, Currency Exchange, Dollar to PKR, EUR to USD" />
+  <meta name="author" content="FixitHub" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <style>
+    :root {
+      --bg-dark: #0f2027;
+      --bg-light: #ffffff;
+      --text-dark: #ffffff;
+      --text-light: #000000;
+      --primary: #00b894;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: var(--text-dark);
+      transition: background 0.4s, color 0.4s;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00b894;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #00b894;
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #00b894;
+      background: none;
+      color: #00b894;
+    }
+
+    .converter {
+      background: #1e2a38;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      max-width: 400px;
+      width: 90%;
+      margin: 60px auto;
+    }
+
+    .converter h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .converter input,
+    .converter select,
+    .converter button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .converter button {
+      background-color: #00b894;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .converter button:hover {
+      background-color: #019875;
+    }
+
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      min-height: 28px;
+    }
+
+    #updateStatus {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #ccc;
+      text-align: center;
+    }
+
+    /* Ads Placeholder */
+    .ad-unit {
+      margin: 20px auto;
+      text-align: center;
+      max-width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      nav a {
+        margin: 5px 10px 5px 0;
+      }
+    }
+
+    .light-mode {
+      background: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    .light-mode header {
+      background-color: #f8f8f8;
+    }
+
+    .light-mode .converter {
+      background: #f1f1f1;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="logo">Tools Hub</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="about-us.html">About Us</a>
+      <a href="privacy-policy.html">Privacy policy</a>
+      <a href="contact-us.html">Contact Us</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Mode</button>
+  </header>
+
+  <!-- AdSense Ad (Top) -->
+  <div class="ad-unit">
+    <!-- Replace with your AdSense top ad unit -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-xxxxxxxxxxxxxx"
+         data-ad-slot="1111111111"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- Converter -->
+  <div class="converter">
+    <h2>Currency Converter</h2>
+    <input type="number" id="amount" placeholder="Enter amount" min="0" />
+    <select id="fromCurrency"></select>
+    <select id="toCurrency"></select>
+    <button onclick="convertCurrency()">Convert</button>
+    <button onclick="updateRates()">Fetch Latest Rates</button>
+    <div class="result" id="result">Converted amount will appear here</div>
+    <div id="updateStatus"></div>
+  </div>
+
+  <!-- AdSense Ad (Bottom) -->
+  <div class="ad-unit">
+    <!-- Replace with your AdSense bottom ad unit -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-xxxxxxxxxxxxxx"
+         data-ad-slot="2222222222"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- Scripts -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <script>
+    const defaultRates = { USD: 1, EUR: 0.92, GBP: 0.79, INR: 83.27, PKR: 278.2, CAD: 1.36, AUD: 1.52, JPY: 156.47, CNY: 7.24, AED: 3.67, SAR: 3.75, TRY: 32.21, BRL: 5.13, RUB: 89.45, ZAR: 18.58, CHF: 0.89, SEK: 10.48, NOK: 10.74, MXN: 17.15, MYR: 4.71, SGD: 1.35, HKD: 7.83, NZD: 1.63, THB: 36.68, BDT: 117.2, LKR: 300.1, IDR: 15900, KRW: 1372.5, EGP: 47.15, IQD: 1309.1, VND: 25500 };
+    let exchangeRates = {...defaultRates};
+
+    const fromSelect = document.getElementById("fromCurrency");
+    const toSelect = document.getElementById("toCurrency");
+    const resultDiv = document.getElementById("result");
+    const updateStatus = document.getElementById("updateStatus");
+
+    function populateCurrencySelectors() {
+      fromSelect.innerHTML = "";
+      toSelect.innerHTML = "";
+      Object.keys(exchangeRates).forEach(currency => {
+        let option1 = document.createElement("option");
+        option1.value = currency;
+        option1.text = currency;
+        fromSelect.appendChild(option1);
+        let option2 = document.createElement("option");
+        option2.value = currency;
+        option2.text = currency;
+        toSelect.appendChild(option2);
+      });
+      fromSelect.value = "USD";
+      toSelect.value = "PKR";
+    }
+
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const from = fromSelect.value;
+      const to = toSelect.value;
+
+      if (isNaN(amount) || amount <= 0) {
+        resultDiv.innerText = "Please enter a valid amount.";
+        return;
+      }
+
+      if (!exchangeRates[from] || !exchangeRates[to]) {
+        resultDiv.innerText = "Currency not supported.";
+        return;
+      }
+
+      const converted = (amount / exchangeRates[from]) * exchangeRates[to];
+      resultDiv.innerText = `${amount} ${from} = ${converted.toFixed(4)} ${to}`;
+    }
+
+    async function updateRates(showStatus = true) {
+      if(showStatus) updateStatus.innerText = "Fetching latest rates...";
+      try {
+        const response = await fetch('https://open.er-api.com/v6/latest/USD');
+        if (!response.ok) throw new Error("Failed to fetch rates");
+        const data = await response.json();
+        if (data.result !== "success") throw new Error("API error");
+
+        exchangeRates = data.rates;
+        populateCurrencySelectors();
+        localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
+        localStorage.setItem('ratesTimestamp', Date.now());
+
+        if(showStatus) {
+          updateStatus.innerText = "Rates updated successfully!";
+          resultDiv.innerText = "Converted amount will appear here";
+        }
+      } catch (e) {
+        if(showStatus) updateStatus.innerText = "Failed to update rates. Using last known rates.";
+        console.error(e);
+      }
+    }
+
+    function loadRatesFromStorage() {
+      const savedRates = localStorage.getItem('exchangeRates');
+      const savedTimestamp = localStorage.getItem('ratesTimestamp');
+      if (savedRates && savedTimestamp) {
+        const age = Date.now() - savedTimestamp;
+        const oneDay = 86400000;
+        if (age < oneDay) {
+          exchangeRates = JSON.parse(savedRates);
+          populateCurrencySelectors();
+          updateStatus.innerText = "Loaded rates from local storage.";
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function startAutoUpdate() {
+      setInterval(() => {
+        updateRates(false);
+      }, 600000);
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+    }
+
+    if (!loadRatesFromStorage()) updateRates();
+    startAutoUpdate();
+  </script>
+</body>
+</html>

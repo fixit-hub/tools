@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Text Extractor Tool - Extract Text from PDF Files Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free online tool to extract text from PDF files. Quickly convert PDF to text with our easy-to-use PDF text extractor. No installation required.">
+  <meta name="keywords" content="PDF to text, extract text from PDF, PDF text extractor, online PDF tool, PDF converter">
+  <meta name="author" content="PDF Text Extractor Tool">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --text-color: #333;
+      --bg-color: #f8f9fa;
+      --card-color: #fff;
+      --border-color: #e0e0e0;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+    }
+    
+    [data-theme="dark"] {
+      --primary-color: #4cc9f0;
+      --secondary-color: #4895ef;
+      --text-color: #f8f9fa;
+      --bg-color: #121212;
+      --card-color: #1e1e1e;
+      --border-color: #333;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 15px 0;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: white;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 20px;
+    }
+    
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-left: 15px;
+    }
+    
+    .ad-container {
+      margin: 20px auto;
+      text-align: center;
+      background-color: var(--card-color);
+      padding: 10px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .ad-container.top-ad {
+      max-width: 728px;
+    }
+    
+    .ad-container.side-ad {
+      display: none;
+    }
+    
+    main {
+      padding: 30px 0;
+    }
+    
+    .tool-container {
+      background-color: var(--card-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    
+    .tool-description {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+    
+    .file-input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .file-input-label {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .file-input-label:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    #fileInput {
+      display: none;
+    }
+    
+    .file-name {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+    
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .primary-btn {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .primary-btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    .secondary-btn {
+      background-color: #6c757d;
+      color: white;
+    }
+    
+    .secondary-btn:hover {
+      background-color: #5a6268;
+      transform: translateY(-2px);
+    }
+    
+    #output {
+      white-space: pre-wrap;
+      background-color: var(--bg-color);
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      min-height: 200px;
+      max-height: 500px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      line-height: 1.5;
+    }
+    
+    .features-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .feature-card {
+      background-color: var(--card-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    
+    .feature-card h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    .blog-section {
+      margin-bottom: 30px;
+    }
+    
+    .blog-card {
+      background-color: var(--card-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    
+    .blog-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .blog-content {
+      padding: 20px;
+    }
+    
+    .blog-content h3 {
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .blog-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+    
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .copyright {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      nav {
+        margin-top: 15px;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      nav ul li {
+        margin: 5px 0;
+      }
+      
+      .button-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .button-group button {
+        width: 100%;
+      }
+      
+      .ad-container.top-ad {
+        max-width: 100%;
+      }
+    }
+    
+    @media (min-width: 992px) {
+      .main-container {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 30px;
+      }
+      
+      .ad-container.side-ad {
+        display: block;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+      }
+    }
+    
+    /* Loading spinner */
+    .spinner {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--primary-color);
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <a href="#" class="logo">PDF Text Extractor</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about-us.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact-us.html">Contact</a></li>
+          <button class="theme-toggle" id="themeToggle">🌓</button>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="main-container">
+      <div>
+        <div class="tool-container">
+          <h1>PDF Text Extractor Tool</h1>
+          <p class="tool-description">Extract text from your PDF files quickly and easily with our free online tool. No registration required.</p>
+          
+          <div class="file-input-container">
+            <label for="fileInput" class="file-input-label">Choose PDF File</label>
+            <input type="file" id="fileInput" accept="application/pdf" />
+            <div class="file-name" id="fileName">No file selected</div>
+          </div>
+          
+          <div class="spinner" id="spinner"></div>
+          
+          <div class="button-group">
+            <button class="primary-btn" onclick="copyText()">Copy Text</button>
+            <button class="primary-btn" onclick="downloadText()">Download as TXT</button>
+            <button class="secondary-btn" onclick="clearText()">Clear</button>
+          </div>
+          
+          <div id="output">Extracted text will appear here...</div>
+        </div>
+        
+        <section id="about" class="features-section">
+          <div class="feature-card">
+            <h3>How to Use</h3>
+            <p>1. Click "Choose PDF File" to select your PDF document<br>
+               2. Wait for the text extraction to complete<br>
+               3. Copy the text or download it as a .txt file</p>
+          </div>
+          <div class="feature-card">
+            <h3>Features</h3>
+            <p>✔ Extract text from any PDF file<br>
+               ✔ Preserves basic formatting<br>
+               ✔ Fast processing<br>
+               ✔ No file size limits<br>
+               ✔ 100% free to use</p>
+          </div>
+          <div class="feature-card">
+            <h3>Why Use Our Tool?</h3>
+            <p>Our PDF text extractor works entirely in your browser, meaning your files never leave your computer. This ensures complete privacy and security for your documents.</p>
+          </div>
+        </section>
+
+          <div class="ad-container top-ad">
+    <!-- Google AdSense Top Ad -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+          </div>
+        
+        <section id="blog" class="blog-section">
+          <h2>Latest Articles</h2>
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="PDF Tips" class="blog-image">
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span>June 15, 2023</span>
+                <span>5 min read</span>
+              </div>
+              <h3>10 Tips for Working with PDF Files</h3>
+              <p>Learn the best practices for managing, editing, and extracting content from PDF documents to improve your workflow...</p>
+            </div>
+          </div>
+          
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="OCR Technology" class="blog-image">
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span>May 28, 2023</span>
+                <span>7 min read</span>
+              </div>
+              <h3>The Evolution of OCR Technology</h3>
+              <p>Discover how optical character recognition has developed over the years and how it powers tools like our PDF text extractor...</p>
+            </div>
+          </div>
+        </section>
+        
+        <section id="faq" class="feature-card">
+          <h2>Frequently Asked Questions</h2>
+          <h3>Is this tool free to use?</h3>
+          <p>Yes, our PDF text extractor is completely free with no hidden charges or limitations.</p>
+          
+          <h3>Are my files secure?</h3>
+          <p>Absolutely! All processing happens in your browser. We don't upload your files to any server.</p>
+          
+          <h3>What's the maximum file size?</h3>
+          <p>There are no strict limits, but very large files may take longer to process depending on your device.</p>
+        </section>
+        
+        <section id="contact" class="feature-card">
+          <h2>Contact Us</h2>
+          <p>Have questions or feedback? We'd love to hear from you!</p>
+          <p>Email: contact@pdftextextractor.com</p>
+        </section>
+      </div>
+      
+      <div class="ad-container side-ad">
+        <!-- Google AdSense Sidebar Ad -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        
+        <!-- Additional content or ads can go here -->
+        <div class="feature-card" style="margin-top: 20px;">
+          <h3>Privacy Policy</h3>
+          <p>We respect your privacy. Our tool processes your PDF files entirely in your browser without uploading them to any server.</p>
+          <a href="#" style="color: var(--primary-color);">Read full policy</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="ad-container">
+    <!-- Google AdSense Bottom Ad -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+      <p class="copyright">© 2023 PDF Text Extractor Tool. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // PDF.js worker path
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    
+    const fileInput = document.getElementById("fileInput");
+    const output = document.getElementById("output");
+    const fileName = document.getElementById("fileName");
+    const spinner = document.getElementById("spinner");
+    const themeToggle = document.getElementById("themeToggle");
+    
+    // Theme toggle functionality
+    themeToggle.addEventListener("click", () => {
+      document.body.dataset.theme = document.body.dataset.theme === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", document.body.dataset.theme);
+    });
+    
+    // Check for saved theme preference
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.dataset.theme = "dark";
+    }
+    
+    fileInput.addEventListener("change", async function () {
+      const file = fileInput.files[0];
+      if (!file || file.type !== "application/pdf") {
+        alert("Please select a valid PDF file.");
+        return;
+      }
+      
+      fileName.textContent = file.name;
+      output.textContent = "Extracting text...";
+      spinner.style.display = "block";
+      
+      try {
+        const reader = new FileReader();
+        reader.onload = async function () {
+          try {
+            const typedArray = new Uint8Array(reader.result);
+            const pdf = await pdfjsLib.getDocument({ data: typedArray }).promise;
+            
+            let extractedText = "";
+            for (let i = 1; i <= pdf.numPages; i++) {
+              const page = await pdf.getPage(i);
+              const content = await page.getTextContent();
+              const strings = content.items.map(item => item.str);
+              extractedText += strings.join(" ") + "\n\n";
+            }
+            
+            output.textContent = extractedText.trim();
+          } catch (error) {
+            output.textContent = "Error extracting text: " + error.message;
+          } finally {
+            spinner.style.display = "none";
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      } catch (error) {
+        output.textContent = "Error: " + error.message;
+        spinner.style.display = "none";
+      }
+    });
+    
+    function copyText() {
+      const text = output.textContent;
+      if (!text || text === "Extracted text will appear here..." || text === "Extracting text...") {
+        return alert("No text to copy. Please extract text from a PDF first.");
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Text copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy text: " + err);
+      });
+    }
+    
+    function downloadText() {
+      const text = output.textContent;
+      if (!text || text === "Extracted text will appear here..." || text === "Extracting text...") {
+        return alert("No text to download. Please extract text from a PDF first.");
+      }
+      const blob = new Blob([text], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "extracted-text.txt";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    
+    function clearText() {
+      output.textContent = "Extracted text will appear here...";
+      fileInput.value = "";
+      fileName.textContent = "No file selected";
+    }
+    
+    // Mobile menu toggle (for smaller screens)
+    const mobileMenuBtn = document.createElement("button");
+    mobileMenuBtn.className = "mobile-menu-btn";
+    mobileMenuBtn.innerHTML = "☰";
+    mobileMenuBtn.style.display = "none";
+    document.querySelector(".header-container").prepend(mobileMenuBtn);
+    
+    const nav = document.querySelector("nav ul");
+    mobileMenuBtn.addEventListener("click", () => {
+      nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+    });
+    
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        mobileMenuBtn.style.display = "block";
+        nav.style.display = "none";
+      } else {
+        mobileMenuBtn.style.display = "none";
+        nav.style.display = "flex";
+      }
+    }
+    
+    window.addEventListener("resize", handleResize);
+    handleResize();
+  </script>
+</body>
+</html>

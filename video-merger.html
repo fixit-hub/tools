@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Merge your videos online with ease. Fast, responsive video merger tool with AdSense support and SEO optimized pages.">
+  <title>Online Video Merger Tool</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #f0f0f0;
+      --text-color: #333;
+      --primary-color: #007BFF;
+      --dark-bg: #121212;
+      --dark-text: #f0f0f0;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: var(--dark-bg);
+      --text-color: var(--dark-text);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    header, footer {
+      background: var(--primary-color);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      color: white;
+      text-decoration: none;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .upload-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .upload-box input {
+      margin: 1rem 0;
+    }
+
+    button {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .adsense-ad {
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .upload-box {
+        padding: 1rem;
+      }
+    }
+  </style>
+  <!-- Google AdSense Example -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <h1>Video Merger Tool</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about-us.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="contact-us.html">Contact</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+
+  <main class="container" id="home">
+    <section class="upload-box">
+      <h2>Merge Your Videos</h2>
+      <p>Upload two videos and click continue to merge them using Ezgif.</p>
+      <input type="file" id="video1" accept="video/*"><br>
+      <input type="file" id="video2" accept="video/*"><br>
+      <button onclick="redirectToEzgif()">Continue</button>
+    </section>
+
+    <div class="adsense-ad">
+      <!-- AdSense Ad Unit 1 -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXX"
+           data-ad-slot="1111111111"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <section id="about">
+      <h2>About Us</h2>
+      <p>We provide free, fast and secure tools for editing and merging videos online. No software installation required.</p>
+    </section>
+
+    <section id="blog">
+      <h2>Blog</h2>
+      <p>Coming soon: Tips and tricks on video editing, online tools, and content creation.</p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy Policy</h2>
+      <p>We respect your privacy. No uploaded video is stored or shared by us.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: support@example.com</p>
+    </section>
+
+    <section id="faq">
+      <h2>FAQ</h2>
+      <p><strong>Q: Is this tool free?</strong><br> A: Yes, 100% free to use.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Video Merger Tool. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function redirectToEzgif() {
+      const v1 = document.getElementById("video1").files[0];
+      const v2 = document.getElementById("video2").files[0];
+
+      if (!v1 || !v2) {
+        alert("Please upload both videos before continuing.");
+        return;
+      }
+
+      window.location.href = "https://ezgif.com/merge-videos";
+    }
+  </script>
+</body>
+  </html>
+  

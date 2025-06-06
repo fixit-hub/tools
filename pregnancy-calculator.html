@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pregnancy Calculator | Due Date Estimator & Gestation Tracker</title>
+  <meta name="description" content="Free advanced pregnancy calculator to estimate your due date, track gestation progress, and get week-by-week insights. Uses LMP or conception date for accurate results.">
+  <meta name="keywords" content="pregnancy calculator, due date calculator, gestation tracker, LMP calculator, conception date calculator, pregnancy week by week">
+  <meta name="author" content="Pregnancy Tools">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #8e44ad;
+      --secondary: #9b59b6;
+      --light: #f5f5f5;
+      --dark: #333;
+      --gray: #777;
+      --light-gray: #eee;
+      --white: #fff;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    .dark-mode {
+      --primary: #9b59b6;
+      --secondary: #8e44ad;
+      --light: #1a1a1a;
+      --dark: #f5f5f5;
+      --gray: #aaa;
+      --light-gray: #2a2a2a;
+      --white: #121212;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    header {
+      background-color: var(--white);
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 100;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav ul li a:hover {
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--dark);
+      cursor: pointer;
+    }
+
+    .ad-container {
+      margin: 20px 0;
+      text-align: center;
+      background-color: var(--white);
+      padding: 10px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+
+    .ad-container.top-ad {
+      margin-top: 30px;
+    }
+
+    .main-content {
+      padding: 30px 0;
+    }
+
+    .calculator-container {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .calculator-description {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--gray);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: var(--white);
+      color: var(--dark);
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: var(--white);
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    button.secondary {
+      background-color: var(--light-gray);
+      color: var(--dark);
+    }
+
+    button.secondary:hover {
+      background-color: #ddd;
+    }
+
+    .results {
+      display: none;
+      margin-top: 30px;
+      padding: 25px;
+      background-color: var(--light-gray);
+      border-radius: var(--border-radius);
+    }
+
+    .result-item {
+      margin-bottom: 15px;
+    }
+
+    .result-item strong {
+      color: var(--primary);
+    }
+
+    .progress-container {
+      margin: 20px 0;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #8e44ad, #9b59b6);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .progress-text {
+      text-align: center;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .action-buttons button {
+      flex: 1;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      border: none;
+      z-index: 99;
+    }
+
+    footer {
+      background-color: var(--white);
+      padding: 30px 0;
+      margin-top: 50px;
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+    }
+
+    .footer-column h3 {
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column ul li a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-column ul li a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--light-gray);
+      color: var(--gray);
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+        margin-top: 15px;
+        display: none;
+      }
+
+      nav.active {
+        display: block;
+      }
+
+      nav ul {
+        flex-direction: column;
+      }
+
+      nav ul li {
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .calculator-container {
+        padding: 20px;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .results {
+      animation: fadeIn 0.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">PregnancyCalc</a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about-us.html">About Us</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="contact-us.html">Contact Us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Top Ad -->
+    <div class="ad-container top-ad">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+           crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <main class="main-content">
+      <div class="calculator-container">
+        <h1>Pregnancy Calculator</h1>
+        
+        <div class="form-group">
+          <label for="method">Calculation Method:</label>
+          <select id="method">
+            <option value="lmp">Last Menstrual Period (LMP)</option>
+            <option value="conception">Conception Date</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dateInput" id="dateLabel">Date of Last Menstrual Period:</label>
+          <input type="date" id="dateInput">
+        </div>
+
+        <button id="calculateBtn" onclick="calculatePregnancy()">Calculate Pregnancy</button>
+        <button class="secondary" onclick="resetForm()">Reset</button>
+
+        <div class="results" id="results">
+          <div class="result-item">
+            <strong>Estimated Due Date:</strong> <span id="dueDate"></span>
+          </div>
+          <div class="result-item">
+            <strong>Gestational Age:</strong> <span id="gestAge"></span>
+          </div>
+          <div class="result-item">
+            <strong>Trimester:</strong> <span id="trimester"></span>
+          </div>
+          <div class="result-item">
+            <strong>Conception Date:</strong> <span id="conceptionDate"></span>
+          </div>
+          <div class="result-item">
+            <strong>Days Remaining:</strong> <span id="daysRemaining"></span>
+          </div>
+
+          <div class="progress-container">
+            <strong>Pregnancy Progress:</strong> <span id="progressText"></span>
+            <div class="progress-bar">
+              <div class="progress" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressPercentage"></div>
+          </div>
+
+          <div class="action-buttons">
+            <button onclick="downloadPDF()"><i class="fas fa-download"></i> Download PDF</button>
+            <button class="secondary" onclick="generateLink()"><i class="fas fa-share"></i> Share Results</button>
+          </div>
+
+          <div class="link-output" id="linkOutput"></div>
+        </div>
+      </div>
+
+      <!-- Middle Ad -->
+      <div class="ad-container">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+             crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <!-- Information Section -->
+      <div class="calculator-container" style="margin-top: 30px;">
+        <h2>About Pregnancy Calculator</h2>
+        <p>Our pregnancy calculator helps you estimate your due date based on either your last menstrual period (LMP) or conception date. The calculator uses the standard Naegele's rule for LMP calculation (280 days from LMP) or adds 266 days to the conception date.</p>
+        
+        <h3 style="margin-top: 20px;">How It Works</h3>
+        <ul style="padding-left: 20px; margin-top: 10px;">
+          <li><strong>LMP Method:</strong> Adds 280 days (40 weeks) to your last menstrual period date</li>
+          <li><strong>Conception Method:</strong> Adds 266 days (38 weeks) to your conception date</li>
+          <li>Trimester breakdown: 1st (weeks 1-12), 2nd (weeks 13-27), 3rd (week 28+)</li>
+        </ul>
+        
+        <h3 style="margin-top: 20px;">Important Notes</h3>
+        <p>This calculator provides estimates only. Always consult with your healthcare provider for medical advice. Only about 5% of women deliver on their exact due date - most deliver within two weeks before or after.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bottom Ad -->
+  <div class="container">
+    <div class="ad-container">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+           crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pregnancy-calculator.html">Pregnancy Calculator</a></li>
+            <li><a href="ovulation-calculator.html">Ovulation Calculator</a></li>
+            <li><a href="baby-names.html">Baby Names</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="pregnancy-week-by-week.html">Pregnancy Week by Week</a></li>
+            <li><a href="due-date-calendar.html">Due Date Calendar</a></li>
+            <li><a href="pregnancy-symptoms.html">Pregnancy Symptoms</a></li>
+            <li><a href="baby-development.html">Baby Development</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact-us.html">Help Center</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="contact-us.html">Report an Issue</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2023 PregnancyCalc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="theme-toggle" id="themeToggle">🌓</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+      document.getElementById('mainNav').classList.toggle('active');
+    });
+
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+    }
+
+    // Update date label based on method selection
+    document.getElementById('method').addEventListener('change', function() {
+      const method = this.value;
+      document.getElementById('dateLabel').textContent = method === 'lmp' 
+        ? 'Date of Last Menstrual Period:' 
+        : 'Date of Conception:';
+    });
+
+    function calculatePregnancy() {
+      const method = document.getElementById("method").value;
+      const inputDate = document.getElementById("dateInput").value;
+      
+      if (!inputDate) {
+        alert("Please select a date to calculate.");
+        return;
+      }
+
+      const baseDate = new Date(inputDate);
+      const conceptionDate = method === "lmp" 
+        ? new Date(baseDate.getTime() + 14 * 24 * 60 * 60 * 1000) 
+        : baseDate;
+      
+      const lmpDate = method === "lmp" 
+        ? baseDate 
+        : new Date(baseDate.getTime() - 14 * 24 * 60 * 60 * 1000);
+      
+      const dueDate = new Date(lmpDate.getTime() + 280 * 24 * 60 * 60 * 1000);
+      const today = new Date();
+      const diffMs = today - lmpDate;
+      const daysPassed = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const weeks = Math.floor(daysPassed / 7);
+      const days = daysPassed % 7;
+
+      let trimester = "3rd Trimester";
+      if (weeks < 13) trimester = "1st Trimester";
+      else if (weeks < 27) trimester = "2nd Trimester";
+
+      const progressPercent = Math.min((daysPassed / 280) * 100, 100).toFixed(1);
+      const remaining = Math.max(280 - daysPassed, 0);
+
+      // Format dates nicely
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      
+      document.getElementById("dueDate").textContent = dueDate.toLocaleDateString('en-US', options);
+      document.getElementById("gestAge").textContent = `${weeks} weeks and ${days} days (${weeks+1} weeks)`;
+      document.getElementById("trimester").textContent = trimester;
+      document.getElementById("conceptionDate").textContent = conceptionDate.toLocaleDateString('en-US', options);
+      document.getElementById("daysRemaining").textContent = `${remaining} days (${Math.ceil(remaining/7)} weeks)`;
+      document.getElementById("progressText").textContent = `${progressPercent}% of pregnancy completed`;
+      document.getElementById("progressPercentage").textContent = `${progressPercent}%`;
+      document.getElementById("progressBar").style.width = `${progressPercent}%`;
+
+      // Show results with animation
+      document.getElementById("results").style.display = "block";
+      document.getElementById("linkOutput").textContent = "";
+    }
+
+    function resetForm() {
+      document.getElementById("dateInput").value = "";
+      document.getElementById("results").style.display = "none";
+      document.getElementById("linkOutput").textContent = "";
+    }
+
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      // Add logo
+      doc.setFontSize(22);
+      doc.setTextColor(142, 68, 173);
+      doc.text("PregnancyCalc", 105, 20, null, null, 'center');
+      
+      // Add title
+      doc.setFontSize(16);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Pregnancy Calculator Report", 105, 30, null, null, 'center');
+      
+      // Add current date
+      doc.setFontSize(10);
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 38, null, null, 'center');
+      
+      // Add line
+      doc.setDrawColor(142, 68, 173);
+      doc.setLineWidth(0.5);
+      doc.line(20, 42, 190, 42);
+      
+      // Add results
+      doc.setFontSize(12);
+      let yPosition = 50;
+      
+      const addResultLine = (label, value) => {
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${label}:`, 20, yPosition);
+        doc.setFont('helvetica', 'normal');
+        doc.text(value, 70, yPosition);
+        yPosition += 8;
+      };
+      
+      addResultLine("Estimated Due Date", document.getElementById("dueDate").textContent);
+      addResultLine("Gestational Age", document.getElementById("gestAge").textContent);
+      addResultLine("Trimester", document.getElementById("trimester").textContent);
+      addResultLine("Conception Date", document.getElementById("conceptionDate").textContent);
+      addResultLine("Days Remaining", document.getElementById("daysRemaining").textContent);
+      addResultLine("Progress", document.getElementById("progressText").textContent);
+      
+      // Add progress bar
+      yPosition += 10;
+      doc.setFillColor(224, 224, 224);
+      doc.rect(20, yPosition, 170, 8, 'F');
+      doc.setFillColor(142, 68, 173);
+      const progressPercent = parseFloat(document.getElementById("progressPercentage").textContent);
+      doc.rect(20, yPosition, 170 * (progressPercent/100), 8, 'F');
+      
+      // Add footer
+      yPosition = 280;
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.text("This report was generated by PregnancyCalc.com - For informational purposes only", 105, yPosition, null, null, 'center');
+      
+      doc.save("Pregnancy_Report.pdf");
+    }
+
+    function generateLink() {
+      const date = document.getElementById("dateInput").value;
+      const method = document.getElementById("method").value;
+      
+      if (!date) {
+        alert("Please calculate results first before generating a shareable link.");
+        return;
+      }
+      
+      const url = `${window.location.origin}${window.location.pathname}?date=${date}&method=${method}`;
+      
+      navigator.clipboard.writeText(url).then(() => {
+        const linkOutput = document.getElementById("linkOutput");
+        linkOutput.innerHTML = `<div style="margin-top: 15px; padding: 10px; background: rgba(142, 68, 173, 0.1); border-radius: 5px;">
+          <p style="margin-bottom: 5px;">Link copied to clipboard!</p>
+          <a href="${url}" style="color: var(--primary); word-break: break-all;">${url}</a>
+        </div>`;
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        document.getElementById("linkOutput").textContent = "Could not copy link. Please try again.";
+      });
+    }
+
+    // Load data from URL if present
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('date')) {
+        document.getElementById('dateInput').value = params.get('date');
+        document.getElementById('method').value = params.get('method') || 'lmp';
+        calculatePregnancy();
+      }
+    });
+
+    // Update method label on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const method = document.getElementById("method").value;
+      document.getElementById("dateLabel").textContent = method === 'lmp' 
+        ? 'Date of Last Menstrual Period:' 
+        : 'Date of Conception:';
+    });
+  </script>
+</body>
+</html>

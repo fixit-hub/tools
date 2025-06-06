@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Free online tool to rotate PDF pages. Easily rotate selected pages in your PDF documents with preview functionality.">
+  <meta name="keywords" content="PDF rotator, rotate PDF, PDF tool, PDF editor, online PDF tool">
+  <meta name="author" content="PDF Tools">
+  <title>PDF Rotator Tool | Rotate PDF Pages Online with Preview</title>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --accent-color: #4895ef;
+      --text-color: #2b2d42;
+      --bg-color: #f8f9fa;
+      --card-color: #ffffff;
+      --border-color: #e9ecef;
+      --error-color: #e63946;
+      --success-color: #2a9d8f;
+      --dark-text: #2b2d42;
+      --dark-bg: #121212;
+      --dark-card: #1e1e1e;
+      --dark-border: #333;
+      --dark-text-color: #f8f9fa;
+    }
+
+    [data-theme="dark"] {
+      --text-color: #f8f9fa;
+      --bg-color: #121212;
+      --card-color: #1e1e1e;
+      --border-color: #333;
+      --dark-text: #f8f9fa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: white;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.3s;
+    }
+
+    nav ul li a:hover {
+      opacity: 0.8;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    main {
+      padding: 2rem 0;
+    }
+
+    .tool-container {
+      background-color: var(--card-color);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .tool-header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+
+    .tool-header p {
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+
+    /* AdSense Styles */
+    .ad-container {
+      margin: 1.5rem 0;
+      text-align: center;
+      padding: 1rem;
+      background-color: var(--card-color);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .ad-label {
+      font-size: 0.8rem;
+      color: var(--text-color);
+      opacity: 0.6;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    input[type="file"], select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background-color: var(--card-color);
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+
+    input[type="file"] {
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      text-align: center;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #downloadLink {
+      display: none;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--success-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    #downloadLink:hover {
+      background-color: #21867a;
+    }
+
+    #errorMsg {
+      color: var(--error-color);
+      font-weight: 500;
+      margin: 1rem 0;
+      text-align: center;
+      padding: 0.8rem;
+      background-color: rgba(230, 57, 70, 0.1);
+      border-radius: 6px;
+    }
+
+    /* PDF Preview */
+    #pdfPreviewContainer {
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    #pdfPreview {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      max-width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      background-color: white;
+    }
+
+    .preview-label {
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 2rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul li a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      opacity: 0.8;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav ul {
+        margin-top: 1rem;
+        justify-content: center;
+      }
+
+      nav ul li {
+        margin: 0 0.5rem;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tool-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .tool-container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <a href="#" class="logo">PDF Tools</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about-us.html">About Us</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="contact-us.html">Contact Us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li>
+            <button class="theme-toggle" id="themeToggle">
+              <i class="fas fa-moon"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Top AdSense Banner -->
+    <div class="ad-container">
+      <span class="ad-label">Advertisement</span>
+      <!-- Replace with your AdSense code -->
+      <div id="top-ad">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+          crossorigin="anonymous"></script>
+        <!-- Top Banner Ad -->
+        <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+          data-ad-slot="YOUR_AD_SLOT_ID"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </div>
+
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1>Rotate PDF Tool with Preview</h1>
+      </div>
+
+      <div class="form-group">
+        <label for="pdfFile">Upload PDF File</label>
+        <input type="file" id="pdfFile" accept="application/pdf" />
+      </div>
+
+      <div class="form-group">
+        <label for="pageSelect">Select Page to Rotate</label>
+        <select id="pageSelect" disabled>
+          <option value="">Please upload a PDF first</option>
+        </select>
+      </div>
+
+      <div class="btn-group">
+        <button id="rotate90Btn" class="btn" disabled>
+          <i class="fas fa-redo"></i> Rotate 90°
+        </button>
+        <button id="rotate180Btn" class="btn" disabled>
+          <i class="fas fa-sync"></i> Rotate 180°
+        </button>
+        <button id="rotate270Btn" class="btn" disabled>
+          <i class="fas fa-undo"></i> Rotate 270°
+        </button>
+      </div>
+
+      <div id="errorMsg"></div>
+
+      <a id="downloadLink" href="#" download="rotated.pdf">
+        <i class="fas fa-download"></i> Download Rotated PDF
+      </a>
+
+      <div id="pdfPreviewContainer">
+        <p class="preview-label">Page Preview</p>
+        <canvas id="pdfPreview" width="400" height="500"></canvas>
+      </div>
+    </div>
+
+    <!-- Middle AdSense Banner -->
+    <div class="ad-container">
+      <span class="ad-label">Advertisement</span>
+      <!-- Replace with your AdSense code -->
+      <div id="middle-ad">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+          crossorigin="anonymous"></script>
+        <!-- Middle Rectangle Ad -->
+        <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+          data-ad-slot="YOUR_AD_SLOT_ID"
+          data-ad-format="rectangle"
+          data-full-width-responsive="true"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </div>
+
+    <!-- Blog/Article Section -->
+    <div class="tool-container">
+      <h2>Latest Articles</h2>
+      <div class="article-grid">
+        <article class="article-card">
+          <img src="https://via.placeholder.com/800x450?text=PDF+Tips" alt="PDF Tips" class="article-image">
+          <h3>5 Ways to Edit PDF Files Online for Free</h3>
+          <p>Discover the best free online tools for editing your PDF documents without installing any software.</p>
+          <a href="#" class="btn">Read More</a>
+        </article>
+        
+        <article class="article-card">
+          <img src="https://via.placeholder.com/800x450?text=PDF+Guide" alt="PDF Guide" class="article-image">
+          <h3>How to Rotate PDF Pages Properly</h3>
+          <p>Learn the correct way to rotate pages in PDF documents for optimal viewing and printing.</p>
+          <a href="#" class="btn">Read More</a>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-container">
+      <div class="footer-section">
+        <h3>PDF Tools</h3>
+        <p>Your one-stop solution for all PDF editing needs online.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="pdf-rotator.html">PDF Rotator</a></li>
+          <li><a href="pdf-merger.html">PDF Merger</a></li>
+          <li><a href="pdf-compressor.html">PDF Compressor</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about-us.html">About Us</a></li>
+          <li><a href="contact-us.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact-us.html">Help Center</a></li>
+          <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2023 PDF Tools. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+    
+    themeToggle.addEventListener('click', () => {
+      document.body.setAttribute('data-theme', 
+        document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      
+      if (document.body.getAttribute('data-theme') === 'dark') {
+        icon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+      }
+    });
+
+    // Original PDF Tool Functionality
+    const pdfFileInput = document.getElementById('pdfFile');
+    const pageSelect = document.getElementById('pageSelect');
+    const rotate90Btn = document.getElementById('rotate90Btn');
+    const rotate180Btn = document.getElementById('rotate180Btn');
+    const rotate270Btn = document.getElementById('rotate270Btn');
+    const downloadLink = document.getElementById('downloadLink');
+    const errorMsg = document.getElementById('errorMsg');
+    const pdfPreviewCanvas = document.getElementById('pdfPreview');
+    const ctx = pdfPreviewCanvas.getContext('2d');
+
+    let pdfDocLib = null;
+    let pdfJsDoc = null;
+    let originalPdfBytes = null;
+    let currentPageIndex = 0;
+
+    function setRotateButtonsState(enabled) {
+      rotate90Btn.disabled = !enabled;
+      rotate180Btn.disabled = !enabled;
+      rotate270Btn.disabled = !enabled;
+    }
+
+    async function renderPage(pageIndex) {
+      if (!pdfJsDoc) return;
+
+      const page = await pdfJsDoc.getPage(pageIndex + 1);
+      const viewport = page.getViewport({ scale: 1 });
+
+      ctx.clearRect(0, 0, pdfPreviewCanvas.width, pdfPreviewCanvas.height);
+
+      const scale = 400 / viewport.width;
+      const scaledViewport = page.getViewport({ scale });
+
+      pdfPreviewCanvas.width = scaledViewport.width;
+      pdfPreviewCanvas.height = scaledViewport.height;
+
+      let rotationAngle = 0;
+      if (pdfDocLib) {
+        const libPage = pdfDocLib.getPage(pageIndex);
+        rotationAngle = libPage.getRotation().angle || 0;
+      }
+
+      const rotatedViewport = page.getViewport({ scale, rotation: rotationAngle });
+
+      pdfPreviewCanvas.width = rotatedViewport.width;
+      pdfPreviewCanvas.height = rotatedViewport.height;
+
+      const renderContext = {
+        canvasContext: ctx,
+        viewport: rotatedViewport,
+      };
+
+      await page.render(renderContext).promise;
+    }
+
+    pdfFileInput.addEventListener('change', async (e) => {
+      errorMsg.textContent = '';
+      downloadLink.style.display = 'none';
+      pageSelect.innerHTML = '';
+      setRotateButtonsState(false);
+
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (file.type !== 'application/pdf') {
+        errorMsg.textContent = 'Please upload a valid PDF file.';
+        return;
+      }
+
+      try {
+        originalPdfBytes = await file.arrayBuffer();
+
+        pdfDocLib = await PDFLib.PDFDocument.load(originalPdfBytes);
+        pdfJsDoc = await pdfjsLib.getDocument({data: originalPdfBytes}).promise;
+
+        pageSelect.innerHTML = '';
+        const pageCount = pdfDocLib.getPageCount();
+        for (let i = 0; i < pageCount; i++) {
+          const option = document.createElement('option');
+          option.value = i;
+          option.textContent = `Page ${i + 1}`;
+          pageSelect.appendChild(option);
+        }
+
+        pageSelect.disabled = false;
+        setRotateButtonsState(true);
+        errorMsg.textContent = '';
+        currentPageIndex = 0;
+        pageSelect.value = 0;
+        await renderPage(currentPageIndex);
+      } catch (err) {
+        errorMsg.textContent = 'Error loading PDF: ' + err.message;
+        pageSelect.disabled = true;
+        setRotateButtonsState(false);
+      }
+    });
+
+    pageSelect.addEventListener('change', async () => {
+      currentPageIndex = parseInt(pageSelect.value);
+      errorMsg.textContent = '';
+      downloadLink.style.display = 'none';
+      await renderPage(currentPageIndex);
+    });
+
+    async function rotateSelectedPage(degreesToAdd) {
+      errorMsg.textContent = '';
+      downloadLink.style.display = 'none';
+
+      if (!pdfDocLib) {
+        errorMsg.textContent = 'Load a PDF file first.';
+        return;
+      }
+
+      const pageIndex = currentPageIndex;
+      if (isNaN(pageIndex) || pageIndex < 0 || pageIndex >= pdfDocLib.getPageCount()) {
+        errorMsg.textContent = 'Invalid page selected.';
+        return;
+      }
+
+      try {
+        const page = pdfDocLib.getPage(pageIndex);
+        const currentRotation = page.getRotation().angle;
+        const newRotation = (currentRotation + degreesToAdd) % 360;
+        page.setRotation(PDFLib.degrees(newRotation));
+
+        const rotatedPdfBytes = await pdfDocLib.save();
+        pdfJsDoc = await pdfjsLib.getDocument({data: rotatedPdfBytes}).promise;
+        await renderPage(pageIndex);
+
+        const blob = new Blob([rotatedPdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.style.display = 'block';
+      } catch (err) {
+        errorMsg.textContent = 'Rotation failed: ' + err.message;
+      }
+    }
+
+    rotate90Btn.addEventListener('click', () => rotateSelectedPage(90));
+    rotate180Btn.addEventListener('click', () => rotateSelectedPage(180));
+    rotate270Btn.addEventListener('click', () => rotateSelectedPage(270));
+  </script>
+</body>
+</html>

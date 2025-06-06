@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Frequently Asked Questions (FAQ) page for FixitHub website, providing answers to common queries." />
+  <title>FAQ | FixitHub</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      color: #222;
+      line-height: 1.6;
+    }
+    header, footer {
+      background-color: #222;
+      color: #eee;
+      text-align: center;
+      padding: 1rem;
+    }
+    nav a {
+      color: #eee;
+      margin: 0 12px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #111;
+      margin-bottom: 1rem;
+    }
+    .faq-item {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 1rem;
+    }
+    .faq-question {
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      padding-right: 20px;
+    }
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+    .faq-question.active::after {
+      content: '−';
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      margin-top: 0.5rem;
+      color: #555;
+    }
+    .faq-answer.open {
+      max-height: 500px;
+    }
+    .adsense {
+      margin: 2rem 0;
+      text-align: center;
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #ddd;
+      }
+      main {
+        background-color: #1c1c1c;
+      }
+      h1 {
+        color: #fff;
+      }
+      header, footer {
+        background-color: #111;
+        color: #ddd;
+      }
+      nav a {
+        color: #ddd;
+      }
+      .faq-answer {
+        color: #aaa;
+      }
+      .faq-item {
+        border-color: #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FixitHub</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about-us.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="cookie-policy.html">Cookie Policy</a>
+      <a href="contact-us.html">Contact</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Frequently Asked Questions (FAQ)</h1>
+
+    <div class="faq-item">
+      <div class="faq-question">What is FixitHub?</div>
+      <div class="faq-answer">
+        FixitHub is a multi-tool website offering a wide range of online utilities and tools for your convenience.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Are the tools on FixitHub free to use?</div>
+      <div class="faq-answer">
+        Yes, most of the tools on FixitHub are completely free to use. Some advanced features may require registration or a subscription.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Do I need to create an account to use the tools?</div>
+      <div class="faq-answer">
+        No, you can use many tools without an account. However, signing up allows you to save preferences and access additional features.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Is my data safe on FixitHub?</div>
+      <div class="faq-answer">
+        We take your privacy seriously. Please review our <a href="privacy.html">Privacy Policy</a> to learn how we handle your data.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How can I contact FixitHub for support?</div>
+      <div class="faq-answer">
+        You can reach out to us via the <a href="contact.html">Contact Us</a> page. We'll be happy to assist you.
+      </div>
+    </div>
+
+    <div class="adsense">
+      <!-- Google AdSense Ad Placeholder -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
+              crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXX"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 FixitHub. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const isOpen = answer.classList.contains('open');
+        // Close all answers
+        document.querySelectorAll('.faq-answer').forEach(ans => ans.classList.remove('open'));
+        document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('active'));
+        // Toggle clicked
+        if (!isOpen) {
+          answer.classList.add('open');
+          question.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

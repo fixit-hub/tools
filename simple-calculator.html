@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced online calculator with scientific functions, dark/light mode, and responsive design. Perfect for students, professionals, and everyday calculations.">
+    <meta name="keywords" content="calculator, online calculator, scientific calculator, math tool, web calculator">
+    <meta name="author" content="Calculator Pro">
+    <meta name="theme-color" content="#4a90e2">
+    <title>Pro Calculator | Advanced Online Calculation Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --clr-bg-light: #f8f9fa;
+            --clr-bg-dark: #1a1a2e;
+            --clr-primary: #4a90e2;
+            --clr-primary-dark: #357ABD;
+            --clr-secondary: #6c757d;
+            --clr-accent: #ff6b6b;
+            --clr-accent-dark: #e65555;
+            --clr-text-light: #212529;
+            --clr-text-dark: #f8f9fa;
+            --clr-card-light: #ffffff;
+            --clr-card-dark: #16213e;
+            --clr-btn-num: #e9ecef;
+            --clr-btn-num-hover: #dee2e6;
+            --clr-btn-op: #4a90e2;
+            --clr-btn-op-hover: #3a70c2;
+            --clr-btn-fn: #6c757d;
+            --clr-btn-fn-hover: #5a6268;
+            --clr-btn-equals: #28a745;
+            --clr-btn-equals-hover: #218838;
+            --clr-border-light: #dee2e6;
+            --clr-border-dark: #2d3748;
+            --clr-ad-bg: #f1f3f5;
+            --clr-ad-bg-dark: #2d3748;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--clr-bg-light);
+            color: var(--clr-text-light);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        body.dark {
+            background-color: var(--clr-bg-dark);
+            color: var(--clr-text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--clr-primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        nav a:hover {
+            opacity: 0.9;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Ad Banner */
+        .ad-banner {
+            background-color: var(--clr-ad-bg);
+            padding: 0.5rem;
+            text-align: center;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--clr-border-light);
+            transition: var(--transition);
+        }
+
+        body.dark .ad-banner {
+            background-color: var(--clr-ad-bg-dark);
+            border-color: var(--clr-border-dark);
+        }
+
+        .ad-banner.top {
+            margin-top: 1rem;
+        }
+
+        .ad-banner.bottom {
+            margin-bottom: 1rem;
+        }
+
+        .ad-placeholder {
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--clr-secondary);
+        }
+
+        body.dark .ad-placeholder {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        @media (min-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr 300px;
+            }
+        }
+
+        /* Calculator Styles */
+        .calculator-section {
+            order: 1;
+        }
+
+        #calculator {
+            background-color: var(--clr-card-light);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        body.dark #calculator {
+            background-color: var(--clr-card-dark);
+        }
+
+        .calculator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--clr-primary);
+        }
+
+        .display {
+            background-color: inherit;
+            color: inherit;
+            min-height: 100px;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            text-align: right;
+            font-weight: 500;
+            border: 1px solid var(--clr-border-light);
+            transition: var(--transition);
+        }
+
+        body.dark .display {
+            border-color: var(--clr-border-dark);
+        }
+
+        .expression {
+            font-size: 1.1rem;
+            color: var(--clr-secondary);
+            min-height: 24px;
+            word-wrap: break-word;
+            opacity: 0.8;
+        }
+
+        body.dark .expression {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .result {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            word-wrap: break-word;
+            margin-top: 0.5rem;
+        }
+
+        #buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+        }
+
+        button {
+            font-size: 1.3rem;
+            padding: 1rem 0;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: 3px solid var(--clr-primary);
+            outline-offset: 2px;
+        }
+
+        /* Button Styles */
+        .btn-num {
+            background-color: var(--clr-btn-num);
+            color: var(--clr-text-light);
+        }
+
+        .btn-num:hover {
+            background-color: var(--clr-btn-num-hover);
+        }
+
+        .btn-op {
+            background-color: var(--clr-btn-op);
+            color: white;
+        }
+
+        .btn-op:hover {
+            background-color: var(--clr-btn-op-hover);
+        }
+
+        .btn-fn {
+            background-color: var(--clr-btn-fn);
+            color: white;
+        }
+
+        .btn-fn:hover {
+            background-color: var(--clr-btn-fn-hover);
+        }
+
+        .btn-equals {
+            background-color: var(--clr-btn-equals);
+            color: white;
+        }
+
+        .btn-equals:hover {
+            background-color: var(--clr-btn-equals-hover);
+        }
+
+        /* Wide buttons */
+        .btn-wide {
+            grid-column: span 2;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--clr-text-light);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        body.dark .theme-toggle {
+            color: var(--clr-text-dark);
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            order: 2;
+        }
+
+        .sidebar-card {
+            background-color: var(--clr-card-light);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        body.dark .sidebar-card {
+            background-color: var(--clr-card-dark);
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--clr-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-title i {
+            font-size: 1.3rem;
+        }
+
+        .article-list {
+            list-style: none;
+        }
+
+        .article-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--clr-border-light);
+            transition: var(--transition);
+        }
+
+        body.dark .article-item {
+            border-bottom-color: var(--clr-border-dark);
+        }
+
+        .article-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .article-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        .article-link:hover {
+            color: var(--clr-primary);
+        }
+
+        .article-img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .article-content {
+            flex: 1;
+        }
+
+        .article-title {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .article-meta {
+            font-size: 0.8rem;
+            color: var(--clr-secondary);
+        }
+
+        /* FAQ Styles */
+        .faq-item {
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--clr-primary);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--clr-primary);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--clr-primary);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                transition: var(--transition);
+                z-index: 99;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 3;
+            }
+
+            #calculator {
+                max-width: 100%;
+            }
+
+            button {
+                padding: 0.8rem 0;
+                font-size: 1.1rem;
+            }
+
+            .result {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            button {
+                padding: 0.7rem 0;
+                font-size: 1rem;
+            }
+
+            .result {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Icons (using Unicode characters as fallback) */
+        .icon-calculator::before { content: "🧮"; }
+        .icon-article::before { content: "📝"; }
+        .icon-faq::before { content: "❓"; }
+        .icon-sun::before { content: "☀️"; }
+        .icon-moon::before { content: "🌙"; }
+        .icon-menu::before { content: "☰"; }
+        .icon-close::before { content: "✕"; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <span class="icon-calculator"></span>
+                <span>Pro Calculator</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span class="icon-menu" id="menuIcon"></span>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about-us.html">About</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact-us.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Top Ad Banner -->
+    <div class="container">
+        <div class="ad-banner top">
+            <div class="ad-placeholder">
+                <!-- Google AdSense Ad Unit -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                    crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                    data-ad-slot="1234567890"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container main-content">
+        <!-- Calculator Section -->
+        <section class="calculator-section fade-in">
+            <div id="calculator" role="application" aria-label="Advanced Calculator">
+                <div class="calculator-header">
+                    <h2 class="calculator-title">Scientific Calculator</h2>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <span class="icon-sun" id="themeIcon"></span>
+                        <span id="themeText">Dark Mode</span>
+                    </button>
+                </div>
+                <div class="display" aria-live="polite" aria-atomic="true">
+                    <div class="expression" id="expression" aria-label="Calculation expression"></div>
+                    <div class="result" id="result" aria-label="Calculation result">0</div>
+                </div>
+                <div id="buttons" role="group" aria-label="Calculator buttons">
+                    <button class="btn-fn" id="clear" aria-label="Clear input">AC</button>
+                    <button class="btn-fn" id="delete" aria-label="Delete last character">⌫</button>
+                    <button class="btn-fn" id="percent" aria-label="Percentage">%</button>
+                    <button class="btn-op" data-op="÷" aria-label="Divide">÷</button>
+
+                    <button class="btn-num" data-num="7" aria-label="Number 7">7</button>
+                    <button class="btn-num" data-num="8" aria-label="Number 8">8</button>
+                    <button class="btn-num" data-num="9" aria-label="Number 9">9</button>
+                    <button class="btn-op" data-op="×" aria-label="Multiply">×</button>
+
+                    <button class="btn-num" data-num="4" aria-label="Number 4">4</button>
+                    <button class="btn-num" data-num="5" aria-label="Number 5">5</button>
+                    <button class="btn-num" data-num="6" aria-label="Number 6">6</button>
+                    <button class="btn-op" data-op="−" aria-label="Subtract">−</button>
+
+                    <button class="btn-num" data-num="1" aria-label="Number 1">1</button>
+                    <button class="btn-num" data-num="2" aria-label="Number 2">2</button>
+                    <button class="btn-num" data-num="3" aria-label="Number 3">3</button>
+                    <button class="btn-op" data-op="+" aria-label="Add">+</button>
+
+                    <button class="btn-fn" id="negate" aria-label="Toggle positive or negative">±</button>
+                    <button class="btn-num" data-num="0" aria-label="Number 0">0</button>
+                    <button class="btn-num" id="decimal" aria-label="Decimal point">.</button>
+                    <button class="btn-equals" id="equals" aria-label="Equals">=</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sidebar -->
+        <aside class="sidebar fade-in">
+            <!-- Popular Articles -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><span class="icon-article"></span> Popular Articles</h3>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="#" class="article-link">
+                            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Math formulas" class="article-img">
+                            <div class="article-content">
+                                <h4 class="article-title">10 Tips for Faster Mental Math Calculations</h4>
+                                <p class="article-meta">3 days ago</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="article-item">
+                        <a href="#" class="article-link">
+                            <img src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Calculator" class="article-img">
+                            <div class="article-content">
+                                <h4 class="article-title">The History of Calculators: From Abacus to Digital</h4>
+                                <p class="article-meta">1 week ago</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="article-item">
+                        <a href="#" class="article-link">
+                            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Student studying" class="article-img">
+                            <div class="article-content">
+                                <h4 class="article-title">How to Use a Scientific Calculator for Advanced Math</h4>
+                                <p class="article-meta">2 weeks ago</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sidebar Ad -->
+            <div class="sidebar-card ad-banner">
+                <div class="ad-placeholder">
+                    <!-- Google AdSense Ad Unit -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                        crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                        data-ad-slot="0987654321"
+                        data-ad-format="rectangle"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><span class="icon-faq"></span> Quick FAQ</h3>
+                <div class="faq-item">
+                    <h4 class="faq-question">How do I use the memory functions?</h4>
+                    <p>Our calculator supports basic operations. For advanced memory functions, consider upgrading to our Pro version.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 class="faq-question">Is this calculator free to use?</h4>
+                    <p>Yes, our basic calculator is completely free with no hidden charges.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 class="faq-question">Can I use this on my mobile device?</h4>
+                    <p>Absolutely! Our calculator is fully responsive and works on all devices.</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Bottom Ad Banner -->
+    <div class="container">
+        <div class="ad-banner bottom">
+            <div class="ad-placeholder">
+                <!-- Google AdSense Ad Unit -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                    crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                    data-ad-slot="1122334455"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-col">
+                <h3>Pro Calculator</h3>
+                <p>Your advanced online calculation tool for everyday use and professional needs.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><span>FB</span></a>
+                    <a href="#" aria-label="Twitter"><span>TW</span></a>
+                    <a href="#" aria-label="Instagram"><span>IG</span></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact-us.html">Help Center</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                </ul>
+            </div>
+        <div class="container copyright">
+            <p>&copy; 2023 Pro Calculator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function(){
+            "use strict";
+
+            // DOM Elements
+            const expressionEl = document.getElementById('expression');
+            const resultEl = document.getElementById('result');
+            const buttons = document.getElementById('buttons');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            const body = document.body;
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            const menuIcon = document.getElementById('menuIcon');
+
+            // State variables
+            let expression = '';
+            let lastInput = '';
+            let justCalculated = false;
+
+            // Map operator symbols to JS eval-friendly
+            const opMap = {
+                '×': '*',
+                '÷': '/',
+                '−': '-',
+                '+': '+'
+            };
+
+            // Helper to sanitize expression for eval
+            function sanitizeExpression(expr) {
+                // Replace custom operators with JS operators
+                let sanitized = expr.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+                // Remove trailing operators
+                while (sanitized.length > 0 && /[\+\-\*\/\.]$/.test(sanitized)) {
+                    sanitized = sanitized.slice(0, -1);
+                }
+                return sanitized;
+            }
+
+            // Evaluate expression safely
+            function evaluateExpression(expr) {
+                try {
+                    const sanitized = sanitizeExpression(expr);
+                    if (sanitized === '') return '0';
+                    let val = Function(`"use strict"; return (${sanitized})`)();
+                    if (val === Infinity || val === -Infinity) return 'Error: Division by zero';
+                    if (isNaN(val)) return 'Error';
+                    // Limit decimal places to 8 digits max
+                    if (typeof val === 'number') {
+                        val = Math.round((val + Number.EPSILON) * 1e8) / 1e8;
+                    }
+                    return val.toString();
+                } catch {
+                    return 'Error';
+                }
+            }
+
+            // Update display
+            function updateDisplay() {
+                expressionEl.textContent = expression || '0';
+                const evalResult = evaluateExpression(expression);
+                if (evalResult === 'Error' || evalResult.startsWith('Error')) {
+                    resultEl.textContent = evalResult;
+                } else {
+                    resultEl.textContent = evalResult;
+                }
+            }
+
+            // Check if last char is operator
+            function endsWithOperator(str) {
+                return /[\+\-\*\/]$/.test(str);
+            }
+
+            // Handle number input
+            function inputNumber(num) {
+                if (justCalculated) {
+                    expression = num;
+                    justCalculated = false;
+                } else {
+                    // Prevent leading zeroes like 00, but allow 0 after operator
+                    if(expression === '0') {
+                        expression = num;
+                    } else {
+                        expression += num;
+                    }
+                }
+                lastInput = 'num';
+                updateDisplay();
+            }
+
+            // Handle operator input
+            function inputOperator(op) {
+                if (expression === '' && op !== '-') return; // Can't start with +,*,/ but can with -
+
+                if (justCalculated) {
+                    justCalculated = false;
+                }
+
+                // Replace last operator if exists
+                if (endsWithOperator(expression)) {
+                    expression = expression.slice(0, -1) + op;
+                } else {
+                    expression += op;
+                }
+                lastInput = 'op';
+                updateDisplay();
+            }
+
+            // Handle decimal point
+            function inputDecimal() {
+                if (justCalculated) {
+                    expression = '0.';
+                    justCalculated = false;
+                    updateDisplay();
+                    lastInput = 'num';
+                    return;
+                }
+                // Prevent multiple decimals in current number segment
+                const parts = expression.split(/[\+\-\*\/]/);
+                const currentNum = parts[parts.length - 1];
+                if (!currentNum.includes('.')) {
+                    if (expression === '' || endsWithOperator(expression)) {
+                        expression += '0.';
+                    } else {
+                        expression += '.';
+                    }
+                    lastInput = 'num';
+                }
+                updateDisplay();
+            }
+
+            // Clear everything
+            function clearAll() {
+                expression = '';
+                lastInput = '';
+                justCalculated = false;
+                updateDisplay();
+            }
+
+            // Delete last character
+            function deleteLast() {
+                if (justCalculated) {
+                    expression = '';
+                    justCalculated = false;
+                } else {
+                    expression = expression.slice(0, -1);
+                }
+                updateDisplay();
+            }
+
+            // Toggle plus/minus for current number
+            function toggleNegate() {
+                if (expression === '') return;
+                // Find last number in expression and negate it
+                let parts = expression.match(/([+\-*/]?)([0-9.]+)$/);
+                if (!parts) return; // no number at end
+                let [fullMatch, operator, number] = parts;
+                if (number.startsWith('-')) {
+                    // Remove negative sign
+                    number = number.slice(1);
+                } else {
+                    number = '-' + number;
+                }
+                expression = expression.slice(0, expression.length - fullMatch.length) + operator + number;
+                updateDisplay();
+            }
+
+            // Percentage - convert current number to percentage (divide by 100)
+            function percentage() {
+                if (expression === '') return;
+                // Find last number
+                let parts = expression.match(/([+\-*/]?)([0-9.]+)$/);
+                if (!parts) return;
+                let [fullMatch, operator, number] = parts;
+                let numVal = parseFloat(number);
+                if (isNaN(numVal)) return;
+                numVal = numVal / 100;
+                expression = expression.slice(0, expression.length - fullMatch.length) + operator + numVal.toString();
+                updateDisplay();
+            }
+
+            // Equals - finalize calculation
+            function calculateResult() {
+                const res = evaluateExpression(expression);
+                if (res === 'Error' || res.startsWith('Error')) {
+                    resultEl.textContent = res;
+                } else {
+                    expression = res;
+                    resultEl.textContent = res;
+                }
+                justCalculated = true;
+                updateDisplay();
+            }
+
+            // Button click handler
+            buttons.addEventListener('click', e => {
+                if (!e.target.matches('button')) return;
+                const btn = e.target;
+                if (btn.id === 'clear') {
+                    clearAll();
+                } else if (btn.id === 'delete') {
+                    deleteLast();
+                } else if (btn.id === 'negate') {
+                    toggleNegate();
+                } else if (btn.id === 'percent') {
+                    percentage();
+                } else if (btn.id === 'decimal') {
+                    inputDecimal();
+                } else if (btn.id === 'equals') {
+                    calculateResult();
+                } else if (btn.classList.contains('btn-num')) {
+                    inputNumber(btn.dataset.num);
+                } else if (btn.classList.contains('btn-op')) {
+                    inputOperator(opMap[btn.dataset.op] ? btn.dataset.op : btn.textContent);
+                }
+            });
+
+            // Keyboard support
+            window.addEventListener('keydown', e => {
+                // Allow digits, operators + - * /, Enter =, Backspace, Delete, Period
+                if ((e.key >= '0' && e.key <= '9')) {
+                    e.preventDefault();
+                    inputNumber(e.key);
+                } else if (['+', '-', '*', '/'].includes(e.key)) {
+                    e.preventDefault();
+                    let opChar = e.key;
+                    // Map * to ×, / to ÷ for display consistency
+                    if (opChar === '*') opChar = '×';
+                    if (opChar === '/') opChar = '÷';
+                    inputOperator(opChar);
+                } else if (e.key === 'Enter' || e.key === '=') {
+                    e.preventDefault();
+                    calculateResult();
+                } else if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    deleteLast();
+                } else if (e.key === 'Delete') {
+                    e.preventDefault();
+                    clearAll();
+                } else if (e.key === '.') {
+                    e.preventDefault();
+                    inputDecimal();
+                }
+            });
+
+            // Dark/Light mode toggle
+            function toggleTheme() {
+                body.classList.toggle('dark');
+                const isDark = body.classList.contains('dark');
+                localStorage.setItem('darkMode', isDark);
+                
+                if (isDark) {
+                    themeIcon.className = 'icon-moon';
+                    themeText.textContent = 'Light Mode';
+                } else {
+                    themeIcon.className = 'icon-sun';
+                    themeText.textContent = 'Dark Mode';
+                }
+            }
+
+            // Check for saved theme preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                body.classList.add('dark');
+                themeIcon.className = 'icon-moon';
+                themeText.textContent = 'Light Mode';
+            }
+
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Mobile menu toggle
+            function toggleMobileMenu() {
+                navMenu.classList.toggle('active');
+                if (navMenu.classList.contains('active')) {
+                    menuIcon.className = 'icon-close';
+                } else {
+                    menuIcon.className = 'icon-menu';
+                }
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('#navMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+            // Initialize display
+            clearAll();
+        })();
+    </script>
+</body>
+</html>

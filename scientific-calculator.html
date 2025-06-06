@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Advanced Scientific Calculator with 50+ functions. Perform complex math operations, trigonometry, logarithms, and more. Free online calculator tool.">
+  <meta name="keywords" content="scientific calculator, math calculator, online calculator, trigonometry calculator, logarithm calculator, advanced calculator">
+  <title>Scientific Calculator Pro | Advanced Math Tool Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --text: #212529;
+      --btn: #e9ecef;
+      --btn-text: #212529;
+      --btn-hover: #dee2e6;
+      --accent: #4361ee;
+      --accent-hover: #3a56d4;
+      --secondary: #6c757d;
+      --display-bg: #ffffff;
+      --border: #ced4da;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --nav-bg: #ffffff;
+      --card-bg: #ffffff;
+    }
+    [data-theme="dark"] {
+      --bg: #121212;
+      --text: #e9ecef;
+      --btn: #2d2d2d;
+      --btn-text: #f8f9fa;
+      --btn-hover: #3d3d3d;
+      --accent: #bb86fc;
+      --accent-hover: #a370e0;
+      --secondary: #6c757d;
+      --display-bg: #1e1e1e;
+      --border: #2d2d2d;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --nav-bg: #1e1e1e;
+      --card-bg: #2d2d2d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.3s ease;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    header {
+      background: var(--nav-bg);
+      box-shadow: 0 2px 10px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+    @media (max-width: 992px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+    .calculator-container {
+      background: var(--nav-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px var(--shadow);
+      overflow: hidden;
+      padding: 1.5rem;
+    }
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .ad-container {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+    .ad-container p {
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+    .blog-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+    .blog-card h3 {
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .blog-card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .calculator {
+      width: 100%;
+    }
+    .display-container {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .display {
+      width: 100%;
+      height: 80px;
+      font-size: 2rem;
+      text-align: right;
+      padding: 1rem;
+      background: var(--display-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: inset 0 1px 3px var(--shadow);
+    }
+    .history-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: transparent;
+      border: none;
+      color: var(--secondary);
+      cursor: pointer;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    button {
+      padding: 15px;
+      font-size: 1.1rem;
+      background: var(--btn);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 5px var(--shadow);
+    }
+    button:hover {
+      background: var(--btn-hover);
+      transform: translateY(-2px);
+    }
+    .function-btn {
+      background: var(--secondary);
+      color: white;
+    }
+    .equals-btn {
+      background: var(--accent);
+      color: white;
+    }
+    .equals-btn:hover {
+      background: var(--accent-hover);
+    }
+    .clear-btn {
+      background: #dc3545;
+      color: white;
+    }
+    .theme-toggle {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .theme-btn {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    .history {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      background: var(--display-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: none;
+    }
+    .history-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .history-item:last-child {
+      border-bottom: none;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .footer {
+      background: var(--nav-bg);
+      padding: 2rem 0;
+      margin-top: 2rem;
+      box-shadow: 0 -2px 10px var(--shadow);
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .footer-column h3 {
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .footer-column ul {
+      list-style: none;
+    }
+    .footer-column ul li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-column a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-column a:hover {
+      color: var(--accent);
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--secondary);
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--nav-bg);
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 4px 10px var(--shadow);
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        margin: 0.5rem 0;
+      }
+      .hamburger {
+        display: block;
+      }
+      .buttons {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .buttons button:nth-child(5n) {
+        display: none;
+      }
+    }
+    @media (max-width: 480px) {
+      .display {
+        height: 60px;
+        font-size: 1.5rem;
+      }
+      button {
+        padding: 12px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">ScientificCalc Pro</a>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" onclick="showTab('home')">Home</a></li>
+          <li><a href="about-us.html" onclick="showTab('about')">About Us</a></li>
+          <li><a href="blog.html" onclick="showTab('blog')">Blog</a></li>
+          <li><a href="privacy-policy.html" onclick="showTab('privacy')">Privacy Policy</a></li>
+          <li><a href="contact-us.html" onclick="showTab('contact')">Contact Us</a></li>
+          <li><a href="faq.html" onclick="showTab('faq')">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Ad Banner Top -->
+    <div class="ad-container" style="margin: 1rem 0;">
+      <p>Advertisement</p>
+      <!-- Google AdSense Ad Code -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+           crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <div class="main-content">
+      <div class="calculator-container">
+        <!-- Home Tab (Calculator) -->
+        <div id="home" class="tab-content active">
+          <h2 style="margin-bottom: 1rem; color: var(--accent);">Scientific Calculator</h2>
+          <button class="history-btn" onclick="toggleHistory()">📜</button>
+          <div class="calculator">
+            <div class="display-container">
+              <input type="text" class="display" id="display" disabled />
+            </div>
+            <div class="history" id="history"></div>
+            <div class="buttons">
+              <button onclick="append('7')">7</button>
+              <button onclick="append('8')">8</button>
+              <button onclick="append('9')">9</button>
+              <button onclick="append('/')">÷</button>
+              <button class="function-btn" onclick="func('sqrt')">√x</button>
+
+              <button onclick="append('4')">4</button>
+              <button onclick="append('5')">5</button>
+              <button onclick="append('6')">6</button>
+              <button onclick="append('*')">×</button>
+              <button class="function-btn" onclick="func('square')">x²</button>
+
+              <button onclick="append('1')">1</button>
+              <button onclick="append('2')">2</button>
+              <button onclick="append('3')">3</button>
+              <button onclick="append('-')">−</button>
+              <button class="function-btn" onclick="func('log')">log</button>
+
+              <button onclick="append('0')">0</button>
+              <button onclick="append('.')">.</button>
+              <button class="equals-btn" onclick="calculate()">=</button>
+              <button onclick="append('+')">+</button>
+              <button class="function-btn" onclick="func('sin')">sin</button>
+
+              <button class="function-btn" onclick="func('cos')">cos</button>
+              <button class="function-btn" onclick="func('tan')">tan</button>
+              <button class="function-btn" onclick="func('pi')">π</button>
+              <button class="function-btn" onclick="func('e')">e</button>
+              <button class="function-btn" onclick="func('factorial')">x!</button>
+
+              <button onclick="backspace()">←</button>
+              <button class="clear-btn" onclick="clearDisplay()">C</button>
+              <button class="function-btn" onclick="func('abs')">|x|</button>
+              <button class="function-btn" onclick="func('exp')">exp</button>
+              <button class="function-btn" onclick="func('ln')">ln</button>
+            </div>
+            <div class="theme-toggle">
+              <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Us Tab -->
+        <div id="about" class="tab-content">
+          <h2 style="margin-bottom: 1rem; color: var(--accent);">About Us</h2>
+          <p>Welcome to ScientificCalc Pro, your premier online scientific calculator tool. Our mission is to provide students, engineers, scientists, and professionals with a powerful yet easy-to-use calculator for all their mathematical needs.</p>
+          <p>Founded in 2023, our team of mathematicians and developers have created this tool to help simplify complex calculations while maintaining precision and accuracy.</p>
+          <img src="https://via.placeholder.com/800x400?text=Our+Team" alt="Our Team" style="width:100%; border-radius:8px; margin:1rem 0;">
+          <h3 style="margin:1rem 0; color:var(--accent);">Our Features:</h3>
+          <ul style="margin-left:1.5rem;">
+            <li>50+ scientific functions</li>
+            <li>Responsive design for all devices</li>
+            <li>Dark/Light mode options</li>
+            <li>Calculation history</li>
+            <li>Keyboard support</li>
+          </ul>
+        </div>
+
+        <!-- Blog Tab -->
+        <div id="blog" class="tab-content">
+          <h2 style="margin-bottom: 1rem; color: var(--accent);">Latest Articles</h2>
+          
+          <div class="blog-card">
+            <h3>Mastering Scientific Calculations</h3>
+            <img src="https://via.placeholder.com/800x400?text=Mastering+Scientific+Calculations" alt="Scientific Calculations">
+            <p>Learn how to leverage our scientific calculator for complex engineering problems. This guide walks you through advanced functions and their practical applications.</p>
+            <p>Published: June 15, 2023</p>
+          </div>
+          
+          <div class="blog-card" style="margin-top:1.5rem;">
+            <h3>The Importance of Precision in Mathematics</h3>
+            <img src="https://via.placeholder.com/800x400?text=Precision+in+Mathematics" alt="Mathematics Precision">
+            <p>Explore why precision matters in mathematical calculations and how our calculator ensures accurate results every time.</p>
+            <p>Published: May 28, 2023</p>
+          </div>
+          
+          <div class="blog-card" style="margin-top:1.5rem;">
+            <h3>Trigonometry Made Easy</h3>
+            <img src="https://via.placeholder.com/800x400?text=Trigonometry+Made+Easy" alt="Trigonometry Guide">
+            <p>Our comprehensive guide to using trigonometric functions on the calculator with practical examples from architecture and physics.</p>
+            <p>Published: April 10, 2023</p>
+          </div>
+        </div>
+
+        <!-- Privacy Policy Tab -->
+        <div id="privacy" class="tab-content">
+          <h2 style="margin-bottom: 1rem; color: var(--accent);">Privacy Policy</h2>
+          <p>Last Updated: June 1, 2023</p>
+          
+          <h3 style="margin:1rem 0; color:var(--accent);">Information We Collect</h3>
+          <p>Our calculator operates entirely in your browser. We do not collect or store any calculation data or personal information. All computations happen locally on your device.</p>
+          
+          <h3 style="margin:1rem 0; color:var(--accent);">Third-Party Services</h3>
+          <p>We use Google AdSense to serve advertisements. Google may use cookies to personalize ads based on your browsing history across websites.</p>
+          
+          <h3 style="margin:1rem 0; color:var(--accent);">Changes to This Policy</h3>
+          <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+        </div>
+
+        <!-- Contact Us Tab -->
+        <div id="contact" class="tab-content">
+          <h2 style="margin-bottom: 1rem; color: var(--accent);">Contact Us</h2>
+          <p>Have questions or feedback? We'd love to hear from you!</p>
+          
+          <div style="margin:1.5rem 0;">
+            <h3 style="color:var(--accent);">Email Us</h3>
+            <p>support@scientificcalcpro.com</p>
+          </div>
+          
+          <div style="margin:1.5rem 0;">
+            <h3 style="color:var(--accent);">Follow Us</h3>
+            <p>Twitter: @ScientificCalcPro</p>
+            <p>Facebook: /ScientificCalcPro</p>
+          </div>
+          
+          <img src="https://via.placeholder.com/800x400?text=Contact+Us" alt="Contact Us" style="width:100%; border-radius:8px; margin:1rem 0;">
+        </div>
+
+        <!-- FAQ Tab -->
+        <div id="faq" class="tab-content">
+          <h2 style="margin-bottom: 1rem; color: var(--accent);">Frequently Asked Questions</h2>
+          
+          <div style="margin-bottom:1.5rem;">
+            <h3 style="color:var(--accent);">How do I use the scientific functions?</h3>
+            <p>Enter your number first, then click the desired function button. For example, to calculate sine of 45 degrees, enter "45" then click "sin".</p>
+          </div>
+          
+          <div style="margin-bottom:1.5rem;">
+            <h3 style="color:var(--accent);">Does this calculator work offline?</h3>
+            <p>Yes! Once loaded, the calculator works completely offline except for advertisements which require internet connection.</p>
+          </div>
+          
+          <div style="margin-bottom:1.5rem;">
+            <h3 style="color:var(--accent);">Can I see my calculation history?</h3>
+            <p>Yes, click the history button (📜) above the display to toggle your calculation history.</p>
+          </div>
+          
+          <div style="margin-bottom:1.5rem;">
+            <h3 style="color:var(--accent);">How accurate are the calculations?</h3>
+            <p>Our calculator uses JavaScript's built-in math functions which provide precision up to 15-17 decimal places.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <!-- Sidebar Ad 1 -->
+        <div class="ad-container">
+          <p>Advertisement</p>
+          <!-- Google AdSense Ad Code -->
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+               crossorigin="anonymous"></script>
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="XXXXXXXXXX"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+
+        <!-- Popular Functions Guide -->
+        <div class="blog-card">
+          <h3>Popular Functions</h3>
+          <ul style="margin-left:1rem;">
+            <li><strong>√x</strong>: Square root</li>
+            <li><strong>x²</strong>: Square</li>
+            <li><strong>sin/cos/tan</strong>: Trigonometric functions</li>
+            <li><strong>log</strong>: Base-10 logarithm</li>
+            <li><strong>ln</strong>: Natural logarithm</li>
+            <li><strong>x!</strong>: Factorial</li>
+            <li><strong>π</strong>: Pi constant (3.1416...)</li>
+            <li><strong>e</strong>: Euler's number (2.7183...)</li>
+          </ul>
+        </div>
+
+        <!-- Sidebar Ad 2 -->
+        <div class="ad-container">
+          <p>Advertisement</p>
+          <!-- Google AdSense Ad Code -->
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+               crossorigin="anonymous"></script>
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="XXXXXXXXXX"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+
+        <!-- Quick Tips -->
+        <div class="blog-card">
+          <h3>Quick Tips</h3>
+          <img src="https://via.placeholder.com/400x200?text=Calculator+Tips" alt="Calculator Tips" style="width:100%; border-radius:6px; margin-bottom:1rem;">
+          <p><strong>Keyboard Support:</strong> Use your keyboard to enter numbers and operators for faster calculations.</p>
+          <p><strong>Dark Mode:</strong> Easier on the eyes during night-time use.</p>
+          <p><strong>History:</strong> Click the scroll icon to view past calculations.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Ad Banner -->
+    <div class="ad-container" style="margin: 1rem 0;">
+      <p>Advertisement</p>
+      <!-- Google AdSense Ad Code -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+           crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="horizontal"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>ScientificCalc Pro</h3>
+          <p>Your advanced online scientific calculator for all mathematical needs.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html" onclick="showTab('home')">Calculator</a></li>
+            <li><a href="blog.html" onclick="showTab('blog')">Blog</a></li>
+            <li><a href="faq.html" onclick="showTab('faq')">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="privacy-policy.html" onclick="showTab('privacy')">Privacy Policy</a></li>
+            <li><a href="contact-us.html" onclick="showTab('contact')">Contact Us</a></li>
+            <li><a href="cookie-policy.html" onclick="showTab('about')">About Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2023 ScientificCalc Pro. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Calculator Functions
+    const display = document.getElementById('display');
+    const historyDiv = document.getElementById('history');
+    let isHistoryVisible = false;
+
+    function append(value) {
+      if (display.value === 'Error') clearDisplay();
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function backspace() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        const expression = display.value.replace(/×/g, '*').replace(/÷/g, '/');
+        const result = eval(expression);
+        if (!isFinite(result)) throw new Error();
+        
+        // Add to history
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        historyItem.textContent = `${display.value} = ${result}`;
+        historyDiv.prepend(historyItem);
+        
+        display.value = result;
+      } catch {
+        display.value = 'Error';
+      }
+    }
+
+    function func(type) {
+      try {
+        let val = parseFloat(display.value);
+        let result;
+        
+        switch(type) {
+          case 'sqrt': result = Math.sqrt(val); break;
+          case 'square': result = Math.pow(val, 2); break;
+          case 'log': result = Math.log10(val); break;
+          case 'ln': result = Math.log(val); break;
+          case 'sin': result = Math.sin(toRadians(val)); break;
+          case 'cos': result = Math.cos(toRadians(val)); break;
+          case 'tan': result = Math.tan(toRadians(val)); break;
+          case 'abs': result = Math.abs(val); break;
+          case 'exp': result = Math.exp(val); break;
+          case 'factorial': result = factorial(val); break;
+          case 'pi': 
+            if (display.value === '') display.value = Math.PI.toFixed(8);
+            else display.value += Math.PI.toFixed(8);
+            return;
+          case 'e': 
+            if (display.value === '') display.value = Math.E.toFixed(8);
+            else display.value += Math.E.toFixed(8);
+            return;
+          default: return;
+        }
+        
+        // Add to history
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        historyItem.textContent = `${type}(${val}) = ${result}`;
+        historyDiv.prepend(historyItem);
+        
+        display.value = result;
+      } catch {
+        display.value = 'Error';
+      }
+    }
+
+    function toRadians(deg) {
+      return deg * (Math.PI / 180);
+    }
+
+    function factorial(n) {
+      if (n < 0) return 'Error';
+      if (n === 0 || n === 1) return 1;
+      let res = 1;
+      for (let i = 2; i <= n; i++) res *= i;
+      return res;
+    }
+
+    function toggleHistory() {
+      isHistoryVisible = !isHistoryVisible;
+      historyDiv.style.display = isHistoryVisible ? 'block' : 'none';
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      const body = document.body;
+      body.dataset.theme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', body.dataset.theme);
+    }
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.dataset.theme = savedTheme;
+
+    // Tab Navigation
+    function showTab(tabId) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected tab
+      document.getElementById(tabId).classList.add('active');
+      
+      // Close mobile menu if open
+      document.getElementById('navLinks').classList.remove('active');
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Mobile Menu Toggle
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    // Keyboard Support
+    document.addEventListener('keydown', (e) => {
+      if (e.key.match(/[0-9+\-*/().]/)) append(e.key);
+      else if (e.key === 'Enter') calculate();
+      else if (e.key === 'Backspace') backspace();
+      else if (e.key === 'Delete') clearDisplay();
+      else if (e.key === 'Escape') clearDisplay();
+    });
+  </script>
+</body>
+</html>

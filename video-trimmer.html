@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free online video trimming tool. Easily cut and trim your videos without quality loss. Works on all devices with no software installation required.">
+  <meta name="keywords" content="video trimmer, video cutter, online video editor, free video tool, cut videos">
+  <meta name="author" content="Simple Video Tools">
+  <meta property="og:title" content="Simple Video Cutter - Free Online Video Trimming Tool">
+  <meta property="og:description" content="Trim your videos quickly and easily with our free online video cutter tool.">
+  <meta property="og:type" content="website">
+  <title>Simple Video Cutter - Free Online Video Trimming Tool | Cut Videos Easily</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --text-color: #333;
+      --bg-color: #f8f9fa;
+      --card-bg: #fff;
+      --border-color: #e0e0e0;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --success-color: #4bb543;
+      --warning-color: #ff9500;
+      --error-color: #ff3b30;
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #4895ef;
+      --secondary-color: #4361ee;
+      --text-color: #f8f9fa;
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --border-color: #333;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    nav a:hover::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+
+    .ad-container {
+      margin: 1rem 0;
+      text-align: center;
+      padding: 10px;
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .ad-container.top-ad {
+      margin-top: 1.5rem;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 992px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tool-container {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tool-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tool-title i {
+      font-size: 1.8rem;
+    }
+
+    .video-container {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      max-height: 400px;
+      background: black;
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      margin-bottom: 1rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    .flex-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .flex-group > div {
+      flex: 1;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .btn:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
+    .status {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .status.success {
+      background-color: rgba(75, 181, 67, 0.2);
+      color: var(--success-color);
+    }
+
+    .status.error {
+      background-color: rgba(255, 59, 48, 0.2);
+      color: var(--error-color);
+    }
+
+    .status.info {
+      background-color: rgba(0, 123, 255, 0.2);
+      color: var(--primary-color);
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .blog-list, .faq-list {
+      list-style: none;
+    }
+
+    .blog-item, .faq-item {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .blog-item:last-child, .faq-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .blog-item a, .faq-item a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+    }
+
+    .blog-item a:hover, .faq-item a:hover {
+      text-decoration: underline;
+    }
+
+    .blog-meta {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 0.3rem;
+    }
+
+    .feature-list {
+      list-style: none;
+    }
+
+    .feature-item {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feature-item i {
+      color: var(--primary-color);
+    }
+
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 2rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-links h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid white;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Mobile menu */
+    @media (max-width: 768px) {
+      .header-container {
+        position: relative;
+      }
+
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-color);
+        padding: 1rem;
+        box-shadow: var(--shadow);
+        display: none;
+      }
+
+      nav.active {
+        display: block;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .flex-group {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Hidden pages */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .blog-image, .about-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .back-btn {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-cut"></i>
+        <span>Video Cutter Pro</span>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+          <li><a href="about-us.html" class="nav-link" data-page="about">About Us</a></li>
+          <li><a href="blog.html" class="nav-link" data-page="blog">Blog</a></li>
+          <li><a href="contact-us.html" class="nav-link" data-page="contact">Contact</a></li>
+          <li><a href="faq.html" class="nav-link" data-page="faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Top Ad -->
+    <div class="ad-container top-ad">
+      <!-- Google AdSense Ad -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <!-- Home Page -->
+    <div class="page active" id="home-page">
+      <div class="main-content">
+        <div class="tool-section">
+          <div class="tool-container">
+            <h1 class="tool-title">
+              <i class="fas fa-scissors"></i>
+              Simple Video Cutter Tool
+            </h1>
+            <p>Trim your videos quickly and easily with our free online tool. No registration required!</p>
+            
+            <div class="form-group">
+              <label for="videoFile">Select your video file:</label>
+              <input type="file" id="videoFile" accept="video/*" />
+            </div>
+            
+            <div class="video-container">
+              <video id="videoPlayer" controls></video>
+            </div>
+            
+            <div class="flex-group">
+              <div class="form-group">
+                <label for="startTime">Start Time (seconds):</label>
+                <input type="number" id="startTime" min="0" step="0.1" value="0" />
+              </div>
+              
+              <div class="form-group">
+                <label for="endTime">End Time (seconds):</label>
+                <input type="number" id="endTime" min="0" step="0.1" value="0" />
+              </div>
+            </div>
+            
+            <button id="trimBtn" class="btn" disabled>
+              <i class="fas fa-cut"></i> Trim & Download
+            </button>
+            
+            <div id="status" class="status"></div>
+          </div>
+
+          <div class="tool-container">
+            <h2 class="tool-title">
+              <i class="fas fa-info-circle"></i>
+              How to Use This Tool
+            </h2>
+            <ol style="padding-left: 1.5rem; margin-bottom: 1rem;">
+              <li>Upload your video file using the button above</li>
+              <li>Play the video to find the sections you want to keep</li>
+              <li>Enter the start and end times for your trimmed video</li>
+              <li>Click "Trim & Download" to save your edited video</li>
+            </ol>
+            <p><strong>Note:</strong> All processing happens in your browser. Your videos are never uploaded to our servers.</p>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <div class="card">
+            <h3 class="card-title">
+              <i class="fas fa-newspaper"></i>
+              Latest Blog Posts
+            </h3>
+            <ul class="blog-list">
+              <li class="blog-item">
+                <a href="#" class="blog-link" data-post="1">How to Trim Videos Without Losing Quality</a>
+                <div class="blog-meta">June 15, 2023 • 5 min read</div>
+              </li>
+              <li class="blog-item">
+                <a href="#" class="blog-link" data-post="2">Best Video Formats for Different Platforms</a>
+                <div class="blog-meta">June 8, 2023 • 7 min read</div>
+              </li>
+              <li class="blog-item">
+                <a href="#" class="blog-link" data-post="3">10 Tips for Better Video Editing</a>
+                <div class="blog-meta">June 1, 2023 • 8 min read</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">
+              <i class="fas fa-ad"></i>
+              Advertisement
+            </h3>
+            <!-- Google AdSense Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">
+              <i class="fas fa-star"></i>
+              Key Features
+            </h3>
+            <ul class="feature-list">
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>100% free to use</span>
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>No watermarks</span>
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>No file size limits</span>
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Works on all devices</span>
+              </li>
+              <li class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>No registration required</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Us Page -->
+    <div class="page" id="about-page">
+      <button class="btn btn-secondary back-btn" id="aboutBackBtn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+      <div class="tool-container">
+        <h1 class="tool-title">
+          <i class="fas fa-info-circle"></i>
+          About Us
+        </h1>
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Our Team" class="about-image">
+        <p>Welcome to Video Cutter Pro, your go-to solution for simple and efficient video trimming online. Our mission is to provide users with a hassle-free way to edit their videos without the need for complicated software or technical expertise.</p>
+        <p>Founded in 2023, our team of developers and designers came together to create a tool that solves a common problem: quickly trimming videos without sacrificing quality or dealing with unnecessary features.</p>
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">Our Values</h2>
+        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+          <li><strong>Simplicity:</strong> We believe tools should be intuitive and easy to use</li>
+          <li><strong>Privacy:</strong> Your files never leave your device - all processing happens in your browser</li>
+          <li><strong>Quality:</strong> We maintain the original quality of your videos during trimming</li>
+          <li><strong>Accessibility:</strong> Our tool works on all devices, from smartphones to desktop computers</li>
+        </ul>
+        <p>We're constantly working to improve our tool and add new features based on user feedback. If you have any suggestions or questions, please don't hesitate to <a href="#" class="nav-link" data-page="contact" style="color: var(--primary-color);">contact us</a>.</p>
+      </div>
+    </div>
+
+    <!-- Blog Page -->
+    <div class="page" id="blog-page">
+      <button class="btn btn-secondary back-btn" id="blogBackBtn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+      <div class="tool-container">
+        <h1 class="tool-title">
+          <i class="fas fa-newspaper"></i>
+          Blog
+        </h1>
+        <div class="blog-list-container">
+          <div class="blog-post-preview">
+            <h2 style="margin-bottom: 1rem; color: var(--primary-color);">
+              <a href="#" class="blog-link" data-post="1" style="color: inherit; text-decoration: none;">How to Trim Videos Without Losing Quality</a>
+            </h2>
+            <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Video Editing" class="blog-image">
+            <p style="margin: 1rem 0;">Video trimming is one of the most basic yet essential editing tasks. Whether you're removing unwanted sections from your vacation videos or creating clips for social media, maintaining quality is crucial...</p>
+            <a href="#" class="btn blog-link" data-post="1" style="width: auto; display: inline-block;">
+              Read More <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          
+          <div class="blog-post-preview" style="margin-top: 2rem;">
+            <h2 style="margin-bottom: 1rem; color: var(--primary-color);">
+              <a href="#" class="blog-link" data-post="2" style="color: inherit; text-decoration: none;">Best Video Formats for Different Platforms</a>
+            </h2>
+            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Video Formats" class="blog-image">
+            <p style="margin: 1rem 0;">Choosing the right video format can significantly impact your content's quality and compatibility across different platforms. In this guide, we'll explore the best formats for YouTube, Instagram, TikTok, and more...</p>
+            <a href="#" class="btn blog-link" data-post="2" style="width: auto; display: inline-block;">
+              Read More <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Post Pages -->
+    <div class="page" id="blog-post-1">
+      <button class="btn btn-secondary back-btn" id="post1BackBtn">
+        <i class="fas fa-arrow-left"></i> Back to Blog
+      </button>
+      <div class="tool-container">
+        <h1 class="tool-title">How to Trim Videos Without Losing Quality</h1>
+        <div class="blog-meta" style="margin-bottom: 1rem;">June 15, 2023 • 5 min read</div>
+        <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Video Editing" class="blog-image">
+        <p>Video trimming is one of the most basic yet essential editing tasks. Whether you're removing unwanted sections from your vacation videos or creating clips for social media, maintaining quality is crucial. Here's how to trim videos without losing quality:</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">1. Use the Right Tool</h2>
+        <p>Our online video cutter preserves the original quality of your videos because it performs all processing locally in your browser. Unlike some online tools that re-encode your video, we simply cut at the nearest keyframe without recompressing.</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">2. Understand Keyframes</h2>
+        <p>Videos are compressed using keyframes (I-frames) and predictive frames (P-frames and B-frames). For the cleanest cuts, try to trim at natural keyframe boundaries. Our tool automatically finds the nearest keyframe to your selected cut point.</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">3. Maintain Original Resolution</h2>
+        <p>When exporting your trimmed video, always maintain the original resolution and frame rate. Reducing these settings will decrease quality. Our tool always preserves the original video specifications.</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">4. Avoid Multiple Re-encodings</h2>
+        <p>Each time you save a video in a lossy format (like MP4), you lose some quality. By trimming without re-encoding (as our tool does), you prevent this generational quality loss.</p>
+        
+        <p>By following these tips and using our free online video cutter, you can ensure your trimmed videos look just as good as the originals!</p>
+      </div>
+    </div>
+
+    <div class="page" id="blog-post-2">
+      <button class="btn btn-secondary back-btn" id="post2BackBtn">
+        <i class="fas fa-arrow-left"></i> Back to Blog
+      </button>
+      <div class="tool-container">
+        <h1 class="tool-title">Best Video Formats for Different Platforms</h1>
+        <div class="blog-meta" style="margin-bottom: 1rem;">June 8, 2023 • 7 min read</div>
+        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Video Formats" class="blog-image">
+        <p>Choosing the right video format can significantly impact your content's quality and compatibility across different platforms. Here's a guide to the best formats for popular platforms:</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">YouTube</h2>
+        <p><strong>Recommended format:</strong> MP4 (H.264 codec, AAC audio)<br>
+        <strong>Resolution:</strong> Up to 8K<br>
+        YouTube accepts most formats, but MP4 with H.264 encoding provides the best balance of quality and file size. For highest quality, use a high bitrate (at least 8 Mbps for 1080p).</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">Instagram</h2>
+        <p><strong>Recommended format:</strong> MP4 (H.264 codec)<br>
+        <strong>Resolution:</strong> 1080x1080 (square), 1080x1350 (portrait), or 1080x608 (landscape)<br>
+        Instagram compresses all videos, so start with high quality. For Stories and Reels, use vertical (9:16) format.</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">TikTok</h2>
+        <p><strong>Recommended format:</strong> MP4 or MOV (H.264 codec)<br>
+        <strong>Resolution:</strong> 1080x1920 (vertical)<br>
+        TikTok is optimized for vertical videos. Use high bitrate to maintain quality after their compression.</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">Facebook</h2>
+        <p><strong>Recommended format:</strong> MP4 or MOV (H.264 codec)<br>
+        <strong>Resolution:</strong> Up to 4K<br>
+        Facebook supports various formats but heavily compresses videos. Upload the highest quality possible.</p>
+        
+        <p>Remember, our video cutter tool preserves your original format, so you can trim your videos without worrying about format compatibility issues!</p>
+      </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page" id="contact-page">
+      <button class="btn btn-secondary back-btn" id="contactBackBtn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+      <div class="tool-container">
+        <h1 class="tool-title">
+          <i class="fas fa-envelope"></i>
+          Contact Us
+        </h1>
+        <p>Have questions, suggestions, or feedback? We'd love to hear from you!</p>
+        
+        <form id="contactForm" style="margin-top: 1.5rem;">
+          <div class="form-group">
+            <label for="contactName">Your Name:</label>
+            <input type="text" id="contactName" required class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--card-bg); color: var(--text-color);">
+          </div>
+          
+          <div class="form-group">
+            <label for="contactEmail">Your Email:</label>
+            <input type="email" id="contactEmail" required class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--card-bg); color: var(--text-color);">
+          </div>
+          
+          <div class="form-group">
+            <label for="contactSubject">Subject:</label>
+            <input type="text" id="contactSubject" required class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--card-bg); color: var(--text-color);">
+          </div>
+          
+          <div class="form-group">
+            <label for="contactMessage">Your Message:</label>
+            <textarea id="contactMessage" rows="5" required class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--card-bg); color: var(--text-color);"></textarea>
+          </div>
+          
+          <button type="submit" class="btn">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+        
+        <div id="contactStatus" class="status" style="margin-top: 1rem; display: none;"></div>
+      </div>
+    </div>
+
+    <!-- FAQ Page -->
+    <div class="page" id="faq-page">
+      <button class="btn btn-secondary back-btn" id="faqBackBtn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+      <div class="tool-container">
+        <h1 class="tool-title">
+          <i class="fas fa-question-circle"></i>
+          Frequently Asked Questions
+        </h1>
+        
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Is this tool really free to use?</h3>
+            <p>Yes, our video cutter is completely free with no hidden charges. We don't require registration or impose any usage limits.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Are my videos uploaded to your servers?</h3>
+            <p>No, all processing happens directly in your browser. Your videos never leave your device, ensuring complete privacy.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">What video formats are supported?</h3>
+            <p>We support most common video formats including MP4, MOV, AVI, MKV, WEBM, and more. The tool works with any format your browser can play.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Is there a file size limit?</h3>
+            <p>There's no artificial limit, but very large files may take longer to process depending on your device's capabilities.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Does trimming affect video quality?</h3>
+            <p>No, our tool performs lossless trimming when possible, maintaining the original quality of your video.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Can I use this tool on my phone?</h3>
+            <p>Yes, our video cutter works on all devices including smartphones and tablets. The interface adapts to your screen size.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Privacy Policy Page -->
+    <div class="page" id="privacy-page">
+      <button class="btn btn-secondary back-btn" id="privacyBackBtn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+      <div class="tool-container">
+        <h1 class="tool-title">
+          <i class="fas fa-shield-alt"></i>
+          Privacy Policy
+        </h1>
+        
+        <p><strong>Last Updated:</strong> June 15, 2023</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">1. Information We Collect</h2>
+        <p>Our video cutter tool processes your videos entirely in your browser. We do not upload, store, or have access to your video files. The only information we collect is standard website analytics (through Google Analytics) that includes:</p>
+        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+          <li>Browser type and version</li>
+          <li>Operating system</li>
+          <li>Approximate geographic location (country/city level)</li>
+          <li>Pages visited and time spent on site</li>
+        </ul>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">2. Cookies</h2>
+        <p>We use cookies to:</p>
+        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+          <li>Remember your theme preference (light/dark mode)</li>
+          <li>Analyze site traffic through Google Analytics</li>
+          <li>Serve relevant advertisements through Google AdSense</li>
+        </ul>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">3. Third-Party Services</h2>
+        <p>We use the following third-party services:</p>
+        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+          <li><strong>Google Analytics:</strong> For understanding how visitors use our site</li>
+          <li><strong>Google AdSense:</strong> To display relevant advertisements</li>
+        </ul>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">4. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+        
+        <h2 style="margin: 1.5rem 0 1rem; color: var(--primary-color);">5. Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, please <a href="#" class="nav-link" data-page="contact" style="color: var(--primary-color);">contact us</a>.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Ad -->
+    <div class="ad-container" style="margin-bottom: 1.5rem;">
+      <!-- Google AdSense Ad -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-container">
+      <div class="footer-logo">
+        <i class="fas fa-cut"></i>
+        <span>Video Cutter Pro</span>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+          <li><a href="about-us.html" class="nav-link" data-page="about">About Us</a></li>
+          <li><a href="blog.html" class="nav-link" data-page="blog">Blog</a></li>
+          <li><a href="contact-us.html" class="nav-link" data-page="contact">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy-plicy.html" class="nav-link" data-page="privacy">Privacy Policy</a></li>
+          <li><a href="terms.html" class="nav-link" data-page="terms">Terms of Service</a></li>
+          <li><a href="faq.html" class="nav-link" data-page="faq">FAQ</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Connect With Us</h3>
+        <ul>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2023 Video Cutter Pro. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // DOM Elements
+    const videoFileInput = document.getElementById('videoFile');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const startTimeInput = document.getElementById('startTime');
+    const endTimeInput = document.getElementById('endTime');
+    const trimBtn = document.getElementById('trimBtn');
+    const status = document.getElementById('status');
+    const themeToggle = document.getElementById('themeToggle');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    const contactForm = document.getElementById('contactForm');
+    const contactStatus = document.getElementById('contactStatus');
+
+    // Page navigation elements
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+    const backBtns = document.querySelectorAll('.back-btn');
+    const blogLinks = document.querySelectorAll('.blog-link');
+
+    // Video trimming functionality
+    let videoFile;
+    let videoURL;
+
+    videoFileInput.addEventListener('change', () => {
+      const file = videoFileInput.files[0];
+      if (!file) return;
+
+      videoFile = file;
+      if (videoURL) URL.revokeObjectURL(videoURL);
+      videoURL = URL.createObjectURL(file);
+      videoPlayer.src = videoURL;
+
+      status.textContent = '';
+      status.className = 'status';
+
+      videoPlayer.addEventListener('loadedmetadata', () => {
+        startTimeInput.value = 0;
+        startTimeInput.max = videoPlayer.duration.toFixed(2);
+        endTimeInput.value = videoPlayer.duration.toFixed(2);
+        endTimeInput.max = videoPlayer.duration.toFixed(2);
+        trimBtn.disabled = false;
+        
+        status.textContent = `Video loaded: ${file.name} (${formatDuration(videoPlayer.duration)})`;
+        status.className = 'status success';
+      }, { once: true });
+    });
+
+    function formatDuration(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+
+    function bytesFromTime(timeInSeconds) {
+      // Approximate conversion (assuming constant bitrate)
+      // This is an estimate; actual byte ranges may differ
+      const duration = videoPlayer.duration;
+      const fileSize = videoFile.size;
+      return Math.floor((timeInSeconds / duration) * fileSize);
+    }
+
+    trimBtn.addEventListener('click', () => {
+      const start = parseFloat(startTimeInput.value);
+      const end = parseFloat(endTimeInput.value);
+
+      if (isNaN(start) || isNaN(end) || start < 0 || end <= start || end > videoPlayer.duration) {
+        status.textContent = 'Please enter valid start and end times.';
+        status.className = 'status error';
+        return;
+      }
+
+      trimBtn.disabled = true;
+      status.textContent = 'Processing... Please wait.';
+      status.className = 'status info';
+
+      // Calculate byte ranges
+      const startByte = bytesFromTime(start);
+      const endByte = bytesFromTime(end);
+
+      const slicedBlob = videoFile.slice(startByte, endByte);
+
+      // Create downloadable link
+      setTimeout(() => {
+        const downloadURL = URL.createObjectURL(slicedBlob);
+        const a = document.createElement('a');
+        a.href = downloadURL;
+        a.download = `trimmed_${videoFile.name}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        status.textContent = 'Done! Your download should start shortly.';
+        status.className = 'status success';
+        trimBtn.disabled = false;
+      }, 100);
+    });
+
+    // Theme toggle functionality
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    // Mobile menu toggle
+    mobileMenuBtn.addEventListener('click', () => {
+      mainNav.classList.toggle('active');
+    });
+
+    // Page navigation
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pageId = link.getAttribute('data-page');
+        showPage(pageId);
+        
+        // Close mobile menu if open
+        mainNav.classList.remove('active');
+      });
+    });
+
+    backBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage('home');
+      });
+    });
+
+    blogLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const postId = link.getAttribute('data-post');
+        showPage(`blog-post-${postId}`);
+      });
+    });
+
+    function showPage(pageId) {
+      // Hide all pages
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show requested page
+      const pageToShow = document.getElementById(`${pageId}-page`) || 
+                         document.getElementById(pageId);
+      if (pageToShow) {
+        pageToShow.classList.add('active');
+      }
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Contact form handling
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Simulate form submission
+      contactStatus.textContent = 'Thank you for your message! We will get back to you soon.';
+      contactStatus.className = 'status success';
+      contactStatus.style.display = 'block';
+      
+      // Reset form
+      contactForm.reset();
+      
+      // Hide status after 5 seconds
+      setTimeout(() => {
+        contactStatus.style.display = 'none';
+      }, 5000);
+    });
+
+    // Initialize AdSense ads
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</body>
+</html>

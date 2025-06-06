@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TikTok Video Downloader - Download TikTok Videos Without Watermark</title>
+  <meta name="description" content="Download TikTok videos easily without watermark. Paste TikTok video link and download high-quality videos instantly." />
+  <meta name="keywords" content="TikTok downloader, download TikTok videos, TikTok video without watermark, TikTok video downloader online" />
+  <meta name="author" content="FixitHub" />
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    :root {
+      --primary: #ff0050;
+      --secondary: #6200ea;
+      --bg: #fff;
+      --text: #222;
+      --nav-bg: #fafafa;
+      --btn-bg: var(--primary);
+      --btn-text: #fff;
+      --input-bg: #fff;
+      --input-text: #222;
+      --ad-bg: #f4f4f4;
+      --border-color: #ddd;
+    }
+    [data-theme="dark"] {
+      --primary: #ff4081;
+      --secondary: #bb86fc;
+      --bg: #121212;
+      --text: #e0e0e0;
+      --nav-bg: #1f1f1f;
+      --btn-bg: var(--primary);
+      --btn-text: #121212;
+      --input-bg: #222;
+      --input-text: #e0e0e0;
+      --ad-bg: #1a1a1a;
+      --border-color: #333;
+    }
+
+    /* Header & Nav */
+    header {
+      background-color: var(--nav-bg);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    nav a:hover,
+    nav a:focus {
+      background-color: var(--primary);
+      color: var(--btn-text);
+      outline: none;
+    }
+
+    /* Dark Mode Toggle Button */
+    #darkModeToggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #darkModeToggle:hover,
+    #darkModeToggle:focus {
+      background-color: var(--primary);
+      color: var(--btn-text);
+      outline: none;
+    }
+
+    /* Main content */
+    main {
+      flex-grow: 1;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      width: 100%;
+    }
+    main h2 {
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+      color: var(--primary);
+    }
+    main p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    #videoLink {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      background-color: var(--input-bg);
+      color: var(--input-text);
+      transition: border-color 0.3s;
+    }
+    #videoLink:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 6px var(--primary);
+    }
+    button {
+      margin-top: 1rem;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background-color 0.3s;
+    }
+    button:hover,
+    button:focus {
+      background-color: var(--secondary);
+      outline: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      main h2 {
+        font-size: 1.5rem;
+      }
+      button {
+        width: 100%;
+      }
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--nav-bg);
+      color: var(--text);
+      text-align: center;
+      padding: 1rem 1rem;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: auto;
+    }
+
+    /* Ad container styling */
+    .ad-container {
+      background-color: var(--ad-bg);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      margin: 2rem 0;
+      text-align: center;
+      border-radius: 6px;
+      color: var(--text);
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    /* SEO & accessibility improvements */
+    a.skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--primary);
+      color: var(--btn-text);
+      padding: 8px 16px;
+      z-index: 10000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a.skip-link:focus {
+      top: 0;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <a href="#maincontent" class="skip-link">Skip to main content</a>
+  <header>
+    <a href="#" class="logo" aria-label="TikTok Downloader Home">TikTok Downloader</a>
+    <nav role="navigation" aria-label="Primary Navigation">
+      <a href="index.html" tabindex="0">Home</a>
+      <a href="about-us.html" tabindex="0">About Us</a>
+      <a href="blog.html" tabindex="0">Blog</a>
+      <a href="privacy-policy.html" tabindex="0">Privacy Policy</a>
+      <a href="contact-us.html" tabindex="0">Contact Us</a>
+      <a href="faq.html" tabindex="0">FAQ</a>
+    </nav>
+    <button id="darkModeToggle" aria-pressed="false" aria-label="Toggle dark/light mode">Dark Mode</button>
+  </header>
+
+  <main id="maincontent" tabindex="-1">
+    <h2>TikTok Video Downloader</h2>
+    <p>Apni TikTok video ka link yahan paste karein:</p>
+    <input
+      type="text"
+      id="videoLink"
+      placeholder="Paste TikTok video link here"
+      aria-label="TikTok video link input"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button onclick="redirectToSnapTik()" aria-label="Download TikTok video">Download</button>
+
+    <!-- AdSense Ad Placeholder 1 -->
+    <div class="ad-container" aria-label="Advertisement">
+      <!-- Google AdSense code sample -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="1111111111"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+
+    <section aria-label="Site Information">
+      <h3>About Us</h3>
+      <p>We provide a simple tool to download TikTok videos without watermark. Paste your video link above and click Download.</p>
+    </section>
+
+    <!-- AdSense Ad Placeholder 2 -->
+    <div class="ad-container" aria-label="Advertisement">
+      <!-- Google AdSense code sample -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="2222222222"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 TikTok Downloader. All rights reserved.
+  </footer>
+
+  <script>
+    // Dark mode toggle
+    const toggleBtn = document.getElementById('darkModeToggle');
+    toggleBtn.addEventListener('click', () => {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        toggleBtn.textContent = 'Dark Mode';
+        toggleBtn.setAttribute('aria-pressed', 'false');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleBtn.textContent = 'Light Mode';
+        toggleBtn.setAttribute('aria-pressed', 'true');
+      }
+    });
+
+ function redirectToSnapTik() {
+      const link = document.getElementById('videoLink').value.trim();
+      if (!link) {
+        alert('Please enter a TikTok video link!');
+        return;
+      }
+      const url = 'https://ssstik.io/en?url=' + encodeURIComponent(link);
+      window.location.href = url;
+    }
+
+    // Load Google AdSense ads
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <!-- Google AdSense script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
+</body>
+  </html>
+        

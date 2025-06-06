@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Date & Time Calculator - Calculate difference between dates and times easily.">
+  <title>Date & Time Calculator</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --card: #f0f0f0;
+    }
+    [data-theme="dark"] {
+      --bg: #111;
+      --text: #fff;
+      --card: #222;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header, footer {
+      background: #007BFF;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: white;
+      text-decoration: none;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+    .ads {
+      border: 1px dashed #aaa;
+      padding: 1rem;
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Date & Time Calculator</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about-us.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact-us.html">Contact</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+  <div class="dark-toggle">
+    <button onclick="toggleTheme()">Toggle Dark/Light</button>
+  </div>
+  <div class="container">
+    <!-- Header Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <div class="card">
+      <h2>Date Difference Calculator</h2>
+      <input type="date" id="date1" />
+      <input type="date" id="date2" />
+      <button onclick="calculateDateDiff()">Calculate</button>
+      <p id="dateResult"></p>
+    </div>
+
+    <!-- middle Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <div class="card">
+      <h2>Time Difference Calculator</h2>
+      <input type="time" id="time1" />
+      <input type="time" id="time2" />
+      <button onclick="calculateTimeDiff()">Calculate</button>
+      <p id="timeResult"></p>
+    </div>
+
+   <!-- bottom Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <section id="about" class="card">
+      <h2>About Us</h2>
+      <p>This tool helps you calculate date and time differences quickly and easily.</p>
+    </section>
+
+    <section id="blog" class="card">
+      <h2>Blog</h2>
+      <h3>📅 How to Calculate Date Differences</h3>
+      <img src="https://via.placeholder.com/600x200?text=Date+Calculator" alt="Blog Cover" width="100%">
+      <p>Learn how to use our tool to calculate date differences accurately in days, months, or years.</p>
+
+      <h3>⏰ Time Math Made Easy</h3>
+      <img src="https://via.placeholder.com/600x200?text=Time+Calculator" alt="Blog Cover" width="100%">
+      <p>With our time calculator, you can easily compute time differences in minutes or hours. Try it out!</p>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact Us</h2>
+      <p>Email: support@toolswebsite.com</p>
+    </section>
+
+    <section id="faq" class="card">
+      <h2>FAQ</h2>
+      <p><strong>Q:</strong> Is this tool free?<br><strong>A:</strong> Yes, completely free to use.</p>
+      <p><strong>Q:</strong> Can I use it on mobile?<br><strong>A:</strong> Yes, it works on all devices.</p>
+    </section>
+
+    <section class="card">
+      <h2>Privacy Policy</h2>
+      <p>We don’t collect personal data. Ads may use cookies for better experience.</p>
+    </section>
+  </div>
+  <footer>
+    <p>&copy; 2025 Date & Time Calculator Tool. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function calculateDateDiff() {
+      const d1 = new Date(document.getElementById("date1").value);
+      const d2 = new Date(document.getElementById("date2").value);
+      if (isNaN(d1) || isNaN(d2)) {
+        document.getElementById("dateResult").textContent = "Please select both dates.";
+        return;
+      }
+      const diff = Math.abs(d2 - d1);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById("dateResult").textContent = `Difference: ${days} day(s)`;
+    }
+
+    function calculateTimeDiff() {
+      const t1 = document.getElementById("time1").value.split(":"),
+            t2 = document.getElementById("time2").value.split(":");
+      if (t1.length < 2 || t2.length < 2) {
+        document.getElementById("timeResult").textContent = "Please select both times.";
+        return;
+      }
+      const date = new Date();
+      const d1 = new Date(date.setHours(t1[0], t1[1], 0));
+      const d2 = new Date(date.setHours(t2[0], t2[1], 0));
+      const diff = Math.abs(d2 - d1);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById("timeResult").textContent = `Difference: ${hours} hour(s), ${minutes} minute(s)`;
+    }
+
+    function toggleTheme() {
+      document.documentElement.dataset.theme =
+        document.documentElement.dataset.theme === "dark" ? "" : "dark";
+    }
+  </script>
+</body>
+</html>

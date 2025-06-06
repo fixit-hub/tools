@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Free online BMR & Calorie Calculator to estimate your daily calorie needs based on age, gender, height, weight and activity level.">
+  <meta name="keywords" content="BMR calculator, calorie calculator, weight loss calculator, weight gain calculator, TDEE calculator">
+  <title>BMR & Calorie Calculator | Calculate Your Daily Calorie Needs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-light: #4895ef;
+      --secondary: #3f37c9;
+      --accent: #4cc9f0;
+      --text: #2b2d42;
+      --text-light: #8d99ae;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --border: #e9ecef;
+      --success: #4caf50;
+      --warning: #ff9800;
+      --error: #f44336;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --primary: #4361ee;
+      --primary-light: #4895ef;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --text: #f8f9fa;
+      --text-light: #adb5bd;
+      --bg: #121212;
+      --card-bg: #1e1e1e;
+      --border: #2b2d42;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: var(--transition);
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 100;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    nav ul li a:hover {
+      opacity: 0.9;
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: var(--transition);
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .ad-container {
+      background-color: var(--card-bg);
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin: 1rem 0;
+      text-align: center;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .ad-container.top-ad {
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .ad-label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    h1, h2, h3, h4 {
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      margin: 2rem 0;
+    }
+    h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-top: 3rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+      color: var(--primary-light);
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .btn-secondary {
+      background-color: var(--card-bg);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    .btn-secondary:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .calculator-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    @media (max-width: 768px) {
+      .calculator-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .calculator-form {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    input, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background-color: var(--bg);
+      color: var(--text);
+      transition: var(--transition);
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .radio-option input {
+      width: auto;
+    }
+    .unit-toggle {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--primary);
+      font-weight: 500;
+      display: inline-block;
+    }
+    .unit-toggle:hover {
+      text-decoration: underline;
+    }
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-left: 1rem;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover {
+      transform: rotate(30deg);
+    }
+    .result-card {
+      background-color: var(--primary);
+      color: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .result-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0.5rem 0 1.5rem;
+    }
+    .calorie-options {
+      margin-top: 2rem;
+    }
+    .calorie-option {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .calorie-option h4 {
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+    .info-section {
+      margin: 3rem 0;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .info-card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    .info-card img {
+      width: 100%;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      height: 200px;
+      object-fit: cover;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .blog-card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .blog-content {
+      padding: 1.5rem;
+    }
+    .blog-content h3 {
+      margin-bottom: 0.5rem;
+    }
+    .blog-meta {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+    footer {
+      background-color: var(--primary);
+      color: white;
+      padding: 3rem 0 1.5rem;
+      margin-top: 3rem;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .footer-links h3 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    .footer-links ul {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .footer-links a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    .hidden {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    @media (max-width: 992px) {
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.75rem;
+      }
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--primary);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(100%);
+        transition: var(--transition);
+      }
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+      .mobile-menu ul {
+        list-style: none;
+        text-align: center;
+      }
+      .mobile-menu li {
+        margin: 1.5rem 0;
+      }
+      .mobile-menu a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+      .close-menu {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">CalorieCalc</a>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link active" data-section="home">Home</a></li>
+          <li><a href="about-us.html" class="nav-link" data-section="about">About</a></li>
+          <li><a href="blog.html" class="nav-link" data-section="blog">Blog</a></li>
+          <li><a href="faq.html" class="nav-link" data-section="faq">FAQ</a></li>
+          <li><a href="contact-us.html" class="nav-link" data-section="contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+      <button class="mobile-menu-btn" onclick="openMobileMenu()">☰</button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" onclick="closeMobileMenu()">×</button>
+    <ul>
+      <li><a href="index.html" class="nav-link active" data-section="home" onclick="closeMobileMenu()">Home</a></li>
+      <li><a href="about-us.html" class="nav-link" data-section="about" onclick="closeMobileMenu()">About</a></li>
+      <li><a href="blog.html" class="nav-link" data-section="blog" onclick="closeMobileMenu()">Blog</a></li>
+      <li><a href="faq.html" class="nav-link" data-section="faq" onclick="closeMobileMenu()">FAQ</a></li>
+      <li><a href="contact-us.html" class="nav-link" data-section="contact" onclick="closeMobileMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <main class="container">
+    <!-- AdSense Top Ad -->
+    <div class="ad-container top-ad">
+      <div class="ad-label">Advertisement</div>
+      <!-- Replace with your AdSense code -->
+      <div id="top-ad">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+          crossorigin="anonymous"></script>
+        <!-- Top Banner Ad -->
+        <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+          data-ad-slot="YOUR_AD_SLOT_ID"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </div>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+      <h1>Calculate Your Daily Calorie Needs</h1>
+      <div class="calculator-container">
+        <div class="card calculator-form">
+          <h3>Personal Information</h3>
+          <div class="form-group">
+            <label>Gender</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="gender" value="male" checked />
+                Male
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="gender" value="female" />
+                Female
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="age">Age (years)</label>
+            <input type="number" id="age" placeholder="Enter your age" min="15" max="120" />
+          </div>
+          <div class="form-group">
+            <label for="height">Height</label>
+            <input type="number" id="height" placeholder="In cm" />
+            <span class="unit-toggle" onclick="toggleHeightUnit()">Switch to ft/in</span>
+          </div>
+          <div class="form-group">
+            <label for="weight">Weight</label>
+            <input type="number" id="weight" placeholder="In kg" />
+            <span class="unit-toggle" onclick="toggleWeightUnit()">Switch to lbs</span>
+          </div>
+          <div class="form-group">
+            <label for="activity">Activity Level</label>
+            <select id="activity">
+              <option value="1.2">Sedentary (little or no exercise)</option>
+              <option value="1.375">Lightly active (1-3 days/week)</option>
+              <option value="1.55">Moderately active (3-5 days/week)</option>
+              <option value="1.725">Very active (6-7 days/week)</option>
+              <option value="1.9">Super active (twice/day training)</option>
+            </select>
+          </div>
+          <div class="btn-group">
+            <button class="btn" onclick="calculateBMR()">Calculate</button>
+            <button class="btn btn-secondary" onclick="resetForm()">Reset</button>
+            <button class="btn btn-secondary" onclick="window.print()">Print</button>
+          </div>
+        </div>
+
+        <div id="result" class="card result-card hidden">
+          <h3>Your Results</h3>
+          <div class="result-item">
+            <p>Basal Metabolic Rate (BMR)</p>
+            <div class="result-value" id="bmr-result">0 kcal/day</div>
+            <p>This is how many calories your body needs at complete rest.</p>
+          </div>
+          <div class="result-item">
+            <p>Maintenance Calories</p>
+            <div class="result-value" id="maintenance-result">0 kcal/day</div>
+            <p>Based on your activity level, this is your daily calorie need.</p>
+          </div>
+          <div class="calorie-options">
+            <h4>Weight Management</h4>
+            <div class="calorie-option">
+              <p><strong>Weight Loss (Mild):</strong> <span id="loss-mild">0</span> kcal/day</p>
+              <p>~0.25 kg (0.5 lb) per week</p>
+            </div>
+            <div class="calorie-option">
+              <p><strong>Weight Loss (Moderate):</strong> <span id="loss-moderate">0</span> kcal/day</p>
+              <p>~0.5 kg (1 lb) per week</p>
+            </div>
+            <div class="calorie-option">
+              <p><strong>Weight Gain (Mild):</strong> <span id="gain-mild">0</span> kcal/day</p>
+              <p>~0.25 kg (0.5 lb) per week</p>
+            </div>
+            <div class="calorie-option">
+              <p><strong>Weight Gain (Moderate):</strong> <span id="gain-moderate">0</span> kcal/day</p>
+              <p>~0.5 kg (1 lb) per week</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Ad -->
+      <div class="ad-container">
+        <div class="ad-label">Advertisement</div>
+        <!-- Replace with your AdSense code -->
+        <div id="middle-ad">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+            crossorigin="anonymous"></script>
+          <!-- Middle Rectangle Ad -->
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h2>Understanding Your Results</h2>
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>What is BMR?</h3>
+            <p>Basal Metabolic Rate (BMR) is the number of calories your body needs to maintain basic physiological functions like breathing, circulation, and cell production while at complete rest.</p>
+          </div>
+          <div class="info-card">
+            <h3>Maintenance Calories</h3>
+            <p>This is your Total Daily Energy Expenditure (TDEE) - the total number of calories you burn each day including physical activity. To maintain your current weight, consume this amount.</p>
+          </div>
+          <div class="info-card">
+            <h3>Weight Loss</h3>
+            <p>To lose weight, consume fewer calories than your maintenance level. A deficit of 500 kcal/day typically leads to about 0.5 kg (1 lb) of weight loss per week.</p>
+          </div>
+          <div class="info-card">
+            <h3>Weight Gain</h3>
+            <p>To gain weight, consume more calories than your maintenance level. A surplus of 500 kcal/day typically leads to about 0.5 kg (1 lb) of weight gain per week.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section hidden">
+      <h2>About CalorieCalc</h2>
+      <div class="card">
+        <h3>Our Mission</h3>
+        <p>At CalorieCalc, we're dedicated to providing accurate, easy-to-use tools that help you understand your body's energy needs. Our BMR and calorie calculator uses scientifically validated formulas to give you personalized results.</p>
+        
+        <h3>How It Works</h3>
+        <p>The calculator uses the Mifflin-St Jeor Equation, which is currently considered the most accurate for estimating BMR in healthy individuals. Your BMR is then multiplied by an activity factor to estimate your total daily energy expenditure.</p>
+        
+        <h3>The Science Behind It</h3>
+        <p>BMR accounts for about 60-75% of your total daily calorie expenditure. The remaining calories are burned through physical activity and digesting food (thermic effect of food). Understanding your BMR is the first step in managing your weight effectively.</p>
+      </div>
+
+      <!-- About Page Ad -->
+      <div class="ad-container">
+        <div class="ad-label">Advertisement</div>
+        <!-- Replace with your AdSense code -->
+        <div id="about-ad">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+            crossorigin="anonymous"></script>
+          <!-- About Page Ad -->
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="section hidden">
+      <h2>Nutrition & Fitness Blog</h2>
+      
+      <div class="blog-grid">
+        <article class="blog-card">
+          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Healthy foods">
+          <div class="blog-content">
+            <h3>10 Foods That Boost Your Metabolism</h3>
+            <div class="blog-meta">June 15, 2023 • Nutrition</div>
+            <p>Discover which foods can naturally increase your metabolic rate and help you burn more calories throughout the day.</p>
+            <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">Read More</a>
+          </div>
+        </article>
+        
+        <article class="blog-card">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Woman exercising">
+          <div class="blog-content">
+            <h3>How Exercise Affects Your Calorie Needs</h3>
+            <div class="blog-meta">May 28, 2023 • Fitness</div>
+            <p>Learn how different types of exercise impact your daily calorie requirements and how to adjust your intake accordingly.</p>
+            <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">Read More</a>
+          </div>
+        </article>
+        
+        <article class="blog-card">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Vegetables">
+          <div class="blog-content">
+            <h3>Macronutrients: Finding Your Perfect Balance</h3>
+            <div class="blog-meta">April 10, 2023 • Nutrition</div>
+            <p>Understand the role of proteins, carbs, and fats in your diet and how to balance them for your specific goals.</p>
+            <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">Read More</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Blog Page Ad -->
+      <div class="ad-container">
+        <div class="ad-label">Advertisement</div>
+        <!-- Replace with your AdSense code -->
+        <div id="blog-ad">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+            crossorigin="anonymous"></script>
+          <!-- Blog Page Ad -->
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section hidden">
+      <h2>Frequently Asked Questions</h2>
+      
+      <div class="card">
+        <h3>General Questions</h3>
+        <div class="faq-item">
+          <h4>How accurate is the calculator?</h4>
+          <p>The calculator provides estimates based on scientifically validated formulas. Individual results may vary based on factors like muscle mass, genetics, and medical conditions.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Why does my BMR change?</h4>
+          <p>Your BMR changes with age, weight fluctuations, muscle mass changes, and other factors. It's good to recalculate every few months or after significant weight changes.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How often should I recalculate?</h4>
+          <p>We recommend recalculating every 2-3 months, or whenever your weight changes by more than 5 kg (10 lbs), or your activity level changes significantly.</p>
+        </div>
+        
+        <h3>Weight Management</h3>
+        <div class="faq-item">
+          <h4>Why am I not losing weight at the suggested calorie level?</h4>
+          <p>Several factors could be at play: inaccurate tracking of food intake, metabolic adaptation, water retention, or needing to adjust your activity factor.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Is it safe to eat below my BMR?</h4>
+          <p>Consistently eating below your BMR is not recommended as it may lead to muscle loss, metabolic slowdown, and nutrient deficiencies. Consult a healthcare professional before making drastic changes.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Page Ad -->
+      <div class="ad-container">
+        <div class="ad-label">Advertisement</div>
+        <!-- Replace with your AdSense code -->
+        <div id="faq-ad">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+            crossorigin="anonymous"></script>
+          <!-- FAQ Page Ad -->
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section hidden">
+      <h2>Contact Us</h2>
+      
+      <div class="card">
+        <h3>Get In Touch</h3>
+        <p>Have questions or feedback? We'd love to hear from you!</p>
+        
+        <form id="contactForm" class="calculator-form">
+          <div class="form-group">
+            <label for="contact-name">Name</label>
+            <input type="text" id="contact-name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" placeholder="Your email" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-subject">Subject</label>
+            <input type="text" id="contact-subject" placeholder="Subject">
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" rows="5" placeholder="Your message" required></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+
+      <!-- Contact Page Ad -->
+      <div class="ad-container">
+        <div class="ad-label">Advertisement</div>
+        <!-- Replace with your AdSense code -->
+        <div id="contact-ad">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+            crossorigin="anonymous"></script>
+          <!-- Contact Page Ad -->
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-container">
+      <div class="footer-links">
+        <div class="footer-logo">CalorieCalc</div>
+        <p>Your trusted source for accurate calorie calculations and nutrition information.</p>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html" class="nav-link" data-section="home">Home</a></li>
+          <li><a href="about-us.html" class="nav-link" data-section="about">About</a></li>
+          <li><a href="blog.html" class="nav-link" data-section="blog">Blog</a></li>
+          <li><a href="faq.html" class="nav-link" data-section="faq">FAQ</a></li>
+          <li><a href="contact-us.html" class="nav-link" data-section="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="blog.html">Nutrition Guides</a></li>
+          <li><a href="blog.html">Fitness Tips</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Connect</h3>
+        <ul>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Pinterest</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container copyright">
+      <p>&copy; 2023 CalorieCalc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute("data-theme");
+      const newTheme = current === "light" ? "dark" : "light";
+      body.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    }
+
+    // Check for saved theme preference
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.setAttribute("data-theme", "dark");
+    }
+
+    // Unit conversion flags
+    let heightInCm = true;
+    let weightInKg = true;
+
+    // Mobile menu functions
+    function openMobileMenu() {
+      document.getElementById("mobileMenu").classList.add("active");
+    }
+
+    function closeMobileMenu() {
+      document.getElementById("mobileMenu").classList.remove("active");
+    }
+
+    // Navigation between sections
+    document.querySelectorAll(".nav-link").forEach(link => {
+      link.addEventListener("click", function(e) {
+        e.preventDefault();
+        const sectionId = this.getAttribute("data-section");
+        
+        // Update active nav link
+        document.querySelectorAll(".nav-link").forEach(navLink => {
+          navLink.classList.remove("active");
+        });
+        this.classList.add("active");
+        
+        // Show selected section
+        document.querySelectorAll(".section").forEach(section => {
+          section.classList.add("hidden");
+        });
+        document.getElementById(sectionId).classList.remove("hidden");
+        
+        // Close mobile menu if open
+        closeMobileMenu();
+      });
+    });
+
+    // Height unit toggle
+    function toggleHeightUnit() {
+      const heightInput = document.getElementById("height");
+      if (heightInCm) {
+        // Convert cm to ft/in
+        let cm = parseFloat(heightInput.value || 0);
+        let inches = cm / 2.54;
+        let feet = Math.floor(inches / 12);
+        let inch = Math.round(inches % 12);
+        heightInput.placeholder = "Enter height in ft (e.g. 5.9)";
+        heightInput.value = `${feet}.${inch}`;
+      } else {
+        // Convert ft/in to cm
+        let val = heightInput.value.split(".");
+        let feet = parseInt(val[0] || 0);
+        let inch = parseInt(val[1] || 0);
+        let cm = ((feet * 12) + inch) * 2.54;
+        heightInput.value = Math.round(cm);
+        heightInput.placeholder = "In cm";
+      }
+      heightInCm = !heightInCm;
+    }
+
+    // Weight unit toggle
+    function toggleWeightUnit() {
+      const weightInput = document.getElementById("weight");
+      if (weightInKg) {
+        // Convert kg to lbs
+        let kg = parseFloat(weightInput.value || 0);
+        weightInput.value = (kg * 2.20462).toFixed(1);
+        weightInput.placeholder = "In lbs";
+      } else {
+        // Convert lbs to kg
+        let lbs = parseFloat(weightInput.value || 0);
+        weightInput.value = (lbs / 2.20462).toFixed(1);
+        weightInput.placeholder = "In kg";
+      }
+      weightInKg = !weightInKg;
+    }
+
+    // Calculate BMR and calorie needs
+    function calculateBMR() {
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const age = parseInt(document.getElementById("age").value);
+      const heightVal = parseFloat(document.getElementById("height").value);
+      const weightVal = parseFloat(document.getElementById("weight").value);
+      const activity = parseFloat(document.getElementById("activity").value);
+      
+      // Validate inputs
+      if (!age || age < 15 || age > 120) {
+        alert("Please enter a valid age between 15 and 120.");
+        return;
+      }
+      if (!heightVal || heightVal <= 0) {
+        alert("Please enter a valid height.");
+        return;
+      }
+      if (!weightVal || weightVal <= 0) {
+        alert("Please enter a valid weight.");
+        return;
+      }
+
+      // Convert units if needed
+      let height = heightInCm ? heightVal : parseInt(heightVal) * 30.48 + ((heightVal % 1) * 12 * 2.54);
+      let weight = weightInKg ? weightVal : weightVal / 2.20462;
+
+      // Calculate BMR (Mifflin-St Jeor Equation)
+      let BMR = gender === "male"
+        ? 10 * weight + 6.25 * height - 5 * age + 5
+        : 10 * weight + 6.25 * height - 5 * age - 161;
+
+      // Calculate maintenance calories
+      let maintenance = BMR * activity;
+
+      // Display results
+      document.getElementById("bmr-result").textContent = `${BMR.toFixed(0)} kcal/day`;
+      document.getElementById("maintenance-result").textContent = `${maintenance.toFixed(0)} kcal/day`;
+      document.getElementById("loss-mild").textContent = Math.round(maintenance * 0.9);
+      document.getElementById("loss-moderate").textContent = Math.round(maintenance * 0.8);
+      document.getElementById("gain-mild").textContent = Math.round(maintenance * 1.1);
+      document.getElementById("gain-moderate").textContent = Math.round(maintenance * 1.2);
+      
+      // Show results section
+      document.getElementById("result").classList.remove("hidden");
+      
+      // Scroll to results
+      document.getElementById("result").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Reset form
+    function resetForm() {
+      document.getElementById("age").value = "";
+      document.getElementById("height").value = "";
+      document.getElementById("weight").value = "";
+      document.getElementById("activity").selectedIndex = 0;
+      document.querySelector('input[name="gender"][value="male"]').checked = true;
+      document.getElementById("result").classList.add("hidden");
+      heightInCm = true;
+      weightInKg = true;
+      document.getElementById("height").placeholder = "In cm";
+      document.getElementById("weight").placeholder = "In kg";
+    }
+
+    // Contact form submission
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Thank you for your message! We'll get back to you soon.");
+      this.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Easy-to-use YouTube Video Downloader Tool. Paste YouTube URL and download instantly via y2mate redirect." />
+  <meta name="keywords" content="YouTube downloader, video download, y2mate, free video download, youtube video" />
+  <meta name="author" content="YourName" />
+  <title>YouTube Video Downloader Tool</title>
+
+  <!-- Google AdSense script -->
+  <script data-ad-client="YOUR_ADSENSE_CLIENT_ID" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <style>
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* CSS Variables for light/dark mode */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #222222;
+      --header-bg: #f8f9fa;
+      --input-bg: #fff;
+      --input-border: #ccc;
+      --button-bg: #007bff;
+      --button-hover-bg: #0056b3;
+      --button-text: #fff;
+      --nav-link-color: #222;
+      --nav-link-hover: #007bff;
+      --ad-bg: #f0f0f0;
+    }
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --header-bg: #1f1f1f;
+      --input-bg: #222;
+      --input-border: #555;
+      --button-bg: #1a73e8;
+      --button-hover-bg: #185abc;
+      --button-text: #fff;
+      --nav-link-color: #e0e0e0;
+      --nav-link-hover: #8ab4f8;
+      --ad-bg: #2a2a2a;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--header-bg);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    header .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--button-bg);
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    nav a {
+      color: var(--nav-link-color);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: var(--nav-link-hover);
+      outline: none;
+    }
+    /* Dark/Light toggle button */
+    .theme-toggle {
+      cursor: pointer;
+      background: none;
+      border: 2px solid var(--button-bg);
+      color: var(--button-bg);
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover,
+    .theme-toggle:focus {
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      outline: none;
+    }
+
+    /* Main content container */
+    main {
+      flex-grow: 1;
+      max-width: 480px;
+      margin: 1rem auto 2rem;
+      padding: 1rem;
+      background-color: var(--header-bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+    }
+
+    main h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      color: var(--button-bg);
+      user-select: none;
+    }
+    main p {
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    /* Input & button */
+    #videoUrl {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      font-size: 1rem;
+      border: 1.8px solid var(--input-border);
+      border-radius: 6px;
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+    #videoUrl:focus {
+      border-color: var(--button-bg);
+    }
+    button {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.7rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    button:hover,
+    button:focus {
+      background-color: var(--button-hover-bg);
+      outline: none;
+    }
+
+    /* Responsive nav */
+    @media (max-width: 480px) {
+      nav {
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      header {
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+
+    /* Advertisement placeholders */
+    .ad-container {
+      background-color: var(--ad-bg);
+      border: 1px solid #ccc;
+      margin: 1rem 0;
+      padding: 0.3rem;
+      text-align: center;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #666;
+      user-select: none;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-color);
+      padding: 1rem 0;
+      border-top: 1px solid #ccc;
+      background-color: var(--header-bg);
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" aria-label="Site Logo">YT Downloader</div>
+    <nav aria-label="Primary Navigation">
+      <a href="#" tabindex="0">Home</a>
+      <a href="#" tabindex="0">About Us</a>
+      <a href="#" tabindex="0">Blog</a>
+      <a href="#" tabindex="0">Privacy Policy</a>
+      <a href="#" tabindex="0">Contact Us</a>
+      <a href="#" tabindex="0">FAQ</a>
+    </nav>
+    <button class="theme-toggle" aria-pressed="false" aria-label="Toggle Dark or Light mode">Dark Mode</button>
+  </header>
+
+  <!-- Top Google AdSense placeholder (small) -->
+  <div class="ad-container" aria-label="Top Advertisement">
+    <!-- Replace below with your actual AdSense code -->
+    <ins class="adsbygoogle"
+      style="display:inline-block;width:320px;height:50px"
+      data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+      data-ad-slot="YOUR_AD_UNIT_ID"></ins>
+  </div>
+
+  <main>
+    <h1>YouTube Video Downloader Tool</h1>
+    <p>Paste YouTube video URL below and click Download to redirect instantly.</p>
+    <input
+      type="text"
+      id="videoUrl"
+      aria-label="YouTube Video URL"
+      placeholder="Paste YouTube video URL here"
+      autocomplete="off"
+      spellcheck="false"
+      required
+    />
+    <button onclick="redirectToY2mate()" aria-describedby="descButton">Download</button>
+    <p id="descButton" style="font-size: 0.85rem; color: #888; margin-top: 0.5rem; user-select:none;">
+      You will be redirected to y2mate.com with the video ready to download.
+    </p>
+
+    <!-- Mid page AdSense placeholder -->
+    <div class="ad-container" aria-label="Advertisement">
+      <!-- Replace below with your actual AdSense code -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="YOUR_ADSENSE_CLIENT_ID"
+        data-ad-slot="YOUR_AD_UNIT_ID"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 YourName. All rights reserved.
+  </footer>
+
+  <script>
+    // Dark/Light mode toggle
+    const themeToggleBtn = document.querySelector('.theme-toggle');
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.textContent = 'Light Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeToggleBtn.textContent = 'Dark Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'false');
+      }
+      localStorage.setItem('theme', theme);
+    }
+    // Load saved theme or default to light
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+
+    // YouTube video ID extraction (your original function)
+    function getYouTubeVideoID(url) {
+      const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+
+    function redirectToY2mate() {
+      const url = document.getElementById('videoUrl').value.trim();
+      if (!url) {
+        alert('Please paste a YouTube video URL!');
+        return;
+      }
+      const videoID = getYouTubeVideoID(url);
+      if (!videoID) {
+        alert('Invalid YouTube URL!');
+        return;
+      }
+      const redirectUrl = `https://www.y2mate.com/youtube/${videoID}`;
+      window.location.href = redirectUrl;
+    }
+
+    // Initialize Google ads
+    (window.adsbygoogle = window.adsbygoogle || []).push();
+  </script>
+</body>
+  </html>
+  

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel to PDF Converter | Convert Spreadsheets to PDF Online</title>
+  <meta name="description" content="Free online tool to convert Excel files to PDF documents quickly and easily. No installation required. Supports XLSX and XLS formats.">
+  <meta name="keywords" content="Excel to PDF, convert Excel, XLSX to PDF, online converter, spreadsheet to PDF">
+  <meta name="author" content="ExcelToPDF Converter">
+  <link rel="canonical" href="https://fixithub.site/excel-to-pdf">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fixithub.site/excel-to-pdf">
+  <meta property="og:title" content="Excel to PDF Converter | Convert Spreadsheets to PDF Online">
+  <meta property="og:description" content="Free online tool to convert Excel files to PDF documents quickly and easily.">
+  <meta property="og:image" content="https://fixithub.site/images/excel-to-pdf-cover.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://fixithub.site/excel-to-pdf">
+  <meta property="twitter:title" content="Excel to PDF Converter | Convert Spreadsheets to PDF Online">
+  <meta property="twitter:description" content="Free online tool to convert Excel files to PDF documents quickly and easily.">
+  <meta property="twitter:image" content="https://fixithub.site/images/excel-to-pdf-cover.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --text-color: #333;
+      --bg-color: #f8f9fa;
+      --card-bg: #fff;
+      --border-color: #e0e0e0;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --hover-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s ease;
+    }
+    
+    .dark-mode {
+      --primary-color: #4895ef;
+      --secondary-color: #4361ee;
+      --text-color: #f8f9fa;
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --border-color: #333;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      --hover-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header Styles */
+    header {
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 20px;
+    }
+    
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    nav ul li a:hover {
+      color: var(--primary-color);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Theme Toggle */
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+    
+    /* Ad Banner */
+    .ad-banner {
+      background-color: var(--card-bg);
+      padding: 10px;
+      margin: 15px 0;
+      border-radius: 5px;
+      text-align: center;
+      border: 1px dashed var(--border-color);
+    }
+    
+    /* Main Content */
+    main {
+      padding: 30px 0;
+    }
+    
+    .converter-section {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+      transition: var(--transition);
+    }
+    
+    .converter-section:hover {
+      box-shadow: var(--hover-shadow);
+    }
+    
+    h1, h2, h3 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+    }
+    
+    .converter-description {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--text-color);
+      opacity: 0.9;
+    }
+    
+    /* File Upload */
+    .file-upload {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .file-input-label {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 15px;
+    }
+    
+    .file-input-label:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    #excelFile {
+      display: none;
+    }
+    
+    .file-name {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+    
+    .convert-btn {
+      padding: 12px 30px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .convert-btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .convert-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .feature-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    
+    .feature-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    /* Blog Section */
+    .blog-section {
+      margin-bottom: 30px;
+    }
+    
+    .blog-posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .blog-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .blog-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .blog-content {
+      padding: 20px;
+    }
+    
+    .blog-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .blog-excerpt {
+      margin-bottom: 15px;
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+    
+    .read-more {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    /* FAQ Section */
+    .faq-section {
+      margin-bottom: 30px;
+    }
+    
+    .faq-item {
+      background-color: var(--card-bg);
+      border-radius: 5px;
+      margin-bottom: 15px;
+      box-shadow: var(--shadow);
+    }
+    
+    .faq-question {
+      padding: 15px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .faq-item.active .faq-answer {
+      padding: 0 20px 20px;
+      max-height: 500px;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--card-bg);
+      padding: 30px 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-column ul li a {
+      text-decoration: none;
+      color: var(--text-color);
+      transition: var(--transition);
+    }
+    
+    .footer-column ul li a:hover {
+      color: var(--primary-color);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-links a {
+      color: var(--text-color);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      color: var(--primary-color);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    /* Other Pages */
+    .page-content {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      nav {
+        width: 100%;
+        margin-top: 15px;
+        display: none;
+      }
+      
+      nav.active {
+        display: block;
+      }
+      
+      nav ul {
+        flex-direction: column;
+      }
+      
+      nav ul li {
+        margin: 10px 0;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+      }
+      
+      .theme-toggle {
+        margin-left: 0;
+        margin-top: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .converter-section {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="#" class="logo" onclick="showPage('home')">
+        <i>📊</i> ExcelToPDF
+      </a>
+      
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+      
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html" onclick="showPage('home')">Home</a></li>
+          <li><a href="about-us.html" onclick="showPage('about')">About Us</a></li>
+          <li><a href="blog.html" onclick="showPage('blog')">Blog</a></li>
+          <li><a href="privacy-policy.html" onclick="showPage('privacy')">Privacy Policy</a></li>
+          <li><a href="contact-us.html" onclick="showPage('contact')">Contact Us</a></li>
+          <li><a href="faq.html" onclick="showPage('faq')">FAQ</a></li>
+        </ul>
+      </nav>
+      
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Top Ad Banner -->
+  <div class="container">
+    <div class="ad-banner">
+      <!-- Google AdSense Ad -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+       crossorigin="anonymous"></script>
+      <!-- Top Banner Ad -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+           data-ad-slot="YOUR_AD_SLOT_ID"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Home Page -->
+    <div id="home-page" class="page">
+      <div class="converter-section">
+        <h1>Excel to PDF Converter👇</h1>
+        </p>
+        
+        <div class="file-upload">
+          <label for="excelFile" class="file-input-label">
+            <i>📁</i> Choose Excel File
+          </label>
+          <input type="file" id="excelFile" accept=".xlsx, .xls" />
+          <div class="file-name" id="fileName">No file selected</div>
+          <button class="convert-btn" onclick="convertToPDF()" disabled id="convertBtn">
+            Convert to PDF
+          </button>
+        </div>
+      </div>
+      
+      <!-- Middle Ad Banner -->
+      <div class="ad-banner">
+        <!-- Google AdSense Ad -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+         crossorigin="anonymous"></script>
+        <!-- Middle Rectangle Ad -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+             data-ad-slot="YOUR_AD_SLOT_ID_2"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      
+      <section class="features">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Fast Conversion</h3>
+          <p>Convert your Excel files to PDF in seconds with our high-speed processing.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">Secure</h3>
+          <p>Your files are processed in your browser and never uploaded to our servers.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">💯</div>
+          <h3 class="feature-title">High Quality</h3>
+          <p>Preserve all your formatting and data structure in the output PDF.</p>
+        </div>
+      </section>
+      
+      <section class="blog-section">
+        <h2>Latest Blog Posts</h2>
+        <div class="blog-posts">
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Excel Tips" class="blog-image">
+            <div class="blog-content">
+              <h3 class="blog-title">5 Excel Tips to Improve Your Productivity</h3>
+              <p class="blog-excerpt">Learn these essential Excel tricks to save time and work more efficiently with your spreadsheets.</p>
+              <a href="#" class="read-more" onclick="showPage('blog-post-1')">Read More</a>
+            </div>
+          </div>
+          
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="PDF vs Excel" class="blog-image">
+            <div class="blog-content">
+              <h3 class="blog-title">When to Use PDF Instead of Excel</h3>
+              <p class="blog-excerpt">Discover the best scenarios for using PDF documents instead of Excel spreadsheets.</p>
+              <a href="#" class="read-more" onclick="showPage('blog-post-2')">Read More</a>
+            </div>
+          </div>
+          
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Excel Automation" class="blog-image">
+            <div class="blog-content">
+              <h3 class="blog-title">Automating Excel Tasks with JavaScript</h3>
+              <p class="blog-excerpt">How to use JavaScript to automate repetitive tasks in Excel and save hours of work.</p>
+              <a href="#" class="read-more" onclick="showPage('blog-post-3')">Read More</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Is this service free to use?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, our Excel to PDF converter is completely free to use with no hidden charges. You can convert as many files as you need without any limitations.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>What Excel formats do you support?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We support both modern .xlsx files and legacy .xls format. Our converter works with all versions of Microsoft Excel and compatible spreadsheet software.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Are my files secure?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely! Your files are processed entirely in your browser and never uploaded to our servers. This ensures maximum privacy and security for your documents.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Can I convert multiple sheets at once?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Currently, our converter processes the first sheet of your Excel file. For multi-sheet documents, each sheet will need to be converted individually.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- About Us Page -->
+    <div id="about-page" class="page" style="display: none;">
+      <div class="page-content">
+        <h1>About Us</h1>
+        <p>Welcome to ExcelToPDF Converter, your go-to solution for converting Excel spreadsheets to PDF documents quickly and easily.</p>
+        
+        <h2>Our Mission</h2>
+        <p>Our mission is to provide simple, secure, and efficient tools that help people work with their documents without compromising privacy or quality. We believe in creating tools that just work, without unnecessary complexity.</p>
+        
+        <h2>Our Team</h2>
+        <p>We're a small team of developers and designers passionate about creating useful web tools. With backgrounds in data analysis and web development, we understand the importance of being able to convert between file formats while preserving data integrity.</p>
+        
+        <h2>Why Choose Us?</h2>
+        <ul>
+          <li><strong>Privacy Focused:</strong> Your files never leave your computer</li>
+          <li><strong>No Registration:</strong> Use our tool without signing up</li>
+          <li><strong>Free Forever:</strong> We'll always offer a free version</li>
+          <li><strong>Regular Updates:</strong> We continuously improve our tools</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Blog Page -->
+    <div id="blog-page" class="page" style="display: none;">
+      <div class="page-content">
+        <h1>Blog</h1>
+        
+        <div class="blog-posts">
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Excel Tips" class="blog-image">
+            <div class="blog-content">
+              <h3 class="blog-title">5 Excel Tips to Improve Your Productivity</h3>
+              <p class="blog-excerpt">Learn these essential Excel tricks to save time and work more efficiently with your spreadsheets.</p>
+              <a href="#" class="read-more" onclick="showPage('blog-post-1')">Read More</a>
+            </div>
+          </div>
+          
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="PDF vs Excel" class="blog-image">
+            <div class="blog-content">
+              <h3 class="blog-title">When to Use PDF Instead of Excel</h3>
+              <p class="blog-excerpt">Discover the best scenarios for using PDF documents instead of Excel spreadsheets.</p>
+              <a href="#" class="read-more" onclick="showPage('blog-post-2')">Read More</a>
+            </div>
+          </div>
+          
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Excel Automation" class="blog-image">
+            <div class="blog-content">
+              <h3 class="blog-title">Automating Excel Tasks with JavaScript</h3>
+              <p class="blog-excerpt">How to use JavaScript to automate repetitive tasks in Excel and save hours of work.</p>
+              <a href="#" class="read-more" onclick="showPage('blog-post-3')">Read More</a>
+            </div>
+          </div>
+          
+          <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1581093450021-4a7360e9a9e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Excel Formulas" class="blog-image">
+            <div class="blog-content">
+              <h3 class="blog-title">10 Essential Excel Formulas Everyone Should Know</h3>
+              <p class="blog-excerpt">Master these fundamental Excel formulas to become more proficient with your data analysis.</p>
+              <a href="#" class="read-more" onclick="showPage('blog-post-4')">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Blog Post 1 -->
+    <div id="blog-post-1" class="page" style="display: none;">
+      <div class="page-content">
+        <a href="#" class="read-more" onclick="showPage('blog')">&larr; Back to Blog</a>
+        <h1>5 Excel Tips to Improve Your Productivity</h1>
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Excel Tips" style="width: 100%; height: auto; border-radius: 8px; margin: 20px 0;">
+        
+        <p>Microsoft Excel is a powerful tool for data analysis and management, but many users only scratch the surface of its capabilities. Here are five tips that can significantly improve your productivity when working with Excel:</p>
+        
+        <h2>1. Keyboard Shortcuts</h2>
+        <p>Learning keyboard shortcuts can save you countless hours. Some essential ones include:</p>
+        <ul>
+          <li><strong>Ctrl + Arrow keys:</strong> Jump to the edge of data regions</li>
+          <li><strong>Ctrl + Shift + Arrow keys:</strong> Select data regions</li>
+          <li><strong>Alt + =:</strong> AutoSum selected cells</li>
+          <li><strong>Ctrl + T:</strong> Convert data range to a table</li>
+        </ul>
+        
+        <h2>2. Flash Fill</h2>
+        <p>Flash Fill (Ctrl + E) automatically fills in values when it detects a pattern. For example, if you have a column of full names and start typing first names in the next column, Excel will recognize the pattern and complete the rest.</p>
+        
+        <h2>3. Conditional Formatting</h2>
+        <p>Use conditional formatting to highlight important data points automatically. You can highlight cells that meet certain criteria, create data bars, or apply color scales to visualize your data better.</p>
+        
+        <h2>4. Pivot Tables</h2>
+        <p>Pivot tables are one of Excel's most powerful features for summarizing and analyzing data. They allow you to quickly create reports by dragging and dropping fields to different areas.</p>
+        
+        <h2>5. Data Validation</h2>
+        <p>Use data validation to control what can be entered in a cell. You can create dropdown lists, restrict entries to certain types (like dates or numbers), or even create custom validation rules.</p>
+        
+        <p>By mastering these Excel features, you'll be able to work more efficiently and get more value from your data.</p>
+      </div>
+    </div>
+    
+    <!-- Blog Post 2 -->
+    <div id="blog-post-2" class="page" style="display: none;">
+      <div class="page-content">
+        <a href="#" class="read-more" onclick="showPage('blog')">&larr; Back to Blog</a>
+        <h1>When to Use PDF Instead of Excel</h1>
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="PDF vs Excel" style="width: 100%; height: auto; border-radius: 8px; margin: 20px 0;">
+        
+        <p>Both Excel and PDF are essential tools in the modern workplace, but they serve different purposes. Here's when you should consider using PDF instead of Excel:</p>
+        
+        <h2>1. Sharing Final Reports</h2>
+        <p>When you need to share a finalized report where the data shouldn't be modified, PDF is the better choice. It preserves formatting and prevents accidental changes to the data.</p>
+        
+        <h2>2. Printing Documents</h2>
+        <p>PDFs are designed for printing. They maintain consistent formatting across different devices and printers, unlike Excel which can have printing issues with large spreadsheets.</p>
+        
+        <h2>3. Archiving Data</h2>
+        <p>For long-term archiving, PDF/A (a specialized PDF format) is often a better choice as it's designed for preservation and is more likely to be readable in the future.</p>
+        
+        <h2>4. When Security is Important</h2>
+        <p>PDFs offer more robust security options. You can password-protect them, restrict editing, printing, or copying of content, which isn't as secure in Excel.</p>
+        
+        <h2>5. Forms That Need to Be Filled Out</h2>
+        <p>While Excel can be used for forms, PDF forms are often more user-friendly for end-users and provide better control over the data entry process.</p>
+        
+        <p>Remember, our Excel to PDF converter makes it easy to switch between these formats when needed!</p>
+      </div>
+    </div>
+    
+    <!-- Blog Post 3 -->
+    <div id="blog-post-3" class="page" style="display: none;">
+      <div class="page-content">
+        <a href="#" class="read-more" onclick="showPage('blog')">&larr; Back to Blog</a>
+        <h1>Automating Excel Tasks with JavaScript</h1>
+        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Excel Automation" style="width: 100%; height: auto; border-radius: 8px; margin: 20px 0;">
+        
+        <p>JavaScript isn't just for web development - it can be a powerful tool for automating repetitive Excel tasks. Here's how you can use JavaScript to work with Excel files:</p>
+        
+        <h2>1. Reading Excel Files</h2>
+        <p>With libraries like SheetJS (xlsx), you can read Excel files directly in JavaScript:</p>
+        <pre><code>const workbook = XLSX.readFile('data.xlsx');
+const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+const data = XLSX.utils.sheet_to_json(firstSheet);</code></pre>
+        
+        <h2>2. Modifying Data</h2>
+        <p>You can process and transform your Excel data programmatically:</p>
+        <pre><code>// Add a new calculated column
+data.forEach(row => {
+  row.total = row.quantity * row.price;
+});</code></pre>
+        
+        <h2>3. Creating Reports</h2>
+        <p>Generate new Excel files with processed data:</p>
+        <pre><code>const newWorksheet = XLSX.utils.json_to_sheet(data);
+const newWorkbook = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(newWorkbook, newWorksheet, "Report");
+XLSX.writeFile(newWorkbook, 'report.xlsx');</code></pre>
+        
+        <h2>4. Converting to PDF</h2>
+        <p>Combine with jsPDF to create PDF reports from your Excel data (like we do in our converter!):</p>
+        <pre><code>const pdf = new jsPDF();
+pdf.text('Sales Report', 10, 10);
+data.forEach((row, i) => {
+  pdf.text(`${row.product}: ${row.total}`, 10, 20 + (i * 10));
+});
+pdf.save('report.pdf');</code></pre>
+        
+        <h2>5. Automating Workflows</h2>
+        <p>Combine these techniques to create complete automated workflows that process Excel data, transform it, and generate reports - saving you hours of manual work.</p>
+      </div>
+    </div>
+    
+    <!-- Blog Post 4 -->
+    <div id="blog-post-4" class="page" style="display: none;">
+      <div class="page-content">
+        <a href="#" class="read-more" onclick="showPage('blog')">&larr; Back to Blog</a>
+        <h1>10 Essential Excel Formulas Everyone Should Know</h1>
+        <img src="https://images.unsplash.com/photo-1581093450021-4a7360e9a9e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Excel Formulas" style="width: 100%; height: auto; border-radius: 8px; margin: 20px 0;">
+        
+        <p>Mastering Excel formulas can transform how you work with data. Here are 10 essential formulas that every Excel user should know:</p>
+        
+        <h2>1. VLOOKUP</h2>
+        <p>Looks for a value in the leftmost column of a table and returns a value in the same row from a specified column.</p>
+        <pre><code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></pre>
+        
+        <h2>2. INDEX-MATCH</h2>
+        <p>A more flexible alternative to VLOOKUP that can look left and is less prone to errors when columns are inserted.</p>
+        <pre><code>=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))</code></pre>
+        
+        <h2>3. SUMIFS</h2>
+        <p>Adds all numbers in a range based on multiple criteria.</p>
+        <pre><code>=SUMIFS(sum_range, criteria_range1, criteria1, [criteria_range2, criteria2], ...)</code></pre>
+        
+        <h2>4. IFERROR</h2>
+        <p>Returns a custom result when a formula generates an error, and the standard result when no error is detected.</p>
+        <pre><code>=IFERROR(value, value_if_error)</code></pre>
+        
+        <h2>5. CONCATENATE (or CONCAT/TEXTJOIN in newer versions)</h2>
+        <p>Combines text from different cells into one cell.</p>
+        <pre><code>=CONCATENATE(text1, [text2], ...)</code></pre>
+        
+        <h2>6. DATE</h2>
+        <p>Creates a date from year, month, and day values, useful for date calculations.</p>
+        <pre><code>=DATE(year, month, day)</code></pre>
+        
+        <h2>7. NETWORKDAYS</h2>
+        <p>Calculates the number of working days between two dates, excluding weekends and holidays.</p>
+        <pre><code>=NETWORKDAYS(start_date, end_date, [holidays])</code></pre>
+        
+        <h2>8. COUNTIF</h2>
+        <p>Counts the number of cells within a range that meet a single condition.</p>
+        <pre><code>=COUNTIF(range, criteria)</code></pre>
+        
+        <h2>9. LEFT/RIGHT/MID</h2>
+        <p>Extracts a specific number of characters from text, from the start (LEFT), end (RIGHT), or middle (MID).</p>
+        <pre><code>=LEFT(text, [num_chars])
+=RIGHT(text, [num_chars])
+=MID(text, start_num, num_chars)</code></pre>
+        
+        <h2>10. PMT</h2>
+        <p>Calculates the payment for a loan based on constant payments and a constant interest rate.</p>
+        <pre><code>=PMT(rate, nper, pv, [fv], [type])</code></pre>
+        
+        <p>Mastering these formulas will give you a solid foundation for working with data in Excel efficiently.</p>
+      </div>
+    </div>
+    
+    <!-- Privacy Policy Page -->
+    <div id="privacy-page" class="page" style="display: none;">
+      <div class="page-content">
+        <h1>Privacy Policy</h1>
+        <p><em>Last Updated: June 2023</em></p>
+        
+        <h2>1. Introduction</h2>
+        <p>Welcome to ExcelToPDF Converter. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
+        
+        <h2>2. Data We Collect</h2>
+        <p>We do not collect or store any personal data from our users. Our Excel to PDF conversion happens entirely in your browser - your files are never uploaded to our servers.</p>
+        
+        <h2>3. Cookies and Tracking</h2>
+        <p>We may use cookies to improve your experience on our site. These cookies are used for:</p>
+        <ul>
+          <li>Remembering your theme preference (light/dark mode)</li>
+          <li>Analyzing site traffic through Google Analytics</li>
+        </ul>
+        
+        <h2>4. Third-Party Services</h2>
+        <p>We use Google AdSense to display advertisements on our site. Google may use cookies to personalize the ads you see. You can learn more about Google's privacy practices at <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a>.</p>
+        
+        <h2>5. Changes to This Policy</h2>
+        <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page.</p>
+        
+        <h2>6. Contact Us</h2>
+        <p>If you have any questions about this privacy policy, please contact us through our <a href="#" onclick="showPage('contact')">Contact page</a>.</p>
+      </div>
+    </div>
+    
+    <!-- Contact Us Page -->
+    <div id="contact-page" class="page" style="display: none;">
+      <div class="page-content">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you! Whether you have a question about our converter, need technical support, or want to suggest improvements, please reach out.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0;">
+          <div>
+            <h2>Send Us a Message</h2>
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+              <div style="margin-bottom: 15px;">
+                <label for="name" style="display: block; margin-bottom: 5px;">Name</label>
+                <input type="text" id="name" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color);">
+              </div>
+              
+              <div style="margin-bottom: 15px;">
+                <label for="email" style="display: block; margin-bottom: 5px;">Email</label>
+                <input type="email" id="email" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color);">
+              </div>
+              
+              <div style="margin-bottom: 15px;">
+                <label for="message" style="display: block; margin-bottom: 5px;">Message</label>
+                <textarea id="message" rows="5" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color);"></textarea>
+              </div>
+              
+              <button type="submit" style="padding: 12px 30px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition);">
+                Send Message
+              </button>
+            </form>
+          </div>
+          
+          <div>
+            <h2>Contact Information</h2>
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">Email</h3>
+              <p>contact.fixithub@gmail.com</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">Follow Us</h3>
+              <div class="social-links">
+                <a href="#" title="Twitter"><i>🐦</i> Twitter</a>
+                <a href="#" title="Facebook"><i>📘</i> Facebook</a>
+                <a href="#" title="LinkedIn"><i>🔗</i> LinkedIn</a>
+              </div>
+            </div>
+            
+            <div>
+              <h3 style="margin-bottom: 10px;">FAQ</h3>
+              <p>Check our <a href="#" onclick="showPage('faq')">Frequently Asked Questions</a> page for quick answers to common questions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FAQ Page -->
+    <div id="faq-page" class="page" style="display: none;">
+      <div class="page-content">
+        <h1>Frequently Asked Questions</h1>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Is this service free to use?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, our Excel to PDF converter is completely free to use with no hidden charges. You can convert as many files as you need without any limitations.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>What Excel formats do you support?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We support both modern .xlsx files and legacy .xls format. Our converter works with all versions of Microsoft Excel and compatible spreadsheet software.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Are my files secure?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely! Your files are processed entirely in your browser and never uploaded to our servers. This ensures maximum privacy and security for your documents.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Can I convert multiple sheets at once?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Currently, our converter processes the first sheet of your Excel file. For multi-sheet documents, each sheet will need to be converted individually.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Does the converter preserve formatting?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Our converter preserves basic formatting like cell alignment, text formatting, and basic cell styles. However, some advanced Excel features may not translate perfectly to PDF.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>What's the maximum file size I can convert?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Since conversion happens in your browser, the limit depends on your device's memory. Typically, files up to 10MB work well, but very large files may cause performance issues.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Can I convert PDF back to Excel?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>This service currently only converts Excel to PDF. Converting PDF back to Excel requires different technology as PDF is not designed for easy data extraction.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Do you store my converted files?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>No, we don't store any of your files. The conversion happens in your browser, and the resulting PDF is downloaded directly to your device.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Why does my PDF look different from my Excel file?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>PDF and Excel are different formats with different capabilities. Some Excel features like conditional formatting, macros, or certain charts may not convert perfectly.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>How can I contact support?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            <p>You can reach our support team through the <a href="#" onclick="showPage('contact')">Contact Us</a> page. We typically respond within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bottom Ad Banner -->
+    <div class="ad-banner">
+      <!-- Google AdSense Ad -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+       crossorigin="anonymous"></script>
+      <!-- Bottom Banner Ad -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+           data-ad-slot="YOUR_AD_SLOT_ID_3"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>ExcelToPDF</h3>
+          <p>Your free online tool for converting Excel spreadsheets to PDF documents quickly and securely.</p>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html" onclick="showPage('home')">Home</a></li>
+            <li><a href="about-us.html" onclick="showPage('about')">About Us</a></li>
+            <li><a href="blog.html" onclick="showPage('blog')">Blog</a></li>
+            <li><a href="faq.html" onclick="showPage('faq')">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy-policy.html" onclick="showPage('privacy')">Privacy Policy</a></li>
+            <li><a href="terms.html" onclick="showPage('terms')">Terms of Service</a></li>
+            <li><a href="contact-us.html" onclick="showPage('contact')">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="#" title="Twitter"><i>🐦</i></a>
+            <a href="#" title="Facebook"><i>📘</i></a>
+            <a href="#" title="LinkedIn"><i>🔗</i></a>
+            <a href="#" title="YouTube"><i>▶️</i></a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2023 ExcelToPDF Converter. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <script>
+    // Theme Management
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const themeIcon = document.getElementById('themeIcon');
+      if (document.body.classList.contains('dark-mode')) {
+        themeIcon.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeIcon.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+    
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('themeIcon').textContent = '☀️';
+    }
+    
+    // Mobile Menu Toggle
+    function toggleMenu() {
+      const nav = document.getElementById('mainNav');
+      nav.classList.toggle('active');
+    }
+    
+    // FAQ Toggle
+    function toggleFAQ(item) {
+      item.classList.toggle('active');
+      const answer = item.querySelector('.faq-answer');
+      const toggle = item.querySelector('.faq-question span:last-child');
+      
+      if (item.classList.contains('active')) {
+        toggle.textContent = '−';
+      } else {
+        toggle.textContent = '+';
+      }
+    }
+    
+    // Page Navigation
+    function showPage(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.style.display = 'none';
+      });
+      
+      // Show selected page
+      document.getElementById(`${pageId}-page`).style.display = 'block';
+      
+      // Close mobile menu if open
+      document.getElementById('mainNav').classList.remove('active');
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+    
+    // Contact Form Submission
+    function submitContactForm(event) {
+      event.preventDefault();
+      
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      // Here you would typically send this data to a server
+      // For this demo, we'll just show an alert
+      alert(`Thank you, ${name}! Your message has been received. We'll contact you at ${email} soon.`);
+      
+      // Reset form
+      document.getElementById('contactForm').reset();
+    }
+    
+    // File Input Handling
+    document.getElementById('excelFile').addEventListener('change', function(e) {
+      const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+      document.getElementById('fileName').textContent = fileName;
+      document.getElementById('convertBtn').disabled = !e.target.files[0];
+    });
+    
+    // Excel to PDF Conversion
+    async function convertToPDF() {
+      const fileInput = document.getElementById("excelFile");
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Please select an Excel file first.");
+        return;
+      }
+      
+      // Show loading state
+      const convertBtn = document.getElementById('convertBtn');
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'Converting...';
+      
+      try {
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+          try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: "array" });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            
+            let y = 20;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const margin = 10;
+            
+            // Add title
+            pdf.setFontSize(18);
+            pdf.text("Excel to PDF Conversion", pageWidth / 2, 15, { align: "center" });
+            pdf.setFontSize(12);
+            
+            // Add conversion date
+            pdf.text(`Converted on: ${new Date().toLocaleString()}`, margin, y);
+            y += 10;
+            
+            // Add file info
+            pdf.text(`File name: ${file.name}`, margin, y);
+            y += 10;
+            
+            // Add some space before the data
+            y += 10;
+            
+            // Process rows
+            pdf.setFontSize(10);
+            rows.forEach(row => {
+              // Skip empty rows
+              if (row.length === 0 || row.every(cell => cell === '')) {
+                y += 5; // Add small space for empty rows
+                return;
+              }
+              
+              let rowText = Array.isArray(row) ? row.join(" | ") : String(row);
+              
+              // Split long text into multiple lines
+              const maxLineWidth = pageWidth - (margin * 2);
+              const lines = pdf.splitTextToSize(rowText, maxLineWidth);
+              
+              // Check if we need a new page
+              if (y + (lines.length * 7) > pdf.internal.pageSize.getHeight() - 10) {
+                pdf.addPage();
+                y = 20;
+              }
+              
+              // Add each line
+              lines.forEach(line => {
+                pdf.text(line, margin, y);
+                y += 7;
+              });
+            });
+            
+            // Save the PDF
+            pdf.save(file.name.replace(/\.[^/.]+$/, "") + ".pdf");
+            
+          } catch (error) {
+            console.error("Conversion error:", error);
+            alert("An error occurred during conversion. Please try again with a different file.");
+          } finally {
+            convertBtn.disabled = false;
+            convertBtn.textContent = 'Convert to PDF';
+          }
+        };
+        reader.readAsArrayBuffer(file);
+        
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+        convertBtn.disabled = false;
+        convertBtn.textContent = 'Convert to PDF';
+      }
+    }
+    
+    // Initialize - show home page
+    document.addEventListener('DOMContentLoaded', function() {
+      showPage('home');
+      
+      // Load AdSense ads
+      if (typeof adsbygoogle !== 'undefined') {
+        adsbygoogle.push({});
+      }
+    });
+  </script>
+</body>
+</html>
