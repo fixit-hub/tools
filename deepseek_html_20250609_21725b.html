@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Compress Images Without Losing Quality – The Ultimate Guide | FixitHub</title>
+    <meta name="description" content="Learn how to compress images without quality loss using FixitHub's free Image Compressor. Perfect for websites, blogs, and social media.">
+    <meta name="keywords" content="compress images online, reduce image size without quality loss, image optimizer free, image compression tool, fixithub image compressor">
+    <meta name="author" content="FixitHub Team">
+    <meta property="og:title" content="How to Compress Images Without Losing Quality – The Ultimate Guide">
+    <meta property="og:description" content="Learn how to compress images without quality loss using FixitHub's free Image Compressor.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://fixithub.site/blog/image-compression-guide">
+    <meta property="og:image" content="https://fixithub.site/images/image-compression-guide-cover.jpg">
+    <link rel="canonical" href="https://fixithub.site/blog/image-compression-guide">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --border-color: #e0e0e0;
+            --header-bg: #fff;
+            --footer-bg: #2b2d42;
+            --footer-text: #f8f9fa;
+            --link-color: #4361ee;
+            --link-hover: #3a0ca3;
+        }
+
+        .dark-mode {
+            --primary-color: #4895ef;
+            --secondary-color: #4361ee;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --header-bg: #1a1a1a;
+            --footer-bg: #121212;
+            --footer-text: #f8f9fa;
+            --link-color: #4895ef;
+            --link-hover: #4cc9f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 20px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .main-content {
+            flex: 2;
+        }
+
+        .sidebar {
+            flex: 1;
+        }
+
+        .blog-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .blog-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 30px;
+        }
+
+        .blog-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .blog-content h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px;
+            color: var(--primary-color);
+        }
+
+        .blog-content p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .blog-content li {
+            margin-bottom: 10px;
+        }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .meta-info span {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .meta-info i {
+            margin-right: 5px;
+        }
+
+        .sidebar-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .popular-posts {
+            list-style: none;
+        }
+
+        .popular-posts li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popular-posts li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .popular-posts a {
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .popular-posts a:hover {
+            color: var(--primary-color);
+        }
+
+        .popular-posts img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .popular-posts .post-title {
+            font-weight: 500;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .tag:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .ad-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 50px 0 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 992px) {
+            .blog-container {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 15px;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: var(--header-bg);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s;
+                z-index: 99;
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Before/After Comparison */
+        .comparison-container {
+            margin: 30px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-row {
+            display: flex;
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .comparison-col {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .comparison-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .comparison-stats {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Callout Box */
+        .callout {
+            background-color: rgba(67, 97, 238, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .callout-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">FixitHub</a>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li>
+                        <button class="theme-toggle">🌓</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>How to Compress Images Without Losing Quality</h1>
+            <p>The Ultimate Guide to Optimizing Your Images for Web and Mobile</p>
+            <a href="https://fixithub.site/tools/image-compressor" class="btn">Try Our Image Compressor</a>
+        </div>
+    </section>
+
+    <div class="container blog-container">
+        <main class="main-content">
+            <article class="blog-card">
+                <img src="https://fixithub.site/images/image-compression-guide-cover.jpg" alt="Image Compression Guide" class="blog-image">
+                <div class="blog-content">
+                    <div class="meta-info">
+                        <span><i>📅</i> June 9, 2025</span>
+                        <span><i>⏱️</i> 8 min read</span>
+                        <span><i>👁️</i> 1.2K views</span>
+                    </div>
+                    
+                    <h2>How to Compress Images Without Losing Quality – The Ultimate Guide</h2>
+                    
+                    <div class="ad-container">
+                        <div>
+                            <div class="ad-label">Advertisement</div>
+                            <!-- AdSense Ad Code -->
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"></script>
+                            <!-- Blog Top Banner -->
+                            <ins class="adsbygoogle"
+                                style="display:block"
+                                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                                data-ad-slot="1234567890"
+                                data-ad-format="auto"
+                                data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                    </div>
+                    
+                    <h3>Introduction</h3>
+                    <p>In today's digital world, <strong>image size</strong> plays a major role in how quickly websites load, how much storage you use, and how well your SEO performs. Whether you're a blogger, web designer, developer, or casual user, knowing how to <strong>compress images without losing quality</strong> is essential. That's where tools like <strong>FixitHub's Image Compressor</strong> come in.</p>
+                    <p>In this article, we'll explore why image compression matters, how it works, and how you can easily reduce image file size using FixitHub—<strong>without compromising on quality</strong>.</p>
+                    
+                    <div class="callout">
+                        <div class="callout-title">Quick Fact</div>
+                        <p>Compressing images can improve website loading speed by up to 50%, significantly boosting user experience and SEO rankings.</p>
+                    </div>
+                    
+                    <h3>What is Image Compression?</h3>
+                    <p>Image compression is the process of reducing the file size of an image while preserving its visual quality. There are two types:</p>
+                    <ul>
+                        <li><strong>Lossless compression</strong>: Reduces file size without losing any data (best for PNG, icons).</li>
+                        <li><strong>Lossy compression</strong>: Slight quality reduction but massive file size savings (ideal for JPG, web images).</li>
+                    </ul>
+                    <p>With the right compression, your images:</p>
+                    <ul>
+                        <li>Load faster</li>
+                        <li>Use less bandwidth</li>
+                        <li>Improve website speed (important for SEO)</li>
+                        <li>Save space on disk/cloud</li>
+                    </ul>
+                    
+                    <div class="comparison-container">
+                        <div class="comparison-row comparison-header">
+                            <div class="comparison-col">Before Compression</div>
+                            <div class="comparison-col">After Compression</div>
+                        </div>
+                        <div class="comparison-row">
+                            <div class="comparison-col">
+                                <img src="https://fixithub.site/images/uncompressed-image.jpg" alt="Uncompressed Image" class="comparison-image">
+                                <div class="comparison-stats">2.4 MB • 4000×3000 px</div>
+                            </div>
+                            <div class="comparison-col">
+                                <img src="https://fixithub.site/images/compressed-image.jpg" alt="Compressed Image" class="comparison-image">
+                                <div class="comparison-stats">450 KB • 4000×3000 px</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ad-container">
+                        <div>
+                            <div class="ad-label">Advertisement</div>
+                            <!-- AdSense In-Article Ad -->
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"></script>
+                            <ins class="adsbygoogle"
+                                style="display:block; text-align:center;"
+                                data-ad-layout="in-article"
+                                data-ad-format="fluid"
+                                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                                data-ad-slot="0987654321"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                    </div>
+                    
+                    <h3>Why Use FixitHub's Image Compressor?</h3>
+                    <p>FixitHub's free Image Compressor tool is designed to:</p>
+                    <ul>
+                        <li>Compress JPG, JPEG, PNG, and WebP formats</li>
+                        <li>Maintain high visual quality</li>
+                        <li>Work instantly online—no downloads or installs</li>
+                        <li>Preserve transparency (for PNG)</li>
+                        <li>Support bulk uploads</li>
+                    </ul>
+                    <p>You don't need any software or technical skills—just upload your images and download them compressed within seconds.</p>
+                    
+                    <h3>How to Compress an Image Using FixitHub</h3>
+                    <p>Follow these simple steps:</p>
+                    <ol>
+                        <li><strong>Visit</strong> the Image Compressor tool at <a href="https://fixithub.site/tools/image-compressor">FixitHub Image Compressor</a></li>
+                        <li><strong>Click "Upload Image"</strong> and select the file(s) you want to compress</li>
+                        <li>The tool automatically compresses your image</li>
+                        <li><strong>Download</strong> the compressed version directly</li>
+                    </ol>
+                    <p>That's it—your image is ready for use on websites, blogs, social media, and more.</p>
+                    
+                    <div class="callout">
+                        <div class="callout-title">Pro Tip</div>
+                        <p>For best results with photographs, use JPG format with 70-80% quality. For graphics with transparency, use PNG-8 format when possible.</p>
+                    </div>
+                    
+                    <h3>Real-World Use Cases</h3>
+                    <ul>
+                        <li><strong>Web developers</strong> use compression to improve site speed</li>
+                        <li><strong>eCommerce stores</strong> compress product images for faster shopping experience</li>
+                        <li><strong>Photographers</strong> reduce file size before uploading portfolios</li>
+                        <li><strong>Students & professionals</strong> compress images to email or share easily</li>
+                    </ul>
+                    
+                    <div class="ad-container">
+                        <div>
+                            <div class="ad-label">Advertisement</div>
+                            <!-- AdSense Bottom Banner -->
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"></script>
+                            <ins class="adsbygoogle"
+                                style="display:block"
+                                data-ad-format="autorelaxed"
+                                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                                data-ad-slot="5678901234"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                    </div>
+                    
+                    <h3>Tips for Better Image Compression</h3>
+                    <ul>
+                        <li><strong>Choose the right format</strong>: Use PNG for logos, JPG for photos</li>
+                        <li><strong>Avoid double compression</strong> (e.g., uploading to WhatsApp & re-compressing)</li>
+                        <li><strong>Test different compression levels</strong> if quality is crucial</li>
+                        <li><strong>Resize large images</strong> before compressing if size isn't needed</li>
+                    </ul>
+                    
+                    <h3>Conclusion</h3>
+                    <p>Image compression doesn't have to be hard. With <strong>FixitHub's free Image Compressor</strong>, you can reduce file size while keeping top quality. Whether you're optimizing a website or freeing up space on your phone, this tool saves you time, bandwidth, and headaches.</p>
+                    <p>Start compressing your images today at <a href="https://fixithub.site/tools/image-compressor">FixitHub Image Compressor</a> — <strong>it's fast, free, and effective.</strong></p>
+                    
+                    <div class="tags">
+                        <a href="#" class="tag">#ImageCompression</a>
+                        <a href="#" class="tag">#WebOptimization</a>
+                        <a href="#" class="tag">#FixitHub</a>
+                        <a href="#" class="tag">#SEO</a>
+                        <a href="#" class="tag">#WebPerformance</a>
+                    </div>
+                </div>
+            </article>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <h3>Popular Posts</h3>
+                <ul class="popular-posts">
+                    <li>
+                        <a href="#">
+                            <img src="https://fixithub.site/images/pdf-to-jpg-thumbnail.jpg" alt="PDF to JPG">
+                            <span class="post-title">How to Convert PDF to JPG in 3 Easy Steps</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="https://fixithub.site/images/video-compression-thumbnail.jpg" alt="Video Compression">
+                            <span class="post-title">The Best Video Compression Techniques for 2025</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="https://fixithub.site/images/seo-tips-thumbnail.jpg" alt="SEO Tips">
+                            <span class="post-title">10 SEO Tips to Boost Your Website Ranking</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="https://fixithub.site/images/webp-guide-thumbnail.jpg" alt="WebP Guide">
+                            <span class="post-title">Why WebP is the Future of Web Images</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-card">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Image Tools</a></li>
+                    <li><a href="#">Video Tools</a></li>
+                    <li><a href="#">PDF Tools</a></li>
+                    <li><a href="#">SEO Tips</a></li>
+                    <li><a href="#">Web Performance</a></li>
+                </ul>
+            </div>
+            
+            <div class="ad-container">
+                <div>
+                    <div class="ad-label">Advertisement</div>
+                    <!-- AdSense Sidebar Ad -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"></script>
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                        data-ad-slot="2468013579"
+                        data-ad-format="rectangle"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+            
+            <div class="sidebar-card">
+                <h3>Subscribe</h3>
+                <p>Get the latest tips and updates delivered to your inbox.</p>
+                <form>
+                    <input type="email" placeholder="Your email address" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid var(--border-color);">
+                    <button type="submit" class="btn" style="width: 100%;">Subscribe</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>FixitHub</h3>
+                    <p>Your one-stop solution for all online tools. We provide free, fast, and reliable tools to make your digital life easier.</p>
+                    <div class="social-links">
+                        <a href="#">FB</a>
+                        <a href="#">TW</a>
+                        <a href="#">IG</a>
+                        <a href="#">LI</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="#">Image Compressor</a></li>
+                        <li><a href="#">PDF to JPG</a></li>
+                        <li><a href="#">Video Compressor</a></li>
+                        <li><a href="#">File Converter</a></li>
+                        <li><a href="#">Password Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 FixitHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // Dark/Light Mode Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        
+        // Check for saved theme preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            body.classList.add(currentTheme);
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            let theme = 'light';
+            if (body.classList.contains('dark-mode')) {
+                theme = 'dark';
+            }
+            localStorage.setItem('theme', theme);
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
