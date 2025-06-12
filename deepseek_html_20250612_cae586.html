@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Rotator & Flipper Tool | FixItHub</title>
+    <meta name="description" content="Free online tool to rotate and flip images. Rotate 90°, 180°, flip horizontally or vertically. No registration required.">
+    <meta name="keywords" content="image rotator, image flipper, rotate image online, flip image, image editor">
+    <meta name="author" content="FixItHub">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #6366f1;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gray-color: #94a3b8;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 2rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .tool-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        body.dark-mode .tool-container {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+        }
+
+        .tool-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .tool-description {
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--gray-color);
+        }
+
+        body.dark-mode .tool-description {
+            color: #94a3b8;
+        }
+
+        .upload-section {
+            border: 2px dashed var(--gray-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-section:hover {
+            border-color: var(--primary-color);
+        }
+
+        .upload-section.active {
+            border-color: var(--success-color);
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            margin-bottom: 1rem;
+        }
+
+        .upload-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .upload-btn:hover {
+            background-color: #4338ca;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .preview-section {
+            display: none;
+            margin-bottom: 2rem;
+        }
+
+        .image-container {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .control-btn {
+            background-color: white;
+            color: var(--dark-color);
+            border: 1px solid var(--gray-color);
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .control-btn {
+            background-color: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+
+        .control-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .control-btn i {
+            font-size: 1rem;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .download-btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-btn:hover {
+            background-color: #0d9c6d;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .ad-container {
+            background-color: #f1f5f9;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-mode .ad-container {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: #e2e8f0;
+        }
+
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s;
+        }
+
+        body.dark-mode .feature-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        body.dark-mode .feature-title {
+            color: #e2e8f0;
+        }
+
+        .feature-desc {
+            color: var(--gray-color);
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .control-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-container {
+                padding: 1rem;
+            }
+
+            .upload-section {
+                padding: 1.5rem;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Blog and article styles */
+        .blog-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s;
+        }
+
+        body.dark-mode .blog-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        body.dark-mode .blog-title {
+            color: #e2e8f0;
+        }
+
+        .blog-excerpt {
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">FixItHub</a>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Image Rotator & Flipper Tool</h1>
+            <p>Free online tool to rotate and flip your images in seconds. No registration required. Works on all devices.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="ad-container">
+            <div>
+                <div class="ad-label">Advertisement</div>
+                <!-- Google AdSense Ad Code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- ImageTool_Top -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <div class="tool-container">
+            <h2 class="tool-title">Image Rotator & Flipper</h2>
+            <p class="tool-description">Upload your image and use the controls to rotate or flip it as needed.</p>
+
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <p class="upload-text">Drag & drop your image here or click to browse</p>
+                <button class="upload-btn">Select Image</button>
+                <input type="file" id="fileInput" class="file-input" accept="image/*">
+            </div>
+
+            <div class="preview-section" id="previewSection">
+                <div class="image-container">
+                    <img id="imagePreview" alt="Preview">
+                </div>
+            </div>
+
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p>Processing image...</p>
+            </div>
+
+            <div class="controls">
+                <button class="control-btn tooltip" id="rotateLeftBtn">
+                    <i class="fas fa-undo"></i> Rotate Left
+                    <span class="tooltiptext">Rotate 90° counter-clockwise</span>
+                </button>
+                <button class="control-btn tooltip" id="rotateRightBtn">
+                    <i class="fas fa-redo"></i> Rotate Right
+                    <span class="tooltiptext">Rotate 90° clockwise</span>
+                </button>
+                <button class="control-btn tooltip" id="rotate180Btn">
+                    <i class="fas fa-sync-alt"></i> Rotate 180°
+                    <span class="tooltiptext">Rotate image 180 degrees</span>
+                </button>
+                <button class="control-btn tooltip" id="flipHorizontalBtn">
+                    <i class="fas fa-arrows-alt-h"></i> Flip Horizontal
+                    <span class="tooltiptext">Mirror the image horizontally</span>
+                </button>
+                <button class="control-btn tooltip" id="flipVerticalBtn">
+                    <i class="fas fa-arrows-alt-v"></i> Flip Vertical
+                    <span class="tooltiptext">Flip the image vertically</span>
+                </button>
+                <button class="control-btn tooltip" id="resetBtn">
+                    <i class="fas fa-trash"></i> Reset
+                    <span class="tooltiptext">Reset to original image</span>
+                </button>
+            </div>
+
+            <div class="download-section">
+                <button class="download-btn" id="downloadBtn" disabled>
+                    <i class="fas fa-download"></i> Download Image
+                </button>
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <div>
+                <div class="ad-label">Advertisement</div>
+                <!-- Google AdSense Ad Code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- ImageTool_Middle -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <section class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-upload"></i>
+                </div>
+                <h3 class="feature-title">Easy to Use</h3>
+                <p class="feature-desc">Simply upload your image and apply transformations with one click. No complicated settings.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="feature-title">Privacy Focused</h3>
+                <p class="feature-desc">All processing happens in your browser. We never upload your images to our servers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">Works Everywhere</h3>
+                <p class="feature-desc">Use our tool on any device - desktop, tablet, or mobile phone. No app installation needed.</p>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <h2 class="section-title">Related Articles</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1579547945413-497e1b99dac0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Image Editing" class="blog-image">
+                    <div class="blog-content">
+                        <h3 class="blog-title">5 Essential Image Editing Techniques Everyone Should Know</h3>
+                        <p class="blog-excerpt">Learn the basic image editing techniques that can transform your photos from good to great.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Web Tools" class="blog-image">
+                    <div class="blog-content">
+                        <h3 class="blog-title">The Best Free Online Tools for Creators in 2023</h3>
+                        <p class="blog-excerpt">Discover the top free web tools that can help you create professional content without expensive software.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Image Formats" class="blog-image">
+                    <div class="blog-content">
+                        <h3 class="blog-title">JPEG vs PNG: Which Image Format Should You Use?</h3>
+                        <p class="blog-excerpt">Understand the differences between JPEG and PNG formats and when to use each for optimal results.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="ad-container">
+            <div>
+                <div class="ad-label">Advertisement</div>
+                <!-- Google AdSense Ad Code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- ImageTool_Bottom -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FixItHub</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Tools</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="#">Image Tools</a></li>
+                        <li><a href="#">PDF Tools</a></li>
+                        <li><a href="#">Text Tools</a></li>
+                        <li><a href="#">Video Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FixItHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const uploadSection = document.getElementById('uploadSection');
+            const fileInput = document.getElementById('fileInput');
+            const previewSection = document.getElementById('previewSection');
+            const imagePreview = document.getElementById('imagePreview');
+            const rotateLeftBtn = document.getElementById('rotateLeftBtn');
+            const rotateRightBtn = document.getElementById('rotateRightBtn');
+            const rotate180Btn = document.getElementById('rotate180Btn');
+            const flipHorizontalBtn = document.getElementById('flipHorizontalBtn');
+            const flipVerticalBtn = document.getElementById('flipVerticalBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const themeToggle = document.getElementById('themeToggle');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const nav = document.querySelector('nav ul');
+
+            // State variables
+            let originalImage = null;
+            let currentImage = null;
+            let currentRotation = 0;
+            let isFlippedHorizontal = false;
+            let isFlippedVertical = false;
+
+            // Event Listeners
+            uploadSection.addEventListener('click', () => fileInput.click());
+            uploadSection.addEventListener('dragover', handleDragOver);
+            uploadSection.addEventListener('dragleave', handleDragLeave);
+            uploadSection.addEventListener('drop', handleDrop);
+            fileInput.addEventListener('change', handleFileSelect);
+            rotateLeftBtn.addEventListener('click', () => rotateImage(-90));
+            rotateRightBtn.addEventListener('click', () => rotateImage(90));
+            rotate180Btn.addEventListener('click', () => rotateImage(180));
+            flipHorizontalBtn.addEventListener('click', () => flipImage('horizontal'));
+            flipVerticalBtn.addEventListener('click', () => flipImage('vertical'));
+            resetBtn.addEventListener('click', resetImage);
+            downloadBtn.addEventListener('click', downloadImage);
+            themeToggle.addEventListener('click', toggleTheme);
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+            // Functions
+            function handleDragOver(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadSection.classList.add('active');
+            }
+
+            function handleDragLeave(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadSection.classList.remove('active');
+            }
+
+            function handleDrop(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadSection.classList.remove('active');
+
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelect({ target: fileInput });
+                }
+            }
+
+            function handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file (JPEG, PNG, etc.)');
+                    return;
+                }
+
+                showLoading(true);
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    originalImage = new Image();
+                    originalImage.onload = function() {
+                        currentImage = new Image();
+                        currentImage.src = originalImage.src;
+                        currentImage.onload = function() {
+                            displayImage();
+                            showLoading(false);
+                        };
+                    };
+                    originalImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function displayImage() {
+                imagePreview.src = currentImage.src;
+                uploadSection.style.display = 'none';
+                previewSection.style.display = 'block';
+                downloadBtn.disabled = false;
+            }
+
+            function rotateImage(degrees) {
+                if (!currentImage) return;
+                
+                showLoading(true);
+                currentRotation += degrees;
+                
+                // Normalize rotation to 0-359 degrees
+                currentRotation = (currentRotation % 360 + 360) % 360;
+                
+                setTimeout(() => {
+                    applyTransformations();
+                    showLoading(false);
+                }, 100);
+            }
+
+            function flipImage(direction) {
+                if (!currentImage) return;
+                
+                showLoading(true);
+                
+                if (direction === 'horizontal') {
+                    isFlippedHorizontal = !isFlippedHorizontal;
+                } else {
+                    isFlippedVertical = !isFlippedVertical;
+                }
+                
+                setTimeout(() => {
+                    applyTransformations();
+                    showLoading(false);
+                }, 100);
+            }
+
+            function applyTransformations() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Calculate new dimensions based on rotation
+                let width = originalImage.width;
+                let height = originalImage.height;
+                
+                if (currentRotation % 180 !== 0) {
+                    [width, height] = [height, width];
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Move to center of canvas
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                
+                // Apply rotation
+                ctx.rotate(currentRotation * Math.PI / 180);
+                
+                // Apply flips
+                const scaleX = isFlippedHorizontal ? -1 : 1;
+                const scaleY = isFlippedVertical ? -1 : 1;
+                ctx.scale(scaleX, scaleY);
+                
+                // Draw image
+                ctx.drawImage(
+                    originalImage,
+                    -originalImage.width / 2,
+                    -originalImage.height / 2,
+                    originalImage.width,
+                    originalImage.height
+                );
+                
+                // Update current image
+                currentImage = new Image();
+                currentImage.src = canvas.toDataURL('image/png');
+                currentImage.onload = function() {
+                    displayImage();
+                };
+            }
+
+            function resetImage() {
+                if (!originalImage) return;
+                
+                showLoading(true);
+                
+                currentRotation = 0;
+                isFlippedHorizontal = false;
+                isFlippedVertical = false;
+                
+                setTimeout(() => {
+                    currentImage = new Image();
+                    currentImage.src = originalImage.src;
+                    currentImage.onload = function() {
+                        displayImage();
+                        showLoading(false);
+                    };
+                }, 100);
+            }
+
+            function downloadImage() {
+                if (!currentImage) return;
+                
+                const link = document.createElement('a');
+                link.download = 'edited-image.png';
+                link.href = currentImage.src;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            function showLoading(show) {
+                loadingIndicator.style.display = show ? 'block' : 'none';
+            }
+
+            function toggleTheme() {
+                document.body.classList.toggle('dark-mode');
+                const icon = themeToggle.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+                
+                // Save preference to localStorage
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode);
+            }
+
+            function toggleMobileMenu() {
+                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            }
+
+            // Initialize theme from localStorage
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                const icon = themeToggle.querySelector('i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        nav.style.display = 'none';
+                    }
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    nav.style.display = 'flex';
+                } else {
+                    nav.style.display = 'none';
+                }
+            });
+
+            // Initialize mobile menu state
+            if (window.innerWidth <= 768) {
+                nav.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
