@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass Generator | Create Strong Passwords Instantly</title>
+    <meta name="description" content="Free online password generator tool that creates secure, random passwords with customizable length and character types. Generate strong passwords for all your accounts.">
+    <meta name="keywords" content="password generator, secure password, random password, strong password, online security">
+    <meta property="og:title" content="SecurePass Generator | Create Strong Passwords Instantly">
+    <meta property="og:description" content="Free online password generator tool that creates secure, random passwords with customizable length and character types.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://securepass-generator.example.com">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #f9fafb;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 0.5rem;
+        }
+
+        .dark-mode {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --text: #f3f4f6;
+            --text-light: #9ca3af;
+            --bg: #111827;
+            --card-bg: #1f2937;
+            --border: #374151;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            transition: background-color 0.2s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .ad-banner {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem auto;
+            max-width: 1200px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .ad-banner.top {
+            margin-top: 1rem;
+        }
+
+        .ad-banner.bottom {
+            margin-bottom: 1rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .password-generator {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .password-display {
+            position: relative;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--card-bg);
+            color: var(--text);
+            font-family: monospace;
+            padding-right: 120px;
+        }
+
+        .password-actions {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .settings {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .setting-title {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-icon {
+            cursor: help;
+            color: var(--text-light);
+        }
+
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .range-input {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--border);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .range-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .strength-meter {
+            margin-top: 0.5rem;
+            height: 8px;
+            background-color: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--danger);
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .strength-label {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .strength-weak {
+            color: var(--danger);
+        }
+
+        .strength-medium {
+            color: #f59e0b;
+        }
+
+        .strength-strong {
+            color: var(--secondary);
+        }
+
+        .sidebar-card {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .blog-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .blog-image {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius);
+            object-fit: cover;
+        }
+
+        .blog-content {
+            flex: 1;
+        }
+
+        .blog-title {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .blog-title:hover {
+            color: var(--primary);
+        }
+
+        .blog-date {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-left: 1.25rem;
+        }
+
+        .tips-list li::marker {
+            color: var(--primary);
+        }
+
+        footer {
+            background-color: var(--card-bg);
+            color: var(--text);
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: none;
+        }
+
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cookie-text {
+            flex: 1;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--radius);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .password-actions {
+                position: static;
+                transform: none;
+                margin-top: 0.5rem;
+                justify-content: flex-end;
+            }
+
+            .password-input {
+                padding-right: 1rem;
+            }
+
+            .cookie-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cookie-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">🔐</span>
+                <span>SecurePass Generator</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="ad-banner top">
+        <!-- Google AdSense Banner Ad -->
+        <div id="banner-ad-top">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                crossorigin="anonymous"></script>
+            <!-- Banner Ad Top -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="main-content">
+                <div class="card password-generator" id="home">
+                    <h1 class="card-title">Password Generator</h1>
+                    <p>Create strong, secure passwords to protect your online accounts. Customize the settings below to generate a password that meets your requirements.</p>
+                    
+                    <div class="password-display">
+                        <input type="text" id="passwordOutput" class="password-input" readonly>
+                        <div class="password-actions">
+                            <button id="copyPassword" class="btn btn-primary btn-icon tooltip">
+                                <span class="tooltiptext">Copy to clipboard</span>
+                                📋
+                            </button>
+                            <button id="refreshPassword" class="btn btn-secondary btn-icon tooltip">
+                                <span class="tooltiptext">Generate new password</span>
+                                🔄
+                            </button>
+                            <button id="toggleVisibility" class="btn btn-outline btn-icon tooltip">
+                                <span class="tooltiptext">Show/hide password</span>
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings">
+                        <div class="setting-group">
+                            <label for="passwordLength" class="setting-title">
+                                Password Length: <span id="lengthValue" class="range-value">12</span>
+                                <span class="info-icon tooltip">ℹ️
+                                    <span class="tooltiptext">Longer passwords are more secure. We recommend at least 12 characters.</span>
+                                </span>
+                            </label>
+                            <div class="range-container">
+                                <input type="range" id="passwordLength" class="range-input" min="4" max="64" value="12">
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-title">
+                                Character Types:
+                                <span class="info-icon tooltip">ℹ️
+                                    <span class="tooltiptext">Select which character types to include in your password. More types = more secure.</span>
+                                </span>
+                            </label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="includeUppercase" checked>
+                                    Uppercase (A-Z)
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="includeLowercase" checked>
+                                    Lowercase (a-z)
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="includeNumbers" checked>
+                                    Numbers (0-9)
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="includeSymbols" checked>
+                                    Symbols (!@#$%)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-title">Password Strength:</label>
+                            <div class="strength-meter">
+                                <div id="strengthBar" class="strength-bar"></div>
+                            </div>
+                            <div id="strengthLabel" class="strength-label strength-weak">Weak</div>
+                        </div>
+
+                        <button id="generatePassword" class="btn btn-primary">
+                            Generate Password
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card" id="about">
+                    <h2 class="card-title">About SecurePass Generator</h2>
+                    <p>SecurePass Generator is a free online tool that helps you create strong, random passwords to enhance your online security. Our mission is to make it easy for everyone to protect their digital accounts with secure passwords.</p>
+                    <p>In today's digital world, using weak or repeated passwords puts your personal information at risk. Our generator creates passwords that are difficult to guess or crack, helping you stay safe online.</p>
+                    <h3>Why use a password generator?</h3>
+                    <ul class="tips-list">
+                        <li>Creates truly random passwords that are hard to guess</li>
+                        <li>Helps you avoid using personal information in passwords</li>
+                        <li>Ensures you use different passwords for different accounts</li>
+                        <li>Saves you time trying to come up with secure passwords</li>
+                        <li>Reduces the risk of password-related security breaches</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card sidebar-card">
+                    <h2 class="card-title">Password Security Tips</h2>
+                    <ul class="tips-list">
+                        <li>Use at least 12 characters in your passwords</li>
+                        <li>Include a mix of uppercase, lowercase, numbers and symbols</li>
+                        <li>Never use personal information like birthdays or names</li>
+                        <li>Use a unique password for each account</li>
+                        <li>Consider using a password manager to store your passwords</li>
+                        <li>Change passwords immediately if a service reports a breach</li>
+                    </ul>
+                </div>
+
+                <div class="card sidebar-card" id="blog">
+                    <h2 class="card-title">Latest Blog Posts</h2>
+                    <div class="blog-list">
+                        <div class="blog-item">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80&q=60" alt="Password security" class="blog-image">
+                            <div class="blog-content">
+                                <a href="#post1" class="blog-title">The Importance of Strong Passwords in 2023</a>
+                                <div class="blog-date">June 15, 2023</div>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80&q=60" alt="Two-factor authentication" class="blog-image">
+                            <div class="blog-content">
+                                <a href="#post2" class="blog-title">Beyond Passwords: Implementing Two-Factor Authentication</a>
+                                <div class="blog-date">May 28, 2023</div>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80&q=60" alt="Password manager" class="blog-image">
+                            <div class="blog-content">
+                                <a href="#post3" class="blog-title">Password Managers: The Key to Digital Security</a>
+                                <div class="blog-date">April 10, 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card sidebar-card">
+                    <!-- Google AdSense Sidebar Ad -->
+                    <div id="sidebar-ad">
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                            crossorigin="anonymous"></script>
+                        <!-- Sidebar Ad -->
+                        <ins class="adsbygoogle"
+                            style="display:block"
+                            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                            data-ad-slot="XXXXXXXXXX"
+                            data-ad-format="auto"
+                            data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-banner bottom">
+        <!-- Google AdSense Banner Ad Bottom -->
+        <div id="banner-ad-bottom">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                crossorigin="anonymous"></script>
+            <!-- Banner Ad Bottom -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>SecurePass</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Password Generator</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#feedback">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-column" id="contact">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="#twitter">Twitter</a></li>
+                    <li><a href="#facebook">Facebook</a></li>
+                    <li><a href="#github">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 SecurePass Generator. All rights reserved.
+        </div>
+    </footer>
+
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+            </div>
+            <div class="cookie-buttons">
+                <button id="acceptCookies" class="btn btn-primary">Accept</button>
+                <button id="declineCookies" class="btn btn-outline">Decline</button>
+                <a href="#privacy" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for blog posts -->
+    <div class="modal" id="post1Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">The Importance of Strong Passwords in 2023</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80" alt="Password security" style="width:100%; border-radius: var(--radius); margin-bottom: 1rem;">
+            <p>In today's digital landscape, strong passwords are your first line of defense against cyber threats. With data breaches becoming increasingly common, using weak or reused passwords puts all your online accounts at risk.</p>
+            <p>According to recent studies, over 80% of data breaches are caused by weak or stolen passwords. Hackers use sophisticated tools that can crack simple passwords in seconds, making it crucial to use complex, unique passwords for each account.</p>
+            <p>Here are key reasons why strong passwords matter:</p>
+            <ul class="tips-list">
+                <li>Prevent unauthorized access to your accounts</li>
+                <li>Protect sensitive personal and financial information</li>
+                <li>Reduce the risk of identity theft</li>
+                <li>Secure your devices from malware and ransomware</li>
+                <li>Maintain privacy in an increasingly connected world</li>
+            </ul>
+            <p>Using our password generator is an easy way to create strong passwords that would take hackers years to crack, even with advanced tools.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="post2Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Beyond Passwords: Implementing Two-Factor Authentication</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80" alt="Two-factor authentication" style="width:100%; border-radius: var(--radius); margin-bottom: 1rem;">
+            <p>While strong passwords are essential, adding two-factor authentication (2FA) provides an additional layer of security that can stop hackers even if they obtain your password.</p>
+            <p>2FA requires two forms of identification to access your accounts: something you know (your password) and something you have (like your phone or a security key). This means even if your password is compromised, attackers can't access your account without the second factor.</p>
+            <p>Types of 2FA methods:</p>
+            <ul class="tips-list">
+                <li>SMS/text message codes</li>
+                <li>Authenticator apps (Google Authenticator, Authy)</li>
+                <li>Biometric verification (fingerprint, face ID)</li>
+                <li>Physical security keys (YubiKey)</li>
+                <li>Email verification codes</li>
+            </ul>
+            <p>For maximum security, we recommend using an authenticator app or physical security key, as these are more secure than SMS-based 2FA which can be vulnerable to SIM swapping attacks.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="post3Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Password Managers: The Key to Digital Security</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=300&q=80" alt="Password manager" style="width:100%; border-radius: var(--radius); margin-bottom: 1rem;">
+            <p>Remembering dozens of strong, unique passwords is nearly impossible without help. That's where password managers come in - they securely store all your passwords in an encrypted vault protected by one master password.</p>
+            <p>Password managers offer several advantages:</p>
+            <ul class="tips-list">
+                <li>Generate and store strong, unique passwords for all accounts</li>
+                <li>Auto-fill passwords across devices</li>
+                <li>Sync passwords securely between devices</li>
+                <li>Alert you about compromised or weak passwords</li>
+                <li>Securely share passwords with family or team members</li>
+                <li>Store other sensitive information like credit cards securely</li>
+            </ul>
+            <p>Popular password managers include LastPass, 1Password, Bitwarden, and Dashlane. Most offer free versions with basic features, while premium versions provide additional security features and cross-device sync.</p>
+            <p>Using a password manager with our generator creates a powerful combination for maintaining strong security across all your online accounts.</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const passwordOutput = document.getElementById('passwordOutput');
+        const passwordLength = document.getElementById('passwordLength');
+        const lengthValue = document.getElementById('lengthValue');
+        const includeUppercase = document.getElementById('includeUppercase');
+        const includeLowercase = document.getElementById('includeLowercase');
+        const includeNumbers = document.getElementById('includeNumbers');
+        const includeSymbols = document.getElementById('includeSymbols');
+        const generatePassword = document.getElementById('generatePassword');
+        const copyPassword = document.getElementById('copyPassword');
+        const refreshPassword = document.getElementById('refreshPassword');
+        const toggleVisibility = document.getElementById('toggleVisibility');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthLabel = document.getElementById('strengthLabel');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        const blogLinks = document.querySelectorAll('.blog-title');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+
+        // Character sets
+        const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+        const numberChars = '0123456789';
+        const symbolChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate initial password
+            generateNewPassword();
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.textContent = '☀️';
+            }
+            
+            // Check cookie consent
+            const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+            if (cookiesAccepted !== 'true') {
+                setTimeout(() => {
+                    cookieConsent.style.display = 'block';
+                }, 2000);
+            }
+        });
+
+        // Event Listeners
+        passwordLength.addEventListener('input', function() {
+            lengthValue.textContent = this.value;
+            generateNewPassword();
+        });
+
+        [includeUppercase, includeLowercase, includeNumbers, includeSymbols].forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Ensure at least one character type is selected
+                if (!includeUppercase.checked && !includeLowercase.checked && 
+                    !includeNumbers.checked && !includeSymbols.checked) {
+                    this.checked = true;
+                    showTooltip(this, 'At least one character type must be selected');
+                }
+                generateNewPassword();
+            });
+        });
+
+        generatePassword.addEventListener('click', generateNewPassword);
+        refreshPassword.addEventListener('click', generateNewPassword);
+
+        copyPassword.addEventListener('click', function() {
+            if (passwordOutput.value) {
+                navigator.clipboard.writeText(passwordOutput.value);
+                showTooltip(this, 'Copied!');
+                this.classList.add('fade-in');
+                setTimeout(() => this.classList.remove('fade-in'), 300);
+            }
+        });
+
+        toggleVisibility.addEventListener('click', function() {
+            const type = passwordOutput.getAttribute('type');
+            passwordOutput.setAttribute('type', type === 'password' ? 'text' : 'password');
+            this.textContent = type === 'password' ? '🙈' : '👁️';
+            showTooltip(this, type === 'password' ? 'Hide password' : 'Show password');
+        });
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        acceptCookies.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieConsent.style.display = 'none';
+        });
+
+        declineCookies.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieConsent.style.display = 'none';
+        });
+
+        // Blog post modals
+        blogLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const postId = this.getAttribute('href').substring(1);
+                const modal = document.getElementById(`${postId}Modal`);
+                if (modal) {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close modal when clicking outside content
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Functions
+        function generateNewPassword() {
+            let charset = '';
+            if (includeUppercase.checked) charset += uppercaseChars;
+            if (includeLowercase.checked) charset += lowercaseChars;
+            if (includeNumbers.checked) charset += numberChars;
+            if (includeSymbols.checked) charset += symbolChars;
+
+            let password = '';
+            const length = parseInt(passwordLength.value);
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+
+            passwordOutput.value = password;
+            passwordOutput.setAttribute('type', 'password');
+            toggleVisibility.textContent = '👁️';
+            updatePasswordStrength(password);
+        }
+
+        function updatePasswordStrength(password) {
+            let strength = 0;
+            const length = password.length;
+
+            // Length contributes up to 50% of strength
+            strength += Math.min(50, (length / 64) * 100);
+
+            // Character variety contributes the remaining 50%
+            let varietyScore = 0;
+            if (includeUppercase.checked) varietyScore += 1;
+            if (includeLowercase.checked) varietyScore += 1;
+            if (includeNumbers.checked) varietyScore += 1;
+            if (includeSymbols.checked) varietyScore += 1;
+
+            // Max variety score is 4 (all types selected)
+            strength += (varietyScore / 4) * 50;
+
+            // Update strength meter
+            strengthBar.style.width = `${strength}%`;
+
+            // Update strength label
+            if (strength < 40) {
+                strengthBar.style.backgroundColor = 'var(--danger)';
+                strengthLabel.textContent = 'Weak';
+                strengthLabel.className = 'strength-label strength-weak';
+            } else if (strength < 70) {
+                strengthBar.style.backgroundColor = '#f59e0b';
+                strengthLabel.textContent = 'Medium';
+                strengthLabel.className = 'strength-label strength-medium';
+            } else {
+                strengthBar.style.backgroundColor = 'var(--secondary)';
+                strengthLabel.textContent = 'Strong';
+                strengthLabel.className = 'strength-label strength-strong';
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            }
+        }
+
+        function showTooltip(element, message) {
+            const tooltip = element.querySelector('.tooltiptext');
+            if (tooltip) {
+                tooltip.textContent = message;
+                tooltip.style.visibility = 'visible';
+                tooltip.style.opacity = '1';
+                setTimeout(() => {
+                    tooltip.style.visibility = 'hidden';
+                    tooltip.style.opacity = '0';
+                }, 2000);
+            }
+        }
+
+        // Generate a password when any setting changes
+        document.querySelectorAll('input[type="range"], input[type="checkbox"]').forEach(input => {
+            input.addEventListener('input', generateNewPassword);
+        });
+    </script>
+
+    <!-- Google Analytics placeholder -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+</body>
+</html>
